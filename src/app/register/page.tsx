@@ -179,6 +179,35 @@ export default function RegisterPage() {
           name: formData.fullName,
           email: formData.email,
           contact: formData.phone,
+          method: 'upi',
+        },
+        config: {
+          display: {
+            blocks: {
+              upi: {
+                name: 'Pay using UPI Apps (Intent / QR)',
+                instruments: [
+                  {
+                    method: 'upi',
+                    flows: ['intent', 'qr', 'collect'],
+                    apps: ['google_pay', 'phonepe', 'paytm', 'bhim', 'cred'],
+                  },
+                ],
+              },
+              other: {
+                name: 'Cards & Netbanking',
+                instruments: [
+                  { method: 'card' },
+                  { method: 'netbanking' },
+                  { method: 'wallet' },
+                ],
+              },
+            },
+            sequence: ['block.upi', 'block.other'],
+            preferences: {
+              show_default_blocks: true,
+            },
+          },
         },
         notes: {
           ticketId,
@@ -651,6 +680,43 @@ export default function RegisterPage() {
               <p>{t.form.payment.included}</p>
             </div>
 
+            {/* UPI Intent Highlight Section */}
+            <div className="bg-stone-50 p-4 rounded-xl border border-stone-200 space-y-3">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-bold text-stone-800 uppercase tracking-wider flex items-center gap-1.5">
+                  <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                  <span>UPI Intent & QR Supported</span>
+                </span>
+                <span className="text-[11px] font-semibold text-emerald-800 bg-emerald-100 px-2 py-0.5 rounded">
+                  1-Tap Intent
+                </span>
+              </div>
+
+              {/* Supported UPI Apps Badges */}
+              <div className="grid grid-cols-5 gap-2 text-center text-[10px] font-bold">
+                <div className="bg-white border border-stone-200 p-2 rounded-lg text-stone-800 shadow-2xs hover:border-amber-400 transition-colors">
+                  Google Pay
+                </div>
+                <div className="bg-white border border-stone-200 p-2 rounded-lg text-purple-800 shadow-2xs hover:border-amber-400 transition-colors">
+                  PhonePe
+                </div>
+                <div className="bg-white border border-stone-200 p-2 rounded-lg text-sky-800 shadow-2xs hover:border-amber-400 transition-colors">
+                  Paytm UPI
+                </div>
+                <div className="bg-white border border-stone-200 p-2 rounded-lg text-emerald-800 shadow-2xs hover:border-amber-400 transition-colors">
+                  BHIM UPI
+                </div>
+                <div className="bg-white border border-stone-200 p-2 rounded-lg text-stone-900 shadow-2xs hover:border-amber-400 transition-colors">
+                  CRED UPI
+                </div>
+              </div>
+
+              <p className="text-[11px] text-stone-500 leading-snug">
+                📲 <strong>मोबाईलवर:</strong> तुमचे Google Pay, PhonePe किंवा Paytm ॲप थेट आपोआप उघडेल (1-Tap UPI Intent).<br />
+                💻 <strong>लॅपटॉप/कॉम्प्युटरवर:</strong> थेट स्कॅन करण्यासाठी Dynamic UPI QR Code दिसेल.
+              </p>
+            </div>
+
             <div className="space-y-3 pt-2">
               <button
                 type="button"
@@ -662,7 +728,7 @@ export default function RegisterPage() {
                 <span>
                   {isSubmitting
                     ? 'रेझरपे सुरू होत आहे...'
-                    : 'रेझरपे द्वारे ₹199 भरा (Razorpay Checkout)'}
+                    : 'UPI (GPay/PhonePe/Paytm) किंवा कार्ड द्वारे ₹199 भरा'}
                 </span>
               </button>
 

@@ -1107,9 +1107,33 @@ export default function RegisterPage() {
                   </p>
                 </div>
 
-                <div className="py-3 space-y-2">
+                <div className="py-3 space-y-1">
                   <h4 className="font-bold text-stone-900 text-sm sm:text-base flex items-center gap-1.5">
                     <span>2.</span>
+                    <span>{lang === 'mr' ? 'फोटो व व्हिडिओ मार्गदर्शक तत्त्वे (Photo & Video Guidelines)' : 'Photos & Video Rules'}</span>
+                  </h4>
+                  <p>
+                    {lang === 'mr'
+                      ? 'सादर केलेले सर्व फोटो स्पष्ट, चालू वर्षातील (२०२६) व स्वतःच्या सजावटीचे असणे अनिवार्य आहे. व्हिडिओचा कालावधी जास्तीत जास्त ५ मिनिटांपर्यंत असावा. इंटरनेटवरून डाऊनलोड केलेले अथवा जुने फोटो आढळल्यास प्रवेश तात्काळ रद्द केला जाईल.'
+                      : 'All photos and videos must be original, from the current year (2026), and clearly depict the setup. Video duration must not exceed 5 minutes. Plagiarized or stock imagery will lead to immediate disqualification.'}
+                  </p>
+                </div>
+
+                <div className="py-3 space-y-1">
+                  <h4 className="font-bold text-stone-900 text-sm sm:text-base flex items-center gap-1.5">
+                    <span>3.</span>
+                    <span>{lang === 'mr' ? 'पर्यावरणपूरक सजावट व शाडू माती (Eco-Friendly Guidelines)' : 'Eco-Friendly & Clay Idols'}</span>
+                  </h4>
+                  <p>
+                    {lang === 'mr'
+                      ? 'पारंपरिक शाडू मातीची मूर्ती, नैसर्गिक रंग आणि पुनर्वापर करता येण्याजोगे साहित्य वापरणाऱ्या सजावटींना परीक्षकांकडून विशेष गुण व प्राधान्य दिले जाईल. थर्माकोल व प्लास्टिकचा वापर टाळण्यास प्रोत्साहन दिले जाते.'
+                      : 'Special evaluation weightage and bonus points are awarded to entries utilizing traditional Shadu clay idols, natural pigments, and sustainable/recyclable materials. Thermocol and plastic are strongly discouraged.'}
+                  </p>
+                </div>
+
+                <div className="py-3 space-y-2">
+                  <h4 className="font-bold text-stone-900 text-sm sm:text-base flex items-center gap-1.5">
+                    <span>4.</span>
                     <span>{lang === 'mr' ? 'प्रवेश शुल्क, किमान सहभाग व परतावा धोरण (Registration Fee & Refund Policy)' : 'Registration Fee, Minimum Participation & Refund Policy'}</span>
                   </h4>
                   <p>
@@ -1125,30 +1149,6 @@ export default function RegisterPage() {
                         : 'Protection Assurance: If total participation is under 1,000 entries, full fees will be refunded after a 3% Razorpay fee deduction.'}
                     </span>
                   </div>
-                </div>
-
-                <div className="py-3 space-y-1">
-                  <h4 className="font-bold text-stone-900 text-sm sm:text-base flex items-center gap-1.5">
-                    <span>3.</span>
-                    <span>{lang === 'mr' ? 'फोटो व व्हिडिओ मार्गदर्शक तत्त्वे (Photo & Video Guidelines)' : 'Photos & Video Rules'}</span>
-                  </h4>
-                  <p>
-                    {lang === 'mr'
-                      ? 'सादर केलेले सर्व फोटो स्पष्ट, चालू वर्षातील (२०२६) व स्वतःच्या सजावटीचे असणे अनिवार्य आहे. व्हिडिओचा कालावधी जास्तीत जास्त ५ मिनिटांपर्यंत असावा. इंटरनेटवरून डाऊनलोड केलेले अथवा जुने फोटो आढळल्यास प्रवेश तात्काळ रद्द केला जाईल.'
-                      : 'All photos and videos must be original, from the current year (2026), and clearly depict the setup. Video duration must not exceed 5 minutes. Plagiarized or stock imagery will lead to immediate disqualification.'}
-                  </p>
-                </div>
-
-                <div className="py-3 space-y-1">
-                  <h4 className="font-bold text-stone-900 text-sm sm:text-base flex items-center gap-1.5">
-                    <span>4.</span>
-                    <span>{lang === 'mr' ? 'पर्यावरणपूरक सजावट व शाडू माती (Eco-Friendly Guidelines)' : 'Eco-Friendly & Clay Idols'}</span>
-                  </h4>
-                  <p>
-                    {lang === 'mr'
-                      ? 'पारंपरिक शाडू मातीची मूर्ती, नैसर्गिक रंग आणि पुनर्वापर करता येण्याजोगे साहित्य वापरणाऱ्या सजावटींना परीक्षकांकडून विशेष गुण व प्राधान्य दिले जाईल. थर्माकोल व प्लास्टिकचा वापर टाळण्यास प्रोत्साहन दिले जाते.'
-                      : 'Special evaluation weightage and bonus points are awarded to entries utilizing traditional Shadu clay idols, natural pigments, and sustainable/recyclable materials. Thermocol and plastic are strongly discouraged.'}
-                  </p>
                 </div>
 
                 <div className="py-3 space-y-1">

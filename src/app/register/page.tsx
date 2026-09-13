@@ -19,6 +19,7 @@ import {
   Lock,
   Video,
   Film,
+  X,
 } from 'lucide-react';
 import Link from 'next/link';
 
@@ -35,6 +36,7 @@ export default function RegisterPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [agreedToTerms, setAgreedToTerms] = useState(false);
+  const [showTermsModal, setShowTermsModal] = useState(false);
 
   // Form State
   const [formData, setFormData] = useState({
@@ -904,11 +906,35 @@ export default function RegisterPage() {
                   <span className="leading-relaxed text-xs sm:text-sm text-stone-800">
                     {lang === 'mr' ? (
                       <>
-                        मी स्पर्धेचे सर्व <strong className="font-semibold text-stone-900">नियम आणि अटी (Terms & Conditions)</strong> वाचल्या आहेत आणि मला त्या पूर्णपणे मान्य आहेत. मी पुष्टी करतो/करते की मी दिलेली माहिती खरी असून सादर केलेली सजावट अधिकृत नियमांचे पालन करते.
+                        मी स्पर्धेचे सर्व{' '}
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            setShowTermsModal(true);
+                          }}
+                          className="font-bold text-[#9B1B1E] hover:text-[#781416] underline decoration-stone-400 hover:decoration-[#9B1B1E] underline-offset-2 cursor-pointer inline"
+                        >
+                          नियम आणि अटी (Terms & Conditions)
+                        </button>{' '}
+                        वाचल्या आहेत आणि मला त्या पूर्णपणे मान्य आहेत. मी पुष्टी करतो/करते की मी दिलेली माहिती खरी असून सादर केलेली सजावट अधिकृत नियमांचे पालन करते.
                       </>
                     ) : (
                       <>
-                        I have read and agree to all the <strong className="font-semibold text-stone-900">Terms & Conditions</strong> of the competition. I confirm that all submitted details and materials comply with official guidelines.
+                        I have read and agree to all the{' '}
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            setShowTermsModal(true);
+                          }}
+                          className="font-bold text-[#9B1B1E] hover:text-[#781416] underline decoration-stone-400 hover:decoration-[#9B1B1E] underline-offset-2 cursor-pointer inline"
+                        >
+                          Terms & Conditions
+                        </button>{' '}
+                        of the competition. I confirm that all submitted details and materials comply with official guidelines.
                       </>
                     )}
                   </span>
@@ -1028,6 +1054,142 @@ export default function RegisterPage() {
               >
                 <span>{t.form.ticket.backToHome}</span>
               </Link>
+            </div>
+          </div>
+        )}
+
+        {/* ================= Terms & Conditions Popup Modal ================= */}
+        {showTermsModal && (
+          <div
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs animate-in fade-in duration-200"
+            onClick={() => setShowTermsModal(false)}
+          >
+            <div
+              className="bg-white w-full max-w-2xl rounded-2xl shadow-2xl border border-stone-200 flex flex-col max-h-[85vh] overflow-hidden animate-in zoom-in-95 duration-150"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Modal Header */}
+              <div className="px-6 py-4 border-b border-stone-200 bg-stone-50/80 flex items-center justify-between">
+                <div className="flex items-center gap-2.5">
+                  <div className="w-9 h-9 rounded-xl bg-amber-100 text-[#9B1B1E] flex items-center justify-center text-lg shadow-2xs">
+                    📜
+                  </div>
+                  <div>
+                    <h3 className="font-serif font-black text-lg text-stone-900 leading-tight">
+                      {lang === 'mr' ? 'लोकोत्सव २०२६ - नियम व अटी' : 'Lokutsav 2026 - Terms & Conditions'}
+                    </h3>
+                    <p className="text-[11px] text-stone-500">
+                      {lang === 'mr' ? 'अधिकृत नियमावली व मार्गदर्शक सूचना' : 'Official Competition Guidelines & Regulations'}
+                    </p>
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setShowTermsModal(false)}
+                  className="w-8 h-8 rounded-full hover:bg-stone-200 text-stone-500 hover:text-stone-800 flex items-center justify-center transition-colors cursor-pointer"
+                  aria-label="Close"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+
+              {/* Modal Body */}
+              <div className="p-6 overflow-y-auto space-y-4 text-xs sm:text-sm text-stone-700 leading-relaxed divide-y divide-stone-100">
+                <div className="pb-3 space-y-1">
+                  <h4 className="font-bold text-stone-900 text-sm sm:text-base flex items-center gap-1.5">
+                    <span>1.</span>
+                    <span>{lang === 'mr' ? 'सहभाग व पात्रता (Eligibility)' : 'Eligibility & Categories'}</span>
+                  </h4>
+                  <p>
+                    {lang === 'mr'
+                      ? 'ही स्पर्धा संपूर्ण महाराष्ट्रातील सर्व घरगुती गणपती, सार्वजनिक गणेशोत्सव मंडळे, गृहनिर्माण संस्था (Housing Societies) आणि संस्थात्मक प्रतिष्ठानांसाठी खुली आहे. एका तिकिटावर केवळ एकच अधिकृत नोंदणी ग्राह्य धरली जाईल.'
+                      : 'This competition is open to all household setups, public mandals, housing societies, and institutions across Maharashtra. One registration pass qualifies a single entry.'}
+                  </p>
+                </div>
+
+                <div className="py-3 space-y-1">
+                  <h4 className="font-bold text-stone-900 text-sm sm:text-base flex items-center gap-1.5">
+                    <span>2.</span>
+                    <span>{lang === 'mr' ? 'प्रवेश शुल्क व परतावा (Registration Fee & Refund Policy)' : 'Registration Fee & Policy'}</span>
+                  </h4>
+                  <p>
+                    {lang === 'mr'
+                      ? 'नोंदणी शुल्क प्रति प्रवेश ₹199 (जीएसटी समाविष्ट) आहे. एकदा तिकीट जनरेट झाल्यानंतर नोंदणी शुल्क कोणत्याही कारणास्तव परत केले जाणार नाही (Non-Refundable).'
+                      : 'The registration fee is ₹199 per entry (inclusive of GST). Once the entry pass/ticket is generated, fees are strictly non-refundable under any circumstances.'}
+                  </p>
+                </div>
+
+                <div className="py-3 space-y-1">
+                  <h4 className="font-bold text-stone-900 text-sm sm:text-base flex items-center gap-1.5">
+                    <span>3.</span>
+                    <span>{lang === 'mr' ? 'फोटो व व्हिडिओ मार्गदर्शक तत्त्वे (Photo & Video Guidelines)' : 'Photos & Video Rules'}</span>
+                  </h4>
+                  <p>
+                    {lang === 'mr'
+                      ? 'सादर केलेले सर्व फोटो स्पष्ट, चालू वर्षातील (२०२६) व स्वतःच्या सजावटीचे असणे अनिवार्य आहे. व्हिडिओचा कालावधी जास्तीत जास्त ५ मिनिटांपर्यंत असावा. इंटरनेटवरून डाऊनलोड केलेले अथवा जुने फोटो आढळल्यास प्रवेश तात्काळ रद्द केला जाईल.'
+                      : 'All photos and videos must be original, from the current year (2026), and clearly depict the setup. Video duration must not exceed 5 minutes. Plagiarized or stock imagery will lead to immediate disqualification.'}
+                  </p>
+                </div>
+
+                <div className="py-3 space-y-1">
+                  <h4 className="font-bold text-stone-900 text-sm sm:text-base flex items-center gap-1.5">
+                    <span>4.</span>
+                    <span>{lang === 'mr' ? 'पर्यावरणपूरक सजावट व शाडू माती (Eco-Friendly Guidelines)' : 'Eco-Friendly & Clay Idols'}</span>
+                  </h4>
+                  <p>
+                    {lang === 'mr'
+                      ? 'पारंपरिक शाडू मातीची मूर्ती, नैसर्गिक रंग आणि पुनर्वापर करता येण्याजोगे साहित्य वापरणाऱ्या सजावटींना परीक्षकांकडून विशेष गुण व प्राधान्य दिले जाईल. थर्माकोल व प्लास्टिकचा वापर टाळण्यास प्रोत्साहन दिले जाते.'
+                      : 'Special evaluation weightage and bonus points are awarded to entries utilizing traditional Shadu clay idols, natural pigments, and sustainable/recyclable materials. Thermocol and plastic are strongly discouraged.'}
+                  </p>
+                </div>
+
+                <div className="py-3 space-y-1">
+                  <h4 className="font-bold text-stone-900 text-sm sm:text-base flex items-center gap-1.5">
+                    <span>5.</span>
+                    <span>{lang === 'mr' ? 'परीक्षण व निकाल (Judging & Evaluation)' : 'Judging & Final Decision'}</span>
+                  </h4>
+                  <p>
+                    {lang === 'mr'
+                      ? 'परीक्षण कला, संस्कृती, पर्यावरण, सर्जनशीलता आणि संकल्पनेच्या आधारे तज्ज्ञ ज्युरी पॅनेलद्वारे केले जाईल. परीक्षकांचा व लोकोत्सव संयोजन समितीचा निर्णय अंतिम व सर्वमान्य राहील.'
+                      : 'Submissions are judged by an independent jury of sculptors, artists, and cultural experts based on creativity, tradition, and eco-friendliness. The jury’s decision is final and binding.'}
+                  </p>
+                </div>
+
+                <div className="pt-3 space-y-1">
+                  <h4 className="font-bold text-stone-900 text-sm sm:text-base flex items-center gap-1.5">
+                    <span>6.</span>
+                    <span>{lang === 'mr' ? 'प्रमाणपत्र व सन्मान (Certificates & Awards)' : 'Certificates & Recognition'}</span>
+                  </h4>
+                  <p>
+                    {lang === 'mr'
+                      ? 'प्रत्येक वैध सहभागी स्पर्धकाला डिजिटल सहभाग प्रमाणपत्र (QR Verified E-Certificate) दिले जाईल. विजेत्यांना राज्य, विभाग व जिल्हास्तरावर रोख बक्षिसे व स्मृतिचिन्ह प्रदान केले जातील.'
+                      : 'Every valid registered entrant receives an official QR-verified Certificate of Participation. Winners across State, Division, and District tiers receive cash awards, trophies, and honor scrolls.'}
+                  </p>
+                </div>
+              </div>
+
+              {/* Modal Footer */}
+              <div className="px-6 py-4 border-t border-stone-200 bg-stone-50 flex items-center justify-end gap-3">
+                <button
+                  type="button"
+                  onClick={() => setShowTermsModal(false)}
+                  className="px-4 py-2 rounded-xl text-stone-600 hover:text-stone-900 font-semibold text-xs sm:text-sm hover:bg-stone-200 transition-colors cursor-pointer"
+                >
+                  {lang === 'mr' ? 'बंद करा' : 'Close'}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setAgreedToTerms(true);
+                    setShowTermsModal(false);
+                    if (errorMessage) setErrorMessage('');
+                  }}
+                  className="px-5 py-2.5 rounded-xl bg-[#9B1B1E] hover:bg-[#781416] text-white font-bold text-xs sm:text-sm shadow-sm transition-all active:scale-98 cursor-pointer flex items-center gap-1.5"
+                >
+                  <CheckCircle2 className="w-4 h-4 text-amber-300" />
+                  <span>{lang === 'mr' ? 'मी वाचले आणि मला मान्य आहे' : 'I Agree & Accept'}</span>
+                </button>
+              </div>
             </div>
           </div>
         )}

@@ -19,11 +19,30 @@ if (process.env.NODE_ENV !== 'production') {
 
 // In-memory persistent cache for zero-setup local dev / demo mode when database is not yet seeded
 let inMemoryEntries: ParticipantEntry[] = [...INITIAL_ENTRIES];
+let isPostgresAvailable: boolean | null = null;
+
+async function canUsePrisma(): Promise<boolean> {
+  if (!process.env.DATABASE_URL) return false;
+  if (isPostgresAvailable === false) return false;
+  if (isPostgresAvailable === true) return true;
+
+  try {
+    const check = prisma.$queryRaw`SELECT 1`;
+    const timeout = new Promise((_, reject) => setTimeout(() => reject(new Error('DB Timeout')), 600));
+    await Promise.race([check, timeout]);
+    isPostgresAvailable = true;
+    return true;
+  } catch {
+    console.warn('⚡ [Lokutsav] PostgreSQL not connected locally. Using instant in-memory data store.');
+    isPostgresAvailable = false;
+    return false;
+  }
+}
 
 export const dataStore = {
   async getAllEntries(): Promise<ParticipantEntry[]> {
     try {
-      if (process.env.DATABASE_URL) {
+      if (await canUsePrisma()) {
         const rows = await prisma.participant.findMany({
           orderBy: [{ finalRank: 'asc' }, { createdAt: 'desc' }],
         });
@@ -63,7 +82,7 @@ export const dataStore = {
 
   async getEntryById(id: string): Promise<ParticipantEntry | null> {
     try {
-      if (process.env.DATABASE_URL) {
+      if (await canUsePrisma()) {
         const r = await prisma.participant.findUnique({
           where: { id },
         });
@@ -109,7 +128,7 @@ export const dataStore = {
     };
 
     try {
-      if (process.env.DATABASE_URL) {
+      if (await canUsePrisma()) {
         // Find or create default competition
         let comp = await prisma.competition.findFirst();
         if (!comp) {
@@ -168,7 +187,7 @@ export const dataStore = {
     razorpayOrderId?: string
   ): Promise<boolean> {
     try {
-      if (process.env.DATABASE_URL) {
+      if (await canUsePrisma()) {
         await prisma.participant.updateMany({
           where: { ticketId },
           data: {
@@ -208,7 +227,7 @@ export const dataStore = {
     totalScore = Math.round(totalScore * 10) / 10;
 
     try {
-      if (process.env.DATABASE_URL) {
+      if (await canUsePrisma()) {
         await prisma.participant.update({
           where: { id },
           data: {

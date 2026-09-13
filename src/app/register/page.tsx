@@ -170,21 +170,32 @@ export default function RegisterPage() {
   };
 
   // Step 1 validation
-  const handleNextFromStep1 = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!formData.fullName || !formData.phone || !formData.district) {
-      setErrorMessage('कृपया सर्व आवश्यक माहिती भरा');
+  const handleNextFromStep1 = (e?: React.SyntheticEvent) => {
+    if (e) e.preventDefault();
+    if (!formData.fullName.trim() || !formData.phone.trim() || !formData.district.trim()) {
+      setErrorMessage(
+        lang === 'mr'
+          ? 'कृपया सर्व आवश्यक माहिती भरा (नाव, फोन, जिल्हा)'
+          : 'Please fill in all required fields (Name, Phone, District)'
+      );
       return;
     }
     setErrorMessage('');
     setStep(2);
+    if (typeof window !== 'undefined') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
   };
 
   // Step 2 submission -> generates ticket & creates Razorpay order
-  const handleProceedToPayment = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!formData.themeTitle || !formData.themeDescription) {
-      setErrorMessage('कृपया सजावटीचे नाव व माहिती भरा');
+  const handleProceedToPayment = async (e?: React.SyntheticEvent) => {
+    if (e) e.preventDefault();
+    if (!formData.themeTitle.trim() || !formData.themeDescription.trim()) {
+      setErrorMessage(
+        lang === 'mr'
+          ? 'कृपया सजावटीचे नाव व माहिती भरा'
+          : 'Please enter the decoration theme title and description'
+      );
       return;
     }
 
@@ -426,7 +437,14 @@ export default function RegisterPage() {
 
         {/* ================= STEP 1: Personal Details ================= */}
         {step === 1 && (
-          <form onSubmit={handleNextFromStep1} className="bg-white rounded-2xl p-6 sm:p-8 border border-[#E5D7C0] shadow-sm space-y-6">
+          <form
+            action="javascript:void(0);"
+            onSubmit={(e) => {
+              e.preventDefault();
+              handleNextFromStep1(e);
+            }}
+            className="bg-white rounded-2xl p-6 sm:p-8 border border-[#E5D7C0] shadow-sm space-y-6"
+          >
             <h2 className="font-serif font-black text-2xl text-stone-900 border-b border-stone-100 pb-3">
               {t.form.personal.title}
             </h2>
@@ -454,8 +472,9 @@ export default function RegisterPage() {
                   <input
                     type="tel"
                     required
+                    maxLength={10}
                     value={formData.phone}
-                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                    onChange={(e) => setFormData({ ...formData, phone: e.target.value.replace(/\D/g, '') })}
                     placeholder={t.form.personal.phonePlaceholder}
                     className="w-full px-4 py-3 rounded-lg border border-stone-300 focus:outline-none focus:ring-2 focus:ring-[#9B1B1E]/40"
                   />
@@ -495,7 +514,7 @@ export default function RegisterPage() {
 
                 <div>
                   <label className="block font-semibold text-stone-800 mb-1">
-                    {t.form.personal.city} <span className="text-red-600">*</span>
+                    {t.form.personal.city}
                   </label>
                   <input
                     type="text"
@@ -524,10 +543,11 @@ export default function RegisterPage() {
 
             <div className="pt-4 border-t border-stone-100 flex justify-end">
               <button
-                type="submit"
-                className="inline-flex items-center gap-2 bg-[#9B1B1E] hover:bg-[#781416] text-white font-bold px-8 py-3.5 rounded-xl shadow-sm transition-all"
+                type="button"
+                onClick={handleNextFromStep1}
+                className="inline-flex items-center gap-2 bg-[#9B1B1E] hover:bg-[#781416] text-white font-bold px-8 py-3.5 rounded-xl shadow-sm transition-all cursor-pointer"
               >
-                <span>पुढील पायरी: सजावट तपशील</span>
+                <span>{lang === 'mr' ? 'पुढील पायरी: सजावट तपशील' : 'Next: Decoration Details'}</span>
                 <ArrowRight className="w-5 h-5" />
               </button>
             </div>
@@ -536,7 +556,14 @@ export default function RegisterPage() {
 
         {/* ================= STEP 2: Decoration Details ================= */}
         {step === 2 && (
-          <form onSubmit={handleProceedToPayment} className="bg-white rounded-2xl p-6 sm:p-8 border border-[#E5D7C0] shadow-sm space-y-6">
+          <form
+            action="javascript:void(0);"
+            onSubmit={(e) => {
+              e.preventDefault();
+              handleProceedToPayment(e);
+            }}
+            className="bg-white rounded-2xl p-6 sm:p-8 border border-[#E5D7C0] shadow-sm space-y-6"
+          >
             <h2 className="font-serif font-black text-2xl text-stone-900 border-b border-stone-100 pb-3">
               {t.form.decoration.title}
             </h2>
@@ -747,19 +774,27 @@ export default function RegisterPage() {
             <div className="pt-4 border-t border-stone-100 flex items-center justify-between">
               <button
                 type="button"
-                onClick={() => setStep(1)}
-                className="inline-flex items-center gap-2 text-stone-600 hover:text-stone-900 font-semibold text-sm"
+                onClick={() => {
+                  setStep(1);
+                  if (typeof window !== 'undefined') window.scrollTo({ top: 0, behavior: 'smooth' });
+                }}
+                className="inline-flex items-center gap-2 text-stone-600 hover:text-stone-900 font-semibold text-sm cursor-pointer"
               >
                 <ArrowLeft className="w-4 h-4" />
-                <span>मागील पायरी</span>
+                <span>{lang === 'mr' ? 'मागील पायरी' : 'Previous Step'}</span>
               </button>
 
               <button
-                type="submit"
-                disabled={isSubmitting}
-                className="inline-flex items-center gap-2 bg-[#9B1B1E] hover:bg-[#781416] text-white font-bold px-8 py-3.5 rounded-xl shadow-sm transition-all disabled:opacity-50"
+                type="button"
+                disabled={isSubmitting || uploadingPhoto || uploadingVideo}
+                onClick={handleProceedToPayment}
+                className="inline-flex items-center gap-2 bg-[#9B1B1E] hover:bg-[#781416] text-white font-bold px-8 py-3.5 rounded-xl shadow-sm transition-all disabled:opacity-50 cursor-pointer"
               >
-                <span>{isSubmitting ? 'प्रक्रिया सुरू आहे...' : 'पुढील पायरी: ₹199 भरणा'}</span>
+                <span>
+                  {isSubmitting
+                    ? lang === 'mr' ? 'प्रक्रिया सुरू आहे...' : 'Processing...'
+                    : lang === 'mr' ? 'पुढील पायरी: ₹199 भरणा' : 'Proceed to ₹199 Payment'}
+                </span>
                 <ArrowRight className="w-5 h-5" />
               </button>
             </div>

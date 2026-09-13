@@ -4,10 +4,10 @@ export const translations = {
   mr: {
     brand: {
       name: 'लोकोत्सव',
-      subtitle: 'महाराष्ट्र राज्य ऑनलाइन गणेश सजावट स्पर्धा 2026',
-      tagline: 'घरोघरी गणपती, परंपरेची कलाकृती - संपूर्ण महाराष्ट्राचा महामहोत्सव',
+      subtitle: 'महाराष्ट्रातील सर्वात मोठी ऑनलाइन गणेश सजावट स्पर्धा 2026',
+      tagline: '३६ जिल्हे, ३५०+ तालुके, १ महामहोत्सव — घरोघरी गणपती, परंपरेची कलाकृती',
       dates: 'भाद्रपद शुद्ध चतुर्थी ते अनंत चतुर्दशी 2026',
-      badgeLive: 'नोंदणी सुरू आहे',
+      badgeLive: 'राज्यस्तरीय नोंदणी सुरू आहे',
       entryFee: 'नोंदणी शुल्क: ₹199',
     },
     nav: {
@@ -22,15 +22,15 @@ export const translations = {
       registerNow: 'स्पर्धेत भाग घ्या',
     },
     hero: {
-      headline: 'तुमच्या घरच्या गणरायाची भव्य सजावट आता पोहोचेल अवघ्या महाराष्ट्रात!',
-      subheadline: 'केवळ ₹199 मध्ये ऑनलाइन नोंदणी करा, तुमच्या सजावटीचे फोटो व व्हिडिओ पाठवा आणि जिंका ₹1,50,000+ ची रोख पारितोषिके व मानाच्या ट्रॉफीज!',
+      headline: 'तुमच्या घरच्या बाप्पाची सजावट पोहोचवा अवघ्या महाराष्ट्रातील घराघरांपर्यंत!',
+      subheadline: 'महाराष्ट्राचा सर्वात मोठा सांस्कृतिक महामंच! केवळ ₹199 मध्ये सहभाग नोंदवा, आपल्या सजावटीचे फोटो व व्हिडिओ पाठवा आणि जिंका मानाची सुवर्ण ट्रॉफी व ₹1,50,000+ रोख पारितोषिके!',
       registerCta: 'आताच नोंदणी करा (₹199)',
       exploreGallery: 'सजावट दालन पहा',
       statParticipants: 'नोंदणीकृत स्पर्धक',
       statDistricts: '36 जिल्हे सहभागी',
       statPrizePool: 'एकूण रोख बक्षिसे',
       statWinners: '10 महाविजेते',
-      announcement: '🌟 सर्व 36 जिल्ह्यांतील घरगुती व सार्वजनिक मंडळांसाठी खुली राज्यस्तरीय स्पर्धा!',
+      announcement: '🚩 महाराष्ट्रातील सर्वात मोठी राज्यस्तरीय ऑनलाइन गणेश सजावट स्पर्धा २०२६ — ३६ जिल्ह्यांतून नोंदणी सुरू!',
     },
     prizesSection: {
       badge: 'मानसन्मान व पारितोषिके',
@@ -184,10 +184,10 @@ export const translations = {
   en: {
     brand: {
       name: 'Lokutsav',
-      subtitle: 'Maharashtra State Online Ganpati Decoration Competition 2026',
-      tagline: 'Artistry in Every Home, Culture Across the State — The Grand Mahotsav',
+      subtitle: "Maharashtra's Biggest Online Ganpati Decoration Competition 2026",
+      tagline: '36 Districts, 350+ Tehsils, 1 Grand Mahotsav — Artistry in Every Home',
       dates: 'Bhadrapad Chaturthi to Anant Chaturdashi 2026',
-      badgeLive: 'Registrations Open',
+      badgeLive: 'State-wide Registrations Open',
       entryFee: 'Entry Fee: ₹199',
     },
     nav: {
@@ -202,15 +202,15 @@ export const translations = {
       registerNow: 'Register Now',
     },
     hero: {
-      headline: 'Showcase Your Ganpati Decoration to the Entire State of Maharashtra!',
-      subheadline: 'Register online for just ₹199, submit your decoration photos and video tour, and compete for ₹1,50,000+ in Cash Prizes, Gold Trophies & Sponsor Hampers.',
+      headline: 'Showcase Your Bappa’s Artistry Across Every Home in Maharashtra!',
+      subheadline: "Maharashtra's Largest Cultural Mahamanch! Register online for just ₹199, submit your decoration photos & video walkthrough, and compete for Prestigious Gold Trophies & ₹1,50,000+ in Cash Rewards!",
       registerCta: 'Enter Competition (₹199)',
       exploreGallery: 'Explore Gallery',
       statParticipants: 'Registered Participants',
       statDistricts: 'Districts Across MH',
       statPrizePool: 'Total Prize Pool',
       statWinners: 'Top 10 Mega Winners',
-      announcement: '🌟 Open to all Household & Sarvajanik Ganpati celebrations across 36 districts of Maharashtra!',
+      announcement: "🚩 Maharashtra's Biggest State-Level Online Ganpati Decoration Competition 2026 — Open Across All 36 Districts!",
     },
     prizesSection: {
       badge: 'Rewards & Honours',

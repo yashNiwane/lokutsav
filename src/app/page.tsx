@@ -1,5 +1,6 @@
 import React from 'react';
 import Hero from '@/components/Hero';
+import StateGrandeurSection from '@/components/StateGrandeurSection';
 import PrizeSection from '@/components/PrizeSection';
 import CriteriaSection from '@/components/CriteriaSection';
 import HowToParticipate from '@/components/HowToParticipate';
@@ -19,6 +20,7 @@ export default async function HomePage() {
   return (
     <div className="flex flex-col">
       <Hero />
+      <StateGrandeurSection />
       <PrizeSection />
       <CriteriaSection />
       {active ? (

@@ -958,20 +958,12 @@ export default function RegisterPage() {
                 </span>
               </button>
 
-              <div className="text-center">
-                <button
-                  type="button"
-                  onClick={handleCompletePaymentSimulated}
-                  className="text-xs text-stone-500 hover:text-stone-800 underline"
-                >
-                  किंवा थेट चाचणी पेमेंट पुष्टीकरण करा (Instant Test Simulation)
-                </button>
-              </div>
-
-              <p className="text-center text-xs text-stone-500 flex items-center justify-center gap-1.5">
+              <p className="text-center text-xs text-stone-500 flex items-center justify-center gap-1.5 pt-1">
                 <Lock className="w-3.5 h-3.5 text-emerald-600" />
                 <span>
-                  रेझरपे अधिकृत टेस्ट की सक्रिय: <code className="font-mono text-stone-700">rzp_test_TWn9LmxfmLCs6o</code>
+                  {lang === 'mr'
+                    ? '२५६-बिट एनक्रिप्टेड व सुरक्षित पेमेंट'
+                    : '256-bit Encrypted & Secure Payment'}
                 </span>
               </p>
             </div>

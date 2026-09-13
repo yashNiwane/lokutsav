@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useLanguage } from '@/lib/language-context';
 import { Sparkles, Menu, X, Award, Image as ImageIcon, Scale, FileText, CheckCircle2 } from 'lucide-react';
 
@@ -55,8 +56,15 @@ export default function Header() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-18 flex items-center justify-between">
         {/* Brand identity */}
         <Link href="/" className="flex items-center gap-3 group">
-          <div className="w-11 h-11 rounded-lg bg-[#9B1B1E] text-amber-300 flex items-center justify-center font-serif text-2xl font-bold shadow-sm border border-amber-400/40 group-hover:scale-105 transition-transform">
-            ॐ
+          <div className="relative w-12 h-12 rounded-xl overflow-hidden shadow-xs border border-[#E5D7C0] bg-white group-hover:scale-105 transition-transform shrink-0 flex items-center justify-center p-1">
+            <Image
+              src="/logo.png"
+              alt="Lokutsav Logo"
+              width={48}
+              height={48}
+              priority
+              className="w-full h-full object-contain"
+            />
           </div>
           <div>
             <div className="flex items-center gap-1.5">

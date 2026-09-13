@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useLanguage } from '@/lib/language-context';
 import { Phone, Mail, MapPin, Heart, ShieldCheck } from 'lucide-react';
 
@@ -15,8 +16,14 @@ export default function Footer() {
           {/* Col 1: Brand & Purpose */}
           <div className="md:col-span-1 space-y-4">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-md bg-[#9B1B1E] text-amber-300 flex items-center justify-center font-serif text-xl font-bold border border-amber-500/40">
-                ॐ
+              <div className="w-11 h-11 rounded-xl bg-white/95 p-1 flex items-center justify-center border border-amber-500/40 shadow-xs shrink-0 overflow-hidden">
+                <Image
+                  src="/logo.png"
+                  alt="Lokutsav Logo"
+                  width={44}
+                  height={44}
+                  className="w-full h-full object-contain"
+                />
               </div>
               <span className="font-serif text-2xl font-black text-white tracking-tight">
                 {t.brand.name}

@@ -933,8 +933,8 @@ export default function RegisterPage() {
                     {ticketId}
                   </p>
                 </div>
-                <div className="w-10 h-10 rounded-md bg-[#9B1B1E] text-amber-300 flex items-center justify-center font-serif text-lg font-bold">
-                  ॐ
+                <div className="w-12 h-12 rounded-xl bg-white p-1 flex items-center justify-center border border-amber-300 shadow-xs overflow-hidden">
+                  <img src="/logo.png" alt="Lokutsav Logo" className="w-full h-full object-contain" />
                 </div>
               </div>
 

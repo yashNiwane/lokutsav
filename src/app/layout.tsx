@@ -16,6 +16,16 @@ export const metadata: Metadata = {
     'गणेश सजावट स्पर्धा',
     'लोकोत्सव',
   ],
+  icons: {
+    icon: [
+      { url: '/favicon.ico' },
+      { url: '/logo.png', type: 'image/png' },
+    ],
+    apple: [
+      { url: '/logo.png' },
+    ],
+    shortcut: ['/favicon.ico'],
+  },
 };
 
 export default function RootLayout({

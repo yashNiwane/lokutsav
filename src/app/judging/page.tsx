@@ -211,8 +211,8 @@ export default function JudgingPage() {
     return (
       <div className="py-20 bg-[#FAF7F2] min-h-[75vh] flex items-center justify-center px-4">
         <div className="max-w-md w-full bg-white rounded-2xl p-8 border border-[#E5D7C0] shadow-sm text-center space-y-6">
-          <div className="w-14 h-14 bg-amber-100 text-amber-800 rounded-2xl flex items-center justify-center mx-auto">
-            <Lock className="w-7 h-7" />
+          <div className="w-16 h-16 rounded-2xl bg-[#FAF7F2] p-2 flex items-center justify-center mx-auto border border-[#E5D7C0] shadow-xs overflow-hidden">
+            <img src="/logo.png" alt="Lokutsav Logo" className="w-full h-full object-contain" />
           </div>
 
           <div>

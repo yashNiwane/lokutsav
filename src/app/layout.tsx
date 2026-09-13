@@ -1,8 +1,16 @@
 import type { Metadata } from 'next';
+import { Poppins } from 'next/font/google';
 import './globals.css';
 import { LanguageProvider } from '@/lib/language-context';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+
+const poppins = Poppins({
+  subsets: ['latin', 'devanagari'],
+  weight: ['300', '400', '500', '600', '700', '800', '900'],
+  variable: '--font-poppins',
+  display: 'swap',
+});
 
 export const metadata: Metadata = {
   title: 'लोकोत्सव 2026 | महाराष्ट्र राज्य ऑनलाइन गणेश सजावट स्पर्धा',
@@ -24,8 +32,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="h-full scroll-smooth" data-scroll-behavior="smooth">
-      <body className="min-h-full flex flex-col font-sans bg-[#FAF7F2] text-[#1C1917] antialiased selection:bg-amber-200 selection:text-[#9B1B1E]">
+    <html lang="en" className={`h-full scroll-smooth ${poppins.variable} ${poppins.className}`} data-scroll-behavior="smooth">
+      <body className={`min-h-full flex flex-col font-sans bg-[#FAF7F2] text-[#1C1917] antialiased selection:bg-amber-200 selection:text-[#9B1B1E] ${poppins.className}`}>
         <LanguageProvider>
           <Header />
           <main className="flex-1">{children}</main>

@@ -81,12 +81,8 @@ export default function Header() {
           <Link href="/#criteria" className="hover:text-[#9B1B1E] transition-colors">
             {t.nav.criteria}
           </Link>
-          <Link href="/gallery" className="hover:text-[#9B1B1E] transition-colors">
-            {t.nav.gallery}
-          </Link>
-          <Link href="/winners" className="hover:text-[#9B1B1E] transition-colors flex items-center gap-1 text-amber-700">
-            <Award className="w-4 h-4 text-amber-600" />
-            {t.nav.winners}
+          <Link href="/#how-to-enter" className="hover:text-[#9B1B1E] transition-colors text-amber-800">
+            सहभाग कसा घ्यावा
           </Link>
           <Link href="/sponsors" className="hover:text-[#9B1B1E] transition-colors">
             {t.nav.sponsors}
@@ -150,18 +146,11 @@ export default function Header() {
               {t.nav.criteria}
             </Link>
             <Link
-              href="/gallery"
+              href="/#how-to-enter"
               onClick={() => setMobileMenuOpen(false)}
               className="p-2.5 rounded-md bg-stone-100 hover:bg-stone-200 text-stone-800"
             >
-              {t.nav.gallery}
-            </Link>
-            <Link
-              href="/winners"
-              onClick={() => setMobileMenuOpen(false)}
-              className="p-2.5 rounded-md bg-amber-50 text-amber-900 border border-amber-200"
-            >
-              {t.nav.winners}
+              सहभाग कसा घ्यावा
             </Link>
             <Link
               href="/sponsors"

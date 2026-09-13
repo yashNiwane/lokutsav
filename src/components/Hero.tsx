@@ -43,10 +43,10 @@ export default function Hero() {
             </Link>
 
             <Link
-              href="/gallery"
+              href="/#how-to-enter"
               className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-white hover:bg-stone-50 text-stone-800 border-2 border-[#E5D7C0] px-6 py-4 rounded-xl text-base font-semibold shadow-2xs transition-all hover:border-amber-600/60"
             >
-              <span>{t.hero.exploreGallery}</span>
+              <span>सहभाग कसा घ्यावा (३ सोप्या पायऱ्या)</span>
             </Link>
           </div>
 

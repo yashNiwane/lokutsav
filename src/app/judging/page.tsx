@@ -38,12 +38,50 @@ export default function JudgingPage() {
   const [submittingScore, setSubmittingScore] = useState(false);
   const [feedbackSuccess, setFeedbackSuccess] = useState('');
 
+  const [competitionPhase, setCompetitionPhaseState] = useState<'REGISTRATION_OPEN' | 'COMPLETED'>('REGISTRATION_OPEN');
+  const [phaseUpdating, setPhaseUpdating] = useState(false);
+
+  const fetchPhase = async () => {
+    try {
+      const res = await fetch('/api/competition/phase');
+      const data = await res.json();
+      if (data.success) {
+        setCompetitionPhaseState(data.phase);
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  const handleTogglePhase = async (newPhase: 'REGISTRATION_OPEN' | 'COMPLETED') => {
+    setPhaseUpdating(true);
+    try {
+      const res = await fetch('/api/competition/phase', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ phase: newPhase, passcode }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        setCompetitionPhaseState(data.phase);
+        alert(data.message);
+      } else {
+        alert(data.error || 'Failed to update phase');
+      }
+    } catch (e) {
+      alert('Error updating competition phase');
+    } finally {
+      setPhaseUpdating(false);
+    }
+  };
+
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
     if (passcode === 'lokutsav2026') {
       setIsAuthenticated(true);
       setAuthError('');
       fetchEntries();
+      fetchPhase();
     } else {
       setAuthError('अवैध परीक्षक पासकोड (Try: lokutsav2026)');
     }
@@ -199,6 +237,54 @@ export default function JudgingPage() {
           >
             लॉगआउट
           </button>
+        </div>
+
+        {/* Competition Phase Control Banner */}
+        <div className="bg-white rounded-2xl p-5 border border-[#E5D7C0] shadow-xs mb-8 flex flex-col md:flex-row items-center justify-between gap-4">
+          <div className="space-y-1 text-center md:text-left">
+            <div className="flex items-center justify-center md:justify-start gap-2">
+              <span className={`w-2.5 h-2.5 rounded-full ${competitionPhase === 'REGISTRATION_OPEN' ? 'bg-amber-500' : 'bg-emerald-600'}`} />
+              <span className="text-xs uppercase font-bold text-stone-500">
+                स्पर्धा टप्पा नियंत्रण (Competition Phase Control)
+              </span>
+            </div>
+            <p className="text-sm font-bold text-stone-900">
+              {competitionPhase === 'REGISTRATION_OPEN' ? (
+                <span>
+                  🚩 <strong>स्पर्धा नोंदणी सुरू (ACTIVE COMPETITION)</strong> — गॅलरी व महाविजेते लोकांच्या नजरेतून लपवले आहेत.
+                </span>
+              ) : (
+                <span>
+                  🏆 <strong>स्पर्धा संपन्न (COMPLETED)</strong> — गॅलरी व महाविजेते सर्वांसाठी लाइव्ह करण्यात आले आहेत.
+                </span>
+              )}
+            </p>
+            <p className="text-xs text-stone-500">
+              {competitionPhase === 'REGISTRATION_OPEN'
+                ? 'ज्युरी या कक्षात सर्व देखावे सतत पाहू, तपासू, गुणदान करू शकतात. स्पर्धा संपेपर्यंत सामान्य जनतेला गॅलरी व विजेते दिसणार नाहीत.'
+                : 'स्पर्धा पूर्ण झाली आहे, निकाल व संपूर्ण दालन संकेतस्थळावर सर्व प्रेक्षकांसाठी खुले आहे.'}
+            </p>
+          </div>
+
+          <div className="shrink-0">
+            {competitionPhase === 'REGISTRATION_OPEN' ? (
+              <button
+                onClick={() => handleTogglePhase('COMPLETED')}
+                disabled={phaseUpdating}
+                className="bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-xs px-5 py-2.5 rounded-xl shadow-xs transition-colors"
+              >
+                {phaseUpdating ? 'बदलत आहे...' : 'स्पर्धा समाप्त करा (गॅलरी व विजेते लाइव्ह करा)'}
+              </button>
+            ) : (
+              <button
+                onClick={() => handleTogglePhase('REGISTRATION_OPEN')}
+                disabled={phaseUpdating}
+                className="bg-amber-700 hover:bg-amber-800 text-white font-bold text-xs px-5 py-2.5 rounded-xl shadow-xs transition-colors"
+              >
+                {phaseUpdating ? 'बदलत आहे...' : 'परत स्पर्धा चालू टप्प्यात बदला (गॅलरी लपवा)'}
+              </button>
+            )}
+          </div>
         </div>
 
         {/* Metric Cards */}

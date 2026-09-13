@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useLanguage } from '@/lib/language-context';
 import {
@@ -24,17 +24,17 @@ export default function ReferralPage() {
   const [stats, setStats] = useState<any>(null);
   const [searchError, setSearchError] = useState('');
   const [copiedLink, setCopiedLink] = useState(false);
+  const [sessionTicket, setSessionTicket] = useState<string | null>(null);
 
-  const handleSearchStats = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!queryCode.trim()) return;
+  const fetchStats = async (codeToSearch: string) => {
+    if (!codeToSearch || !codeToSearch.trim()) return;
 
     setSearching(true);
     setSearchError('');
     setStats(null);
 
     try {
-      const res = await fetch(`/api/referral?code=${encodeURIComponent(queryCode.trim())}`);
+      const res = await fetch(`/api/referral?code=${encodeURIComponent(codeToSearch.trim())}`);
       const data = await res.json();
       if (data.success && data.stats) {
         setStats(data.stats);
@@ -53,6 +53,25 @@ export default function ReferralPage() {
     } finally {
       setSearching(false);
     }
+  };
+
+  // Auto-load ticket from session if user already registered
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const saved =
+        sessionStorage.getItem('lokutsav_my_ticket') ||
+        localStorage.getItem('lokutsav_my_ticket');
+      if (saved) {
+        setSessionTicket(saved);
+        setQueryCode(saved);
+        fetchStats(saved);
+      }
+    }
+  }, []);
+
+  const handleSearchStats = async (e: React.FormEvent) => {
+    e.preventDefault();
+    await fetchStats(queryCode);
   };
 
   const referralUrl =
@@ -189,6 +208,25 @@ export default function ReferralPage() {
                 : 'Enter your registered Ticket ID to track how many participants registered using your code.'}
             </p>
           </div>
+
+          {sessionTicket && (
+            <div className="bg-emerald-50 border border-emerald-300 p-3.5 rounded-xl flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs text-emerald-950 font-medium shadow-2xs">
+              <span className="flex items-center gap-2">
+                <span className="text-base">🎫</span>
+                <span>
+                  {lang === 'mr' ? 'चालू सत्रातील तिकीट थेट लोड झाले:' : 'Loaded from your active session:'}{' '}
+                  <strong className="font-mono text-emerald-900 font-bold">{sessionTicket}</strong>
+                </span>
+              </span>
+              <button
+                type="button"
+                onClick={() => fetchStats(sessionTicket)}
+                className="inline-flex items-center gap-1 text-emerald-800 hover:text-emerald-950 underline font-bold cursor-pointer"
+              >
+                <span>↻ {lang === 'mr' ? 'माहिती रिफ्रेश करा' : 'Refresh stats'}</span>
+              </button>
+            </div>
+          )}
 
           <form onSubmit={handleSearchStats} className="flex flex-col sm:flex-row gap-3">
             <div className="relative flex-1">

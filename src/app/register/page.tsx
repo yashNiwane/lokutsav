@@ -65,17 +65,38 @@ export default function RegisterPage() {
   });
 
   const [copiedReferral, setCopiedReferral] = useState(false);
+  const [existingTicket, setExistingTicket] = useState<string | null>(null);
 
-  // Auto-detect referral code from URL e.g. /register?ref=LOK-2026-8941
+  // Auto-detect referral code from URL & sync with session
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const params = new URLSearchParams(window.location.search);
-      const ref = params.get('ref') || params.get('referral');
-      if (ref) {
+      const urlRef = params.get('ref') || params.get('referral');
+
+      if (urlRef) {
+        const cleanRef = urlRef.trim().toUpperCase();
+        sessionStorage.setItem('lokutsav_ref', cleanRef);
+        localStorage.setItem('lokutsav_ref', cleanRef);
         setFormData((prev) => ({
           ...prev,
-          referredBy: ref.trim().toUpperCase(),
+          referredBy: cleanRef,
         }));
+      } else {
+        // Check session storage if user navigated from another page
+        const savedRef = sessionStorage.getItem('lokutsav_ref') || localStorage.getItem('lokutsav_ref');
+        if (savedRef) {
+          setFormData((prev) => ({
+            ...prev,
+            referredBy: savedRef.trim().toUpperCase(),
+          }));
+        }
+      }
+
+      // Check if user already completed a ticket in this session
+      const myTicket = sessionStorage.getItem('lokutsav_my_ticket') || localStorage.getItem('lokutsav_my_ticket');
+      const isPaid = sessionStorage.getItem('lokutsav_payment_status') === 'COMPLETED' || localStorage.getItem('lokutsav_payment_status') === 'COMPLETED';
+      if (myTicket && isPaid) {
+        setExistingTicket(myTicket);
       }
     }
   }, []);
@@ -247,6 +268,10 @@ export default function RegisterPage() {
       if (data.success) {
         setTicketId(data.ticketId);
         setRazorpayOrder(data.order);
+        if (typeof window !== 'undefined') {
+          sessionStorage.setItem('lokutsav_my_ticket', data.ticketId);
+          localStorage.setItem('lokutsav_my_ticket', data.ticketId);
+        }
         setStep(3);
       } else {
         setErrorMessage(data.error || 'नोंदणी अयशस्वी झाली');
@@ -342,6 +367,12 @@ export default function RegisterPage() {
             });
             const verifyData = await verifyRes.json();
             if (verifyData.success) {
+              if (typeof window !== 'undefined') {
+                sessionStorage.setItem('lokutsav_my_ticket', ticketId);
+                localStorage.setItem('lokutsav_my_ticket', ticketId);
+                sessionStorage.setItem('lokutsav_payment_status', 'COMPLETED');
+                localStorage.setItem('lokutsav_payment_status', 'COMPLETED');
+              }
               setStep(4);
             } else {
               setErrorMessage(verifyData.error || 'Payment verification failed');
@@ -406,6 +437,12 @@ export default function RegisterPage() {
 
       const data = await res.json();
       if (data.success) {
+        if (typeof window !== 'undefined') {
+          sessionStorage.setItem('lokutsav_my_ticket', ticketId);
+          localStorage.setItem('lokutsav_my_ticket', ticketId);
+          sessionStorage.setItem('lokutsav_payment_status', 'COMPLETED');
+          localStorage.setItem('lokutsav_payment_status', 'COMPLETED');
+        }
         setStep(4);
       } else {
         setErrorMessage(data.error || 'Payment verification failed');
@@ -480,6 +517,31 @@ export default function RegisterPage() {
           <div className="mb-6 p-4 rounded-xl bg-red-50 border border-red-200 text-red-800 text-sm flex items-center gap-2">
             <AlertCircle className="w-5 h-5 shrink-0" />
             <span>{errorMessage}</span>
+          </div>
+        )}
+
+        {/* Existing Session Ticket Notice */}
+        {existingTicket && step === 1 && (
+          <div className="mb-6 p-4 rounded-xl bg-amber-50/90 border border-amber-300 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs sm:text-sm">
+            <div className="flex items-center gap-2.5 text-stone-800 font-medium">
+              <span className="text-xl">🎫</span>
+              <div>
+                <p className="font-bold text-stone-900">
+                  {lang === 'mr' ? 'आपल्या सत्रातील सक्रिय तिकीट जतन केले आहे' : 'Active Ticket Found in Session'}
+                </p>
+                <p className="text-stone-600 font-mono text-xs">
+                  क्रमांक: <strong className="text-[#9B1B1E]">{existingTicket}</strong>
+                </p>
+              </div>
+            </div>
+            <div className="flex items-center gap-2">
+              <Link
+                href="/referral"
+                className="font-bold text-[#9B1B1E] hover:underline bg-white px-3.5 py-2 rounded-lg border border-amber-300 text-xs shadow-2xs hover:bg-stone-50 transition-colors"
+              >
+                {lang === 'mr' ? 'माझे रेफरल्स व लिंक पहा' : 'View Referrals & Rewards'} →
+              </Link>
+            </div>
           </div>
         )}
 

@@ -21,13 +21,13 @@ export default async function WinnersPage() {
         <div className="text-center max-w-3xl mx-auto mb-16 space-y-3">
           <div className="inline-flex items-center gap-2 bg-amber-100 border border-amber-300 px-4 py-1.5 rounded-full text-amber-900 text-xs font-bold shadow-2xs">
             <Trophy className="w-4 h-4 text-amber-700" />
-            <span>अधिकृत निकाल व महाविजेते २०२६</span>
+            <span>अधिकृत निकाल व महाविजेते 2026</span>
           </div>
           <h1 className="font-serif font-black text-3xl sm:text-5xl text-stone-900 tracking-tight">
             महाराष्ट्र राज्य महाविजेते व गुणवंत देखावे
           </h1>
           <p className="text-stone-600 text-base">
-            तज्ज्ञ ज्युरी मंडळाने निवडलेले महाराष्ट्रातील अव्वल १० सर्वोत्कृष्ट गणपती देखावे.
+            तज्ज्ञ ज्युरी मंडळाने निवडलेले महाराष्ट्रातील अव्वल 10 सर्वोत्कृष्ट गणपती देखावे.
           </p>
         </div>
 
@@ -65,7 +65,7 @@ export default async function WinnersPage() {
                     <div className="flex items-center justify-between text-xs text-stone-500 font-semibold">
                       <span>{entry.ticketId}</span>
                       <span className="text-emerald-700 font-bold">
-                        ज्युरी गुण: {entry.finalScore}/१०
+                        ज्युरी गुण: {entry.finalScore}/10
                       </span>
                     </div>
 
@@ -90,10 +90,10 @@ export default async function WinnersPage() {
                     </span>
                     <p className="font-serif font-black text-xl text-[#9B1B1E]">
                       {entry.finalRank === 1
-                        ? '₹५१,००० रोख + सुवर्ण ट्रॉफी'
+                        ? '₹51,000 रोख + सुवर्ण ट्रॉफी'
                         : entry.finalRank === 2
-                        ? '₹३१,००० रोख + रजत ट्रॉफी'
-                        : '₹२१,००० रोख + कांस्य ट्रॉफी'}
+                        ? '₹31,000 रोख + रजत ट्रॉफी'
+                        : '₹21,000 रोख + कांस्य ट्रॉफी'}
                     </p>
                   </div>
                 </div>
@@ -107,7 +107,7 @@ export default async function WinnersPage() {
           <div className="bg-white rounded-2xl border border-[#E5D7C0] p-6 sm:p-8 shadow-xs">
             <h3 className="font-serif font-black text-2xl text-stone-900 mb-6 flex items-center gap-2">
               <Award className="w-6 h-6 text-amber-600" />
-              <span>४था ते १०वा मानाचा क्रमांक (प्रत्येकी ₹५,००० रोख)</span>
+              <span>4था ते 10वा मानाचा क्रमांक (प्रत्येकी ₹5,000 रोख)</span>
             </h3>
 
             <div className="overflow-x-auto">
@@ -138,10 +138,10 @@ export default async function WinnersPage() {
                         {entry.themeTitle}
                       </td>
                       <td className="py-4 px-2 text-right font-mono font-bold text-emerald-700">
-                        {entry.finalScore}/१०
+                        {entry.finalScore}/10
                       </td>
                       <td className="py-4 px-2 text-right font-serif font-black text-[#9B1B1E]">
-                        ₹५,०००
+                        ₹5,000
                       </td>
                     </tr>
                   ))}

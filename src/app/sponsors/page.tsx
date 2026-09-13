@@ -29,13 +29,13 @@ export default function SponsorsPage() {
         <div className="text-center max-w-3xl mx-auto mb-16 space-y-3">
           <div className="inline-flex items-center gap-2 bg-amber-100 border border-amber-300 px-4 py-1.5 rounded-full text-amber-900 text-xs font-bold shadow-2xs">
             <Handshake className="w-4 h-4 text-amber-700" />
-            <span>ब्रँड पार्टनरशिप व प्रायोजकत्व २०२६</span>
+            <span>ब्रँड पार्टनरशिप व प्रायोजकत्व 2026</span>
           </div>
           <h1 className="font-serif font-black text-3xl sm:text-5xl text-stone-900 tracking-tight">
             महाराष्ट्रातील लाखो कुटुंबांपर्यंत आपला ब्रँड पोहोचवा
           </h1>
           <p className="text-stone-600 text-base">
-            लोकोत्सव २०२६ च्या माध्यमातून राज्यभरातील ३६ जिल्ह्यांमध्ये गणेशोत्सवाच्या पवित्र पर्वावर आपल्या उत्पादनांची व सेवेची प्रतिष्ठा वाढवा.
+            लोकोत्सव 2026 च्या माध्यमातून राज्यभरातील 36 जिल्ह्यांमध्ये गणेशोत्सवाच्या पवित्र पर्वावर आपल्या उत्पादनांची व सेवेची प्रतिष्ठा वाढवा.
           </p>
         </div>
 
@@ -43,7 +43,7 @@ export default function SponsorsPage() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
           <div className="bg-white p-6 rounded-2xl border border-[#E5D7C0] shadow-xs space-y-2">
             <span className="text-xs font-bold uppercase tracking-wider text-amber-800">व्यापक पोहोच</span>
-            <h3 className="font-serif font-black text-2xl text-stone-900">३६ जिल्हे • १०,०००+ कुटुंबे</h3>
+            <h3 className="font-serif font-black text-2xl text-stone-900">36 जिल्हे • 10,000+ कुटुंबे</h3>
             <p className="text-xs text-stone-600 leading-relaxed">
               मुंबई, पुणे, नाशिक, नागपूर, कोल्हापूर, छत्रपती संभाजीनगरसह संपूर्ण महाराष्ट्रातील मध्यमवर्गीय व उच्च मध्यमवर्गीय कुटुंबांशी थेट जोडणी.
             </p>
@@ -97,7 +97,7 @@ export default function SponsorsPage() {
             प्रायोजकत्व चौकशी अर्ज
           </h2>
           <p className="text-center text-xs text-stone-500 mb-6">
-            आमची प्रायोजकत्व समन्वय समिती २४ तासांच्या आत आपल्याशी संपर्क साधेल.
+            आमची प्रायोजकत्व समन्वय समिती 24 तासांच्या आत आपल्याशी संपर्क साधेल.
           </p>
 
           {inquirySubmitted ? (
@@ -151,7 +151,7 @@ export default function SponsorsPage() {
                     required
                     value={formData.phone}
                     onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                    placeholder="१० अंकी मोबाइल नंबर"
+                    placeholder="10 अंकी मोबाइल नंबर"
                     className="w-full px-4 py-2.5 rounded-lg border border-stone-300 focus:outline-none focus:ring-2 focus:ring-[#9B1B1E]"
                   />
                 </div>

@@ -117,7 +117,7 @@ export const dataStore = {
             data: {
               slug: 'ganeshutsav-2026',
               title: 'Maharashtra Rajya Online Ganpati Decoration Competition 2026',
-              titleMr: 'महाराष्ट्र राज्य ऑनलाइन गणेश सजावट स्पर्धा २०२६',
+              titleMr: 'महाराष्ट्र राज्य ऑनलाइन गणेश सजावट स्पर्धा 2026',
               description: 'State-level Ganpati decoration competition',
               descriptionMr: 'राज्यस्तरीय गणेश सजावट स्पर्धा',
               entryFee: 199,

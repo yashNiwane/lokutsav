@@ -90,13 +90,13 @@ export default function PrizeSection() {
           <div className="space-y-2 text-center md:text-left">
             <div className="inline-flex items-center gap-2 text-xs font-bold text-amber-900 bg-amber-200/60 px-2.5 py-1 rounded">
               <Award className="w-4 h-4 text-amber-800" />
-              <span>४था ते १०वा मानाचा क्रमांक (७ विजेते)</span>
+              <span>4था ते 10वा मानाचा क्रमांक (7 विजेते)</span>
             </div>
             <h3 className="font-serif font-black text-2xl text-stone-900">
-              प्रत्येकी ₹५,००० रोख + महा लोकोत्सव सन्मानचिन्ह
+              प्रत्येकी ₹5,000 रोख + महा लोकोत्सव सन्मानचिन्ह
             </h3>
             <p className="text-sm text-stone-600 max-w-2xl">
-              ४थ्या ते १०व्या क्रमांकाच्या प्रत्येक स्पर्धकाला ₹५,००० रोख, प्रायोजक गिफ्ट हॅम्पर आणि अधिकृत गुणवत्ता सन्मानपत्र प्रदान केले जाईल.
+              4थ्या ते 10व्या क्रमांकाच्या प्रत्येक स्पर्धकाला ₹5,000 रोख, प्रायोजक गिफ्ट हॅम्पर आणि अधिकृत गुणवत्ता सन्मानपत्र प्रदान केले जाईल.
             </p>
           </div>
 
@@ -105,7 +105,7 @@ export default function PrizeSection() {
               href="/register"
               className="inline-flex items-center gap-2 bg-[#9B1B1E] hover:bg-[#781416] text-white px-6 py-3 rounded-xl font-bold text-sm shadow-sm transition-all"
             >
-              <span>नोंदणी करा (₹१९९)</span>
+              <span>नोंदणी करा (₹199)</span>
             </Link>
           </div>
         </div>

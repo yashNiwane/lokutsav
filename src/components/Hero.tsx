@@ -53,12 +53,12 @@ export default function Hero() {
           <div className="flex items-center justify-center gap-4 text-xs text-stone-500 pt-2 font-medium">
             <span className="flex items-center gap-1">
               <ShieldCheck className="w-4 h-4 text-emerald-700" />
-              १००% पारदर्शक ज्युरी परीक्षण
+              100% पारदर्शक ज्युरी परीक्षण
             </span>
             <span>•</span>
             <span>अधिकृत डिजिटल सहभाग प्रमाणपत्र</span>
             <span>•</span>
-            <span>सर्व ३६ जिल्हे पात्र</span>
+            <span>सर्व 36 जिल्हे पात्र</span>
           </div>
         </div>
 
@@ -69,7 +69,7 @@ export default function Hero() {
               {t.hero.statPrizePool}
             </p>
             <p className="font-serif text-2xl sm:text-3xl font-black text-[#9B1B1E]">
-              ₹१,५०,०००+
+              ₹1,50,000+
             </p>
             <p className="text-[11px] text-stone-600 mt-1 font-medium">
               रोख रक्कम + मानाच्या ट्रॉफीज
@@ -81,7 +81,7 @@ export default function Hero() {
               {t.brand.entryFee}
             </p>
             <p className="font-serif text-2xl sm:text-3xl font-black text-amber-700">
-              ₹१९९ मात्र
+              ₹199 मात्र
             </p>
             <p className="text-[11px] text-stone-600 mt-1 font-medium">
               सुलभ UPI व कार्ड पेमेंट्स
@@ -93,7 +93,7 @@ export default function Hero() {
               {t.hero.statDistricts}
             </p>
             <p className="font-serif text-2xl sm:text-3xl font-black text-stone-900">
-              ३६ जिल्हे
+              36 जिल्हे
             </p>
             <p className="text-[11px] text-stone-600 mt-1 font-medium">
               घरगुती व सार्वजनिक मंडळे
@@ -105,7 +105,7 @@ export default function Hero() {
               {t.hero.statWinners}
             </p>
             <p className="font-serif text-2xl sm:text-3xl font-black text-emerald-800">
-              १० महाविजेते
+              10 महाविजेते
             </p>
             <p className="text-[11px] text-stone-600 mt-1 font-medium">
               तज्ज्ञ ज्युरी मंडळाकडून निवड

@@ -97,14 +97,14 @@ export default function Footer() {
               राज्यव्यापी सहभाग
             </span>
             <p className="text-xs text-stone-400 leading-relaxed">
-              कोकण, पश्चिम महाराष्ट्र, मराठवाडा, विदर्भ आणि खान्देश मधील सर्व ३६ जिल्ह्यांतील भाविकांसाठी खुली स्पर्धा.
+              कोकण, पश्चिम महाराष्ट्र, मराठवाडा, विदर्भ आणि खान्देश मधील सर्व 36 जिल्ह्यांतील भाविकांसाठी खुली स्पर्धा.
             </p>
             <div className="pt-2">
               <Link
                 href="/register"
                 className="block text-center bg-amber-600 hover:bg-amber-500 text-stone-950 font-bold text-xs py-2.5 px-4 rounded transition-colors"
               >
-                नोंदणी करा (₹१९९)
+                नोंदणी करा (₹199)
               </Link>
             </div>
           </div>

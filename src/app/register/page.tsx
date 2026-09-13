@@ -171,7 +171,7 @@ export default function RegisterPage() {
         key: keyId,
         amount: razorpayOrder?.amount || 19900,
         currency: razorpayOrder?.currency || 'INR',
-        name: 'लोकोत्सव २०२६ | Lokutsav',
+        name: 'लोकोत्सव 2026 | Lokutsav',
         description: `महाराष्ट्र राज्य गणेश सजावट स्पर्धा नोंदणी (${ticketId})`,
         image: 'https://images.unsplash.com/photo-1567591370504-20a2e7c54ef5?auto=format&fit=crop&w=120&q=80',
         order_id: razorpayOrder?.orderId && !razorpayOrder.isSimulated ? razorpayOrder.orderId : undefined,
@@ -281,14 +281,14 @@ export default function RegisterPage() {
         {/* Top Breadcrumb & Title */}
         <div className="text-center mb-8 space-y-2">
           <span className="text-xs font-bold uppercase tracking-widest text-[#9B1B1E] bg-red-50 border border-red-200 px-3 py-1 rounded-full">
-            अधिकृत स्पर्धा नोंदणी पोर्टल २०२६
+            अधिकृत स्पर्धा नोंदणी पोर्टल 2026
           </span>
           <h1 className="font-serif font-black text-3xl sm:text-4xl text-stone-900">
             {lang === 'mr' ? 'गणेश सजावट स्पर्धा नोंदणी' : 'Competition Entry Registration'}
           </h1>
           <p className="text-stone-600 text-sm">
             {lang === 'mr'
-              ? 'केवळ ३ सोप्या चरणांत नोंदणी पूर्ण करा आणि अधिकृत प्रवेश तिकीट मिळवा.'
+              ? 'केवळ 3 सोप्या चरणांत नोंदणी पूर्ण करा आणि अधिकृत प्रवेश तिकीट मिळवा.'
               : 'Complete your registration in 3 simple steps and get your official entry pass.'}
           </p>
         </div>
@@ -614,7 +614,7 @@ export default function RegisterPage() {
                 disabled={isSubmitting}
                 className="inline-flex items-center gap-2 bg-[#9B1B1E] hover:bg-[#781416] text-white font-bold px-8 py-3.5 rounded-xl shadow-sm transition-all disabled:opacity-50"
               >
-                <span>{isSubmitting ? 'प्रक्रिया सुरू आहे...' : 'पुढील पायरी: ₹१९९ भरणा'}</span>
+                <span>{isSubmitting ? 'प्रक्रिया सुरू आहे...' : 'पुढील पायरी: ₹199 भरणा'}</span>
                 <ArrowRight className="w-5 h-5" />
               </button>
             </div>
@@ -631,15 +631,15 @@ export default function RegisterPage() {
             <div className="bg-amber-50/70 p-5 rounded-xl border border-amber-200 space-y-3">
               <div className="flex items-center justify-between text-sm">
                 <span className="text-stone-700">{t.form.payment.feeLabel}</span>
-                <span className="font-bold text-stone-900 font-mono">₹१९९.००</span>
+                <span className="font-bold text-stone-900 font-mono">₹199.00</span>
               </div>
               <div className="flex items-center justify-between text-sm">
                 <span className="text-stone-700">{t.form.payment.gstLabel}</span>
-                <span className="font-bold text-emerald-700 font-mono">समाविष्ट (₹०.००)</span>
+                <span className="font-bold text-emerald-700 font-mono">समाविष्ट (₹0.00)</span>
               </div>
               <div className="pt-2 border-t border-amber-200 flex items-center justify-between text-base font-black">
                 <span className="text-stone-900">{t.form.payment.totalLabel}</span>
-                <span className="font-serif text-2xl text-[#9B1B1E]">₹१९९ मात्र</span>
+                <span className="font-serif text-2xl text-[#9B1B1E]">₹199 मात्र</span>
               </div>
             </div>
 
@@ -662,7 +662,7 @@ export default function RegisterPage() {
                 <span>
                   {isSubmitting
                     ? 'रेझरपे सुरू होत आहे...'
-                    : 'रेझरपे द्वारे ₹१९९ भरा (Razorpay Checkout)'}
+                    : 'रेझरपे द्वारे ₹199 भरा (Razorpay Checkout)'}
                 </span>
               </button>
 
@@ -710,7 +710,7 @@ export default function RegisterPage() {
               <div className="flex items-center justify-between border-b border-stone-200 pb-3">
                 <div>
                   <span className="text-[10px] uppercase font-bold text-stone-500 block">
-                    {t.brand.name} २०२६ अधिकृत प्रवेशिका
+                    {t.brand.name} 2026 अधिकृत प्रवेशिका
                   </span>
                   <p className="font-serif font-black text-xl text-[#9B1B1E]">
                     {ticketId}
@@ -736,7 +736,7 @@ export default function RegisterPage() {
                 </div>
                 <div>
                   <span className="text-stone-500 block">शुल्क स्थिती:</span>
-                  <span className="font-bold text-emerald-700">₹१९९ पूर्ण (Paid via Razorpay)</span>
+                  <span className="font-bold text-emerald-700">₹199 पूर्ण (Paid via Razorpay)</span>
                 </div>
               </div>
             </div>

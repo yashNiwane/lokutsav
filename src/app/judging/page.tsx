@@ -274,7 +274,7 @@ export default function JudgingPage() {
                     <td className="py-4 px-4 text-center">
                       {entry.finalScore ? (
                         <span className="inline-block font-mono font-bold text-sm bg-emerald-100 text-emerald-800 px-2.5 py-1 rounded">
-                          {entry.finalScore}/१०
+                          {entry.finalScore}/10
                           {entry.finalRank && ` (#${entry.finalRank})`}
                         </span>
                       ) : (
@@ -341,9 +341,9 @@ export default function JudgingPage() {
             {/* 5 Criteria Score Sliders */}
             <div className="space-y-4">
               <h3 className="font-serif font-bold text-lg text-stone-900 flex items-center justify-between">
-                <span>५ निकषांवर गुणदान (प्रत्येकी १ ते १०)</span>
+                <span>5 निकषांवर गुणदान (प्रत्येकी 1 ते 10)</span>
                 <span className="font-mono text-base text-[#9B1B1E] font-black bg-amber-100 px-3 py-1 rounded">
-                  एकूण भारांकित गुण: {calculateTotal()}/१०
+                  एकूण भारांकित गुण: {calculateTotal()}/10
                 </span>
               </h3>
 
@@ -353,7 +353,7 @@ export default function JudgingPage() {
                     <div className="flex items-center justify-between text-xs font-semibold mb-1">
                       <span>{c.nameMr} ({Math.round(c.weight * 100)}%)</span>
                       <span className="font-mono font-bold text-[#9B1B1E] text-sm">
-                        {scores[c.id] || 0} / १०
+                        {scores[c.id] || 0} / 10
                       </span>
                     </div>
                     <input

@@ -77,7 +77,7 @@ export default function SponsorsSection() {
           <div className="space-y-2 text-center md:text-left">
             <div className="inline-flex items-center gap-2 text-xs font-bold text-amber-400">
               <Handshake className="w-4 h-4" />
-              <span>ब्रँड प्रायोजकत्व संधी २०२६</span>
+              <span>ब्रँड प्रायोजकत्व संधी 2026</span>
             </div>
             <h3 className="font-serif font-black text-2xl">
               आपल्या ब्रँडला महाराष्ट्रातील लाखो भाविक व घराघरांपर्यंत पोहोचवा

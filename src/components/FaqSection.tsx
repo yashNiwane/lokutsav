@@ -13,31 +13,31 @@ export default function FaqSection() {
       qEn: 'What is the registration fee and how do I pay?',
       qMr: 'नोंदणी शुल्क किती आहे आणि ते कसे भरायचे?',
       aEn: 'The entry fee is a nominal ₹199 per decoration entry. You can pay online securely using UPI (Google Pay, PhonePe, Paytm), Netbanking, or Debit/Credit Cards via our Razorpay integration.',
-      aMr: 'नोंदणी शुल्क प्रति सजावट केवळ ₹१९९ आहे. तुम्ही थेट UPI (Google Pay, PhonePe, Paytm), नेटबँकिंग किंवा डेबिट/क्रेडिट कार्डद्वारे सुरक्षितपणे ऑनलाइन भरणा करू शकता.',
+      aMr: 'नोंदणी शुल्क प्रति सजावट केवळ ₹199 आहे. तुम्ही थेट UPI (Google Pay, PhonePe, Paytm), नेटबँकिंग किंवा डेबिट/क्रेडिट कार्डद्वारे सुरक्षितपणे ऑनलाइन भरणा करू शकता.',
     },
     {
       qEn: 'How many photos and videos can I submit?',
       qMr: 'किती छायाचित्रे व व्हिडिओ सादर करता येतील?',
       aEn: 'You can upload 3 to 5 high-resolution photos showing full view, close-up detailing, and lighting setup. A video walkthrough tour is optional but highly recommended to help the jury evaluate spatial depth and lighting.',
-      aMr: 'तुम्ही सजावटीचे ३ ते ५ उच्च दर्जाचे फोटो जोडू शकता, ज्यामध्ये पूर्ण देखावा, सुबक कारागिरी आणि प्रकाशयोजना दिसावी. सजावटीचा १ ते २ मिनिटांचा व्हिडिओ ऐच्छिक परंतु परीक्षकांसाठी अत्यंत उपयुक्त आहे.',
+      aMr: 'तुम्ही सजावटीचे 3 ते 5 उच्च दर्जाचे फोटो जोडू शकता, ज्यामध्ये पूर्ण देखावा, सुबक कारागिरी आणि प्रकाशयोजना दिसावी. सजावटीचा 1 ते 2 मिनिटांचा व्हिडिओ ऐच्छिक परंतु परीक्षकांसाठी अत्यंत उपयुक्त आहे.',
     },
     {
       qEn: 'Who is eligible to participate?',
       qMr: 'स्पर्धेत कोण कोण सहभागी होऊ शकते?',
       aEn: 'The competition is open to all residents and families across all 36 districts of Maharashtra for Household Ganpati decorations, as well as registered Sarvajanik Ganesh Mandals.',
-      aMr: 'महाराष्ट्रातील सर्व ३६ जिल्ह्यांतील घरगुती गणपती बसवणारे सर्व नागरिक, कुटुंबे तसेच सार्वजनिक गणेशोत्सव मंडळे या स्पर्धेत सहभागी होण्यास पात्र आहेत.',
+      aMr: 'महाराष्ट्रातील सर्व 36 जिल्ह्यांतील घरगुती गणपती बसवणारे सर्व नागरिक, कुटुंबे तसेच सार्वजनिक गणेशोत्सव मंडळे या स्पर्धेत सहभागी होण्यास पात्र आहेत.',
     },
     {
       qEn: 'How will the Top 10 winners be selected?',
-      qMr: '१० महाविजेते कसे निवडले जातील?',
+      qMr: '10 महाविजेते कसे निवडले जातील?',
       aEn: 'Our esteemed jury panel evaluates every entry based on 5 weighted criteria: Concept & Creativity (25%), Craftsmanship & Detailing (25%), Eco-friendliness & Sustainable materials (20%), Lighting & Presentation (15%), and Innovation (15%).',
-      aMr: 'आमचे तज्ज्ञ परीक्षक ५ मुख्य निकषांवर गुणदान करतात: संकल्पना व कल्पकता (२५%), हस्तकला व फिनिशिंग (२५%), पर्यावरणपूरकता (२०%), प्रकाशयोजना व सादरीकरण (१५%) आणि नाविन्यता (१५%). यातून सर्वोच्च गुणांचे १० स्पर्धक महाविजेते ठरतील.',
+      aMr: 'आमचे तज्ज्ञ परीक्षक 5 मुख्य निकषांवर गुणदान करतात: संकल्पना व कल्पकता (25%), हस्तकला व फिनिशिंग (25%), पर्यावरणपूरकता (20%), प्रकाशयोजना व सादरीकरण (15%) आणि नाविन्यता (15%). यातून सर्वोच्च गुणांचे 10 स्पर्धक महाविजेते ठरतील.',
     },
     {
       qEn: 'When do I receive my participation certificate?',
       qMr: 'सहभाग प्रमाणपत्र कधी आणि कसे मिळेल?',
       aEn: 'Immediately upon successful registration and payment of ₹199, your official Lokutsav Ticket ID is generated. The verified digital Certificate of Participation will be available for instant download and sent to your registered email.',
-      aMr: 'नोंदणी व ₹१९९ शुल्क भरणा यशस्वी होताच तुम्हाला अधिकृत तिकीट क्रमांक मिळतो. पडताळणी पूर्ण झाल्यानंतर डिजिटल सहभाग प्रमाणपत्र थेट तुमच्या ईमेलवर व संकेतस्थळावरून डाऊनलोड करता येईल.',
+      aMr: 'नोंदणी व ₹199 शुल्क भरणा यशस्वी होताच तुम्हाला अधिकृत तिकीट क्रमांक मिळतो. पडताळणी पूर्ण झाल्यानंतर डिजिटल सहभाग प्रमाणपत्र थेट तुमच्या ईमेलवर व संकेतस्थळावरून डाऊनलोड करता येईल.',
     },
   ];
 

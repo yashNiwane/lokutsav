@@ -59,7 +59,7 @@ export default function CriteriaSection() {
               </div>
 
               <div className="mt-6 pt-4 border-t border-stone-100 flex items-center justify-between text-[11px] font-semibold text-stone-500">
-                <span>कमाल गुण: {crit.maxScore}/१०</span>
+                <span>कमाल गुण: {crit.maxScore}/10</span>
                 <span className="text-emerald-700">पारदर्शक</span>
               </div>
             </div>
@@ -70,7 +70,7 @@ export default function CriteriaSection() {
         <div className="mt-10 p-4 rounded-xl bg-emerald-50 border border-emerald-300 flex items-center gap-3 text-emerald-900 text-xs sm:text-sm font-medium">
           <Leaf className="w-5 h-5 text-emerald-700 shrink-0" />
           <span>
-            <strong>पर्यावरणपूरक संदेश:</strong> शाडू मातीची मूर्ती, नैसर्गिक फुले व कागदी लगद्याच्या सजावटींना गुणदानात विशेष प्राधान्य (२०% थेट गुण) दिले जाईल.
+            <strong>पर्यावरणपूरक संदेश:</strong> शाडू मातीची मूर्ती, नैसर्गिक फुले व कागदी लगद्याच्या सजावटींना गुणदानात विशेष प्राधान्य (20% थेट गुण) दिले जाईल.
           </span>
         </div>
       </div>

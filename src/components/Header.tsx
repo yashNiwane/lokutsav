@@ -64,7 +64,7 @@ export default function Header() {
                 {t.brand.name}
               </span>
               <span className="text-[10px] uppercase font-bold tracking-widest px-1.5 py-0.5 rounded bg-amber-100 text-amber-900 border border-amber-300">
-                २०२६
+                2026
               </span>
             </div>
             <p className="text-[11px] text-stone-600 font-medium line-clamp-1">
@@ -109,7 +109,7 @@ export default function Header() {
             className="inline-flex items-center gap-2 bg-[#9B1B1E] hover:bg-[#781416] text-white px-4 py-2.5 rounded-lg text-sm font-bold shadow-sm transition-all hover:shadow-md active:scale-98"
           >
             <span>{t.nav.registerNow}</span>
-            <span className="bg-white/20 text-xs px-1.5 py-0.5 rounded font-mono">₹१९९</span>
+            <span className="bg-white/20 text-xs px-1.5 py-0.5 rounded font-mono">₹199</span>
           </Link>
         </div>
 
@@ -119,7 +119,7 @@ export default function Header() {
             href="/register"
             className="bg-[#9B1B1E] text-white text-xs font-bold px-3 py-1.5 rounded-md"
           >
-            ₹१९९ नोंदणी
+            ₹199 नोंदणी
           </Link>
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -185,7 +185,7 @@ export default function Header() {
               onClick={() => setMobileMenuOpen(false)}
               className="w-full text-center bg-[#9B1B1E] text-white font-bold py-3 rounded-lg text-sm shadow-xs"
             >
-              {t.nav.registerNow} (₹१९९)
+              {t.nav.registerNow} (₹199)
             </Link>
             <Link
               href="/judging"

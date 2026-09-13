@@ -5,8 +5,8 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
 export const metadata: Metadata = {
-  title: 'लोकोत्सव २०२६ | महाराष्ट्र राज्य ऑनलाइन गणेश सजावट स्पर्धा',
-  description: 'महाराष्ट्रातील सर्वात मोठी राज्यस्तरीय ऑनलाइन गणपती सजावट स्पर्धा. ₹१९९ मध्ये नोंदणी करा आणि जिंका ₹१,५०,०००+ रोख पारितोषिके व मानाच्या ट्रॉफीज.',
+  title: 'लोकोत्सव 2026 | महाराष्ट्र राज्य ऑनलाइन गणेश सजावट स्पर्धा',
+  description: 'महाराष्ट्रातील सर्वात मोठी राज्यस्तरीय ऑनलाइन गणपती सजावट स्पर्धा. ₹199 मध्ये नोंदणी करा आणि जिंका ₹1,50,000+ रोख पारितोषिके व मानाच्या ट्रॉफीज.',
   keywords: [
     'Lokutsav',
     'Ganpati Decoration Competition',
@@ -24,7 +24,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="mr" className="h-full scroll-smooth">
+    <html lang="mr" className="h-full scroll-smooth" data-scroll-behavior="smooth">
       <body className="min-h-full flex flex-col font-sans bg-[#FAF7F2] text-[#1C1917] antialiased selection:bg-amber-200 selection:text-[#9B1B1E]">
         <LanguageProvider>
           <Header />

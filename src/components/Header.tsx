@@ -82,7 +82,7 @@ export default function Header() {
             {t.nav.criteria}
           </Link>
           <Link href="/#how-to-enter" className="hover:text-[#9B1B1E] transition-colors text-amber-800">
-            सहभाग कसा घ्यावा
+            {t.nav.howToEnter}
           </Link>
           <Link href="/sponsors" className="hover:text-[#9B1B1E] transition-colors">
             {t.nav.sponsors}
@@ -115,7 +115,7 @@ export default function Header() {
             href="/register"
             className="bg-[#9B1B1E] text-white text-xs font-bold px-3 py-1.5 rounded-md"
           >
-            ₹199 नोंदणी
+            {t.nav.registerNow} (₹199)
           </Link>
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -150,7 +150,7 @@ export default function Header() {
               onClick={() => setMobileMenuOpen(false)}
               className="p-2.5 rounded-md bg-stone-100 hover:bg-stone-200 text-stone-800"
             >
-              सहभाग कसा घ्यावा
+              {t.nav.howToEnter}
             </Link>
             <Link
               href="/sponsors"

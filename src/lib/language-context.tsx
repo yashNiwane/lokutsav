@@ -7,13 +7,13 @@ import { translations } from './translations';
 interface LanguageContextType {
   lang: Language;
   setLang: (lang: Language) => void;
-  t: typeof translations.mr;
+  t: typeof translations.en;
 }
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
 export function LanguageProvider({ children }: { children: React.ReactNode }) {
-  const [lang, setLangState] = useState<Language>('mr'); // Default to Marathi for cultural warmth
+  const [lang, setLangState] = useState<Language>('en'); // Default to English
 
   useEffect(() => {
     const saved = localStorage.getItem('lokutsav_lang') as Language;

@@ -6,7 +6,7 @@ import { useLanguage } from '@/lib/language-context';
 import { Trophy, Calendar, MapPin, Sparkles, ArrowRight, ShieldCheck } from 'lucide-react';
 
 export default function Hero() {
-  const { t } = useLanguage();
+  const { lang, t } = useLanguage();
 
   return (
     <section className="relative overflow-hidden bg-[#FAF7F2] border-b border-[#E5D7C0] pt-12 pb-20">
@@ -46,19 +46,19 @@ export default function Hero() {
               href="/#how-to-enter"
               className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-white hover:bg-stone-50 text-stone-800 border-2 border-[#E5D7C0] px-6 py-4 rounded-xl text-base font-semibold shadow-2xs transition-all hover:border-amber-600/60"
             >
-              <span>सहभाग कसा घ्यावा (३ सोप्या पायऱ्या)</span>
+              <span>{lang === 'mr' ? 'सहभाग कसा घ्यावा (३ सोप्या पायऱ्या)' : 'How to Enter (3 Simple Steps)'}</span>
             </Link>
           </div>
 
           <div className="flex items-center justify-center gap-4 text-xs text-stone-500 pt-2 font-medium">
             <span className="flex items-center gap-1">
               <ShieldCheck className="w-4 h-4 text-emerald-700" />
-              100% पारदर्शक ज्युरी परीक्षण
+              {lang === 'mr' ? '100% पारदर्शक ज्युरी परीक्षण' : '100% Impartial Jury Evaluation'}
             </span>
             <span>•</span>
-            <span>अधिकृत डिजिटल सहभाग प्रमाणपत्र</span>
+            <span>{lang === 'mr' ? 'अधिकृत डिजिटल सहभाग प्रमाणपत्र' : 'Official Digital Certificate'}</span>
             <span>•</span>
-            <span>सर्व 36 जिल्हे पात्र</span>
+            <span>{lang === 'mr' ? 'सर्व 36 जिल्हे पात्र' : 'Open Across All 36 Districts'}</span>
           </div>
         </div>
 
@@ -72,7 +72,7 @@ export default function Hero() {
               ₹1,50,000+
             </p>
             <p className="text-[11px] text-stone-600 mt-1 font-medium">
-              रोख रक्कम + मानाच्या ट्रॉफीज
+              {lang === 'mr' ? 'रोख रक्कम + मानाच्या ट्रॉफीज' : 'Cash Rewards + Trophies'}
             </p>
           </div>
 
@@ -81,10 +81,10 @@ export default function Hero() {
               {t.brand.entryFee}
             </p>
             <p className="font-serif text-2xl sm:text-3xl font-black text-amber-700">
-              ₹199 मात्र
+              {lang === 'mr' ? '₹199 मात्र' : '₹199 Only'}
             </p>
             <p className="text-[11px] text-stone-600 mt-1 font-medium">
-              सुलभ UPI व कार्ड पेमेंट्स
+              {lang === 'mr' ? 'सुलभ UPI व कार्ड पेमेंट्स' : 'Instant UPI & Cards'}
             </p>
           </div>
 
@@ -93,10 +93,10 @@ export default function Hero() {
               {t.hero.statDistricts}
             </p>
             <p className="font-serif text-2xl sm:text-3xl font-black text-stone-900">
-              36 जिल्हे
+              {lang === 'mr' ? '36 जिल्हे' : '36 Districts'}
             </p>
             <p className="text-[11px] text-stone-600 mt-1 font-medium">
-              घरगुती व सार्वजनिक मंडळे
+              {lang === 'mr' ? 'घरगुती व सार्वजनिक मंडळे' : 'Household & Mandals'}
             </p>
           </div>
 
@@ -105,10 +105,10 @@ export default function Hero() {
               {t.hero.statWinners}
             </p>
             <p className="font-serif text-2xl sm:text-3xl font-black text-emerald-800">
-              10 महाविजेते
+              {lang === 'mr' ? '10 महाविजेते' : '10 Champions'}
             </p>
             <p className="text-[11px] text-stone-600 mt-1 font-medium">
-              तज्ज्ञ ज्युरी मंडळाकडून निवड
+              {lang === 'mr' ? 'तज्ज्ञ ज्युरी मंडळाकडून निवड' : 'Judged by Official Jury'}
             </p>
           </div>
         </div>

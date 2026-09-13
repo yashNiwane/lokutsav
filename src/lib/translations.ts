@@ -20,6 +20,7 @@ export const translations = {
       sponsors: 'प्रायोजक',
       judgingPortal: 'परीक्षक कक्ष',
       registerNow: 'स्पर्धेत भाग घ्या',
+      howToEnter: 'सहभाग कसा घ्यावा',
     },
     hero: {
       headline: 'तुमच्या घरच्या बाप्पाची सजावट पोहोचवा अवघ्या महाराष्ट्रातील घराघरांपर्यंत!',
@@ -200,6 +201,7 @@ export const translations = {
       sponsors: 'Sponsors',
       judgingPortal: 'Jury Desk',
       registerNow: 'Register Now',
+      howToEnter: 'How to Enter',
     },
     hero: {
       headline: 'Showcase Your Bappa’s Artistry Across Every Home in Maharashtra!',

@@ -34,6 +34,7 @@ export default function RegisterPage() {
   const [step, setStep] = useState<1 | 2 | 3 | 4>(1);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+  const [agreedToTerms, setAgreedToTerms] = useState(false);
 
   // Form State
   const [formData, setFormData] = useState({
@@ -232,6 +233,15 @@ export default function RegisterPage() {
 
   // Step 3 -> Launch Razorpay Checkout Modal
   const launchRazorpayCheckout = () => {
+    if (!agreedToTerms) {
+      setErrorMessage(
+        lang === 'mr'
+          ? 'कृपया पेमेंट करण्यापूर्वी नियम व अटी मान्य करा.'
+          : 'Please accept the Terms & Conditions before proceeding to payment.'
+      );
+      return;
+    }
+
     const keyId =
       razorpayOrder?.keyId ||
       process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID ||
@@ -338,6 +348,15 @@ export default function RegisterPage() {
   };
 
   const handleCompletePaymentSimulated = async () => {
+    if (!agreedToTerms) {
+      setErrorMessage(
+        lang === 'mr'
+          ? 'कृपया पेमेंट करण्यापूर्वी नियम व अटी मान्य करा.'
+          : 'Please accept the Terms & Conditions before proceeding to payment.'
+      );
+      return;
+    }
+
     setIsSubmitting(true);
     setErrorMessage('');
 
@@ -869,11 +888,39 @@ export default function RegisterPage() {
             </div>
 
             <div className="space-y-3 pt-2">
+              {/* Terms and Conditions Checkbox */}
+              <div className="bg-amber-50/70 border border-amber-200/80 rounded-xl p-3.5 sm:p-4 text-xs sm:text-sm text-stone-800 transition-colors">
+                <label className="flex items-start gap-3 cursor-pointer select-none">
+                  <input
+                    type="checkbox"
+                    id="termsAgreement"
+                    checked={agreedToTerms}
+                    onChange={(e) => {
+                      setAgreedToTerms(e.target.checked);
+                      if (errorMessage) setErrorMessage('');
+                    }}
+                    className="mt-0.5 h-4 w-4 rounded border-stone-300 text-[#9B1B1E] focus:ring-[#9B1B1E] accent-[#9B1B1E] cursor-pointer shrink-0"
+                  />
+                  <span className="leading-relaxed text-xs sm:text-sm text-stone-800">
+                    {lang === 'mr' ? (
+                      <>
+                        मी स्पर्धेचे सर्व <strong className="font-semibold text-stone-900">नियम आणि अटी (Terms & Conditions)</strong> वाचल्या आहेत आणि मला त्या पूर्णपणे मान्य आहेत. मी पुष्टी करतो/करते की मी दिलेली माहिती खरी असून सादर केलेली सजावट अधिकृत नियमांचे पालन करते.
+                      </>
+                    ) : (
+                      <>
+                        I have read and agree to all the <strong className="font-semibold text-stone-900">Terms & Conditions</strong> of the competition. I confirm that all submitted details and materials comply with official guidelines.
+                      </>
+                    )}
+                  </span>
+                </label>
+              </div>
+
               <button
                 type="button"
                 onClick={launchRazorpayCheckout}
-                disabled={isSubmitting}
-                className="w-full flex items-center justify-center gap-3 bg-[#9B1B1E] hover:bg-[#781416] text-white py-4 rounded-xl font-bold text-base shadow-md transition-all active:scale-98 disabled:opacity-50"
+                disabled={isSubmitting || !agreedToTerms}
+                title={!agreedToTerms ? (lang === 'mr' ? 'कृपया पुढे जाण्यापूर्वी नियम व अटी मान्य करा' : 'Please agree to terms & conditions before proceeding') : ''}
+                className="w-full flex items-center justify-center gap-3 bg-[#9B1B1E] hover:bg-[#781416] text-white py-4 rounded-xl font-bold text-base shadow-md transition-all active:scale-98 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
               >
                 <CreditCard className="w-5 h-5 text-amber-300" />
                 <span>

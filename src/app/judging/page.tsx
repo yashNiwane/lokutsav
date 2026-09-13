@@ -14,7 +14,42 @@ import {
   Sparkles,
   MapPin,
   TrendingUp,
+  Video,
+  Play,
+  Film,
+  Image as ImageIcon,
+  Maximize2,
+  X,
 } from 'lucide-react';
+
+function isVideoDirectFile(url?: string): boolean {
+  if (!url) return false;
+  const clean = url.toLowerCase();
+  return (
+    clean.startsWith('/uploads/') ||
+    clean.endsWith('.mp4') ||
+    clean.endsWith('.mov') ||
+    clean.endsWith('.webm') ||
+    clean.endsWith('.m4v')
+  );
+}
+
+function isYouTubeUrl(url?: string): boolean {
+  if (!url) return false;
+  return url.includes('youtube.com') || url.includes('youtu.be');
+}
+
+function getYouTubeEmbedUrl(url: string): string {
+  if (url.includes('youtu.be/')) {
+    const id = url.split('youtu.be/')[1]?.split('?')[0];
+    return `https://www.youtube.com/embed/${id}`;
+  }
+  if (url.includes('watch?v=')) {
+    const id = url.split('watch?v=')[1]?.split('&')[0];
+    return `https://www.youtube.com/embed/${id}`;
+  }
+  return url;
+}
 
 export default function JudgingPage() {
   const [passcode, setPasscode] = useState('');
@@ -24,6 +59,10 @@ export default function JudgingPage() {
   const [entries, setEntries] = useState<ParticipantEntry[]>([]);
   const [loading, setLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
+
+  // Quick Video Preview Modal state
+  const [previewVideoUrl, setPreviewVideoUrl] = useState<string | null>(null);
+  const [previewVideoTitle, setPreviewVideoTitle] = useState<string>('');
 
   // Active entry being evaluated
   const [activeEntry, setActiveEntry] = useState<ParticipantEntry | null>(null);
@@ -344,6 +383,27 @@ export default function JudgingPage() {
                     </td>
                     <td className="py-4 px-4 max-w-xs">
                       <p className="font-medium text-stone-800 truncate">{entry.themeTitle}</p>
+                      <div className="flex items-center gap-2 mt-1.5 flex-wrap">
+                        <span className="inline-flex items-center gap-1 text-[11px] text-stone-600 bg-stone-100 px-2 py-0.5 rounded border border-stone-200">
+                          <ImageIcon className="w-3 h-3 text-stone-500" />
+                          <span>{entry.photoUrls.length} फोटो</span>
+                        </span>
+                        {entry.videoUrl ? (
+                          <button
+                            type="button"
+                            onClick={() => {
+                              setPreviewVideoUrl(entry.videoUrl || null);
+                              setPreviewVideoTitle(`${entry.themeTitle} (${entry.fullName} - ${entry.district})`);
+                            }}
+                            className="inline-flex items-center gap-1 text-[11px] font-bold text-amber-900 bg-amber-100 hover:bg-amber-200 px-2.5 py-0.5 rounded border border-amber-300 transition-colors cursor-pointer"
+                          >
+                            <Play className="w-3 h-3 fill-amber-900" />
+                            <span>व्हिडिओ देखावा (Video)</span>
+                          </button>
+                        ) : (
+                          <span className="text-[11px] text-stone-400 italic">व्हिडिओ नाही</span>
+                        )}
+                      </div>
                     </td>
                     <td className="py-4 px-4 text-xs">
                       <span className="block text-stone-600 font-semibold">
@@ -404,13 +464,103 @@ export default function JudgingPage() {
               </button>
             </div>
 
-            {/* Photo preview strip */}
-            <div className="grid grid-cols-3 gap-2">
-              {activeEntry.photoUrls.slice(0, 3).map((url, i) => (
-                <div key={i} className="aspect-4/3 rounded-lg overflow-hidden border border-stone-300 bg-stone-100">
-                  <img src={url} alt="entry preview" className="w-full h-full object-cover" />
+            {/* Video Tour Player */}
+            {activeEntry.videoUrl ? (
+              <div className="bg-stone-950 rounded-2xl p-4 border border-stone-800 space-y-3 shadow-lg">
+                <div className="flex items-center justify-between text-white flex-wrap gap-2">
+                  <div className="flex items-center gap-2">
+                    <div className="w-8 h-8 rounded-lg bg-[#9B1B1E] flex items-center justify-center text-white shadow-xs">
+                      <Video className="w-4 h-4" />
+                    </div>
+                    <div>
+                      <h4 className="font-bold text-sm text-stone-100 flex items-center gap-2">
+                        <span>सजावट व्हिडिओ देखावा (Video Tour)</span>
+                        <span className="text-[10px] font-bold uppercase tracking-wider bg-emerald-900/80 text-emerald-300 border border-emerald-700 px-2 py-0.5 rounded-full">
+                          थेट अपलोड (5 min limit)
+                        </span>
+                      </h4>
+                      <p className="text-[11px] text-stone-400">परीक्षकांसाठी अधिकृत व्हिडिओ पडताळणी</p>
+                    </div>
+                  </div>
+
+                  <a
+                    href={activeEntry.videoUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="text-xs text-amber-300 hover:text-amber-200 flex items-center gap-1 font-semibold bg-stone-800 hover:bg-stone-700 px-3 py-1.5 rounded-lg border border-stone-700 transition-colors"
+                  >
+                    <span>नवीन विंडोमध्ये उघडा</span>
+                    <ExternalLink className="w-3.5 h-3.5" />
+                  </a>
                 </div>
-              ))}
+
+                <div className="rounded-xl overflow-hidden bg-black aspect-16/9 max-h-[360px] flex items-center justify-center shadow-inner">
+                  {isVideoDirectFile(activeEntry.videoUrl) ? (
+                    <video
+                      key={activeEntry.videoUrl}
+                      src={activeEntry.videoUrl}
+                      controls
+                      playsInline
+                      preload="metadata"
+                      className="w-full h-full object-contain"
+                    />
+                  ) : isYouTubeUrl(activeEntry.videoUrl) ? (
+                    <iframe
+                      src={getYouTubeEmbedUrl(activeEntry.videoUrl)}
+                      title="Decoration Video Tour"
+                      className="w-full h-full border-0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                    />
+                  ) : (
+                    <video
+                      key={activeEntry.videoUrl}
+                      src={activeEntry.videoUrl}
+                      controls
+                      playsInline
+                      preload="metadata"
+                      className="w-full h-full object-contain"
+                    />
+                  )}
+                </div>
+              </div>
+            ) : (
+              <div className="bg-amber-50 p-3.5 rounded-xl border border-amber-200 text-amber-900 text-xs flex items-center gap-2">
+                <Film className="w-4 h-4 text-amber-700 shrink-0" />
+                <span>या स्पर्धकाने व्हिडिओ जोडलेला नाही (केवळ खालील छायाचित्रे उपलब्ध आहेत).</span>
+              </div>
+            )}
+
+            {/* Photo Gallery with Full Resolution View */}
+            <div className="space-y-2">
+              <h4 className="text-xs font-bold text-stone-700 uppercase tracking-wider flex items-center justify-between">
+                <span className="flex items-center gap-1.5">
+                  <ImageIcon className="w-3.5 h-3.5 text-stone-500" />
+                  <span>सजावट छायाचित्रे (Photos - {activeEntry.photoUrls.length})</span>
+                </span>
+                <span className="text-[11px] text-stone-400 font-normal">फोटोवर क्लिक करून मोठा आकार पहा</span>
+              </h4>
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
+                {activeEntry.photoUrls.map((url, i) => (
+                  <a
+                    key={i}
+                    href={url}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="aspect-4/3 rounded-xl overflow-hidden border border-stone-300 bg-stone-100 group relative block shadow-2xs hover:border-[#9B1B1E] transition-colors"
+                  >
+                    <img
+                      src={url}
+                      alt={`सजावट छायाचित्र ${i + 1}`}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200"
+                    />
+                    <span className="absolute bottom-1.5 right-1.5 bg-black/70 backdrop-blur-xs text-white text-[10px] px-2 py-0.5 rounded font-medium opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1">
+                      <Maximize2 className="w-2.5 h-2.5" />
+                      मोठे करा
+                    </span>
+                  </a>
+                ))}
+              </div>
             </div>
 
             <div className="bg-white p-4 rounded-xl border border-stone-200 text-xs space-y-2">
@@ -491,6 +641,69 @@ export default function JudgingPage() {
               >
                 {submittingScore ? 'नोंद होत आहे...' : 'गुण निश्चित करा व क्रमवारी लावा'}
               </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Quick Video Preview Modal */}
+      {previewVideoUrl && (
+        <div className="fixed inset-0 z-50 bg-black/85 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-stone-900 rounded-2xl max-w-3xl w-full border border-stone-800 p-5 space-y-4 shadow-2xl text-white">
+            <div className="flex items-center justify-between border-b border-stone-800 pb-3">
+              <div className="flex items-center gap-2">
+                <Video className="w-5 h-5 text-amber-400" />
+                <h3 className="font-serif font-bold text-base text-stone-100 truncate max-w-md">
+                  {previewVideoTitle || 'सजावट व्हिडिओ देखावा'}
+                </h3>
+              </div>
+              <button
+                onClick={() => setPreviewVideoUrl(null)}
+                className="text-stone-400 hover:text-white p-1 rounded-lg hover:bg-stone-800 transition-colors cursor-pointer"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <div className="rounded-xl overflow-hidden bg-black aspect-16/9 max-h-[440px] flex items-center justify-center">
+              {isVideoDirectFile(previewVideoUrl) ? (
+                <video
+                  src={previewVideoUrl}
+                  controls
+                  autoPlay
+                  playsInline
+                  className="w-full h-full object-contain"
+                />
+              ) : isYouTubeUrl(previewVideoUrl) ? (
+                <iframe
+                  src={getYouTubeEmbedUrl(previewVideoUrl)}
+                  title="Decoration Video Tour"
+                  className="w-full h-full border-0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                />
+              ) : (
+                <video
+                  src={previewVideoUrl}
+                  controls
+                  autoPlay
+                  playsInline
+                  className="w-full h-full object-contain"
+                />
+              )}
+            </div>
+
+            <div className="flex items-center justify-between text-xs text-stone-400 pt-1">
+              <span>कालावधी: कमाल 5 मिनिटे (Direct Video Tour)</span>
+              <a
+                href={previewVideoUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="text-amber-400 hover:text-amber-300 font-semibold flex items-center gap-1"
+              >
+                <span>नवीन टॅबमध्ये उघडा</span>
+                <ExternalLink className="w-3.5 h-3.5" />
+              </a>
             </div>
           </div>
         </div>

@@ -22,6 +22,14 @@ import {
   X,
 } from 'lucide-react';
 import Link from 'next/link';
+import {
+  GooglePayLogo,
+  PhonePeLogo,
+  PaytmLogo,
+  BhimLogo,
+  CredLogo,
+  UpiBadgeIcon,
+} from '@/components/UpiLogos';
 
 declare global {
   interface Window {
@@ -857,31 +865,37 @@ export default function RegisterPage() {
             {/* UPI Intent Highlight Section */}
             <div className="bg-stone-50 p-4 rounded-xl border border-stone-200 space-y-3">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-bold text-stone-800 uppercase tracking-wider flex items-center gap-1.5">
-                  <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                <span className="text-xs font-bold text-stone-800 uppercase tracking-wider flex items-center gap-2">
+                  <UpiBadgeIcon className="w-6 h-4 shrink-0" />
                   <span>UPI Intent & QR Supported</span>
                 </span>
-                <span className="text-[11px] font-semibold text-emerald-800 bg-emerald-100 px-2 py-0.5 rounded">
-                  1-Tap Intent
+                <span className="text-[11px] font-semibold text-emerald-800 bg-emerald-100 px-2.5 py-0.5 rounded-full flex items-center gap-1">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-pulse" />
+                  <span>1-Tap Intent</span>
                 </span>
               </div>
 
-              {/* Supported UPI Apps Badges */}
-              <div className="grid grid-cols-5 gap-2 text-center text-[10px] font-bold">
-                <div className="bg-white border border-stone-200 p-2 rounded-lg text-stone-800 shadow-2xs hover:border-amber-400 transition-colors">
-                  Google Pay
+              {/* Supported UPI Apps Badges with Logos */}
+              <div className="grid grid-cols-2 sm:grid-cols-5 gap-2.5 text-center text-xs font-semibold">
+                <div className="bg-white border border-stone-200 p-2.5 rounded-xl text-stone-800 shadow-2xs hover:border-amber-400 hover:shadow-xs transition-all flex flex-col items-center justify-center gap-1.5">
+                  <GooglePayLogo className="w-6 h-6 shrink-0" />
+                  <span className="text-[11px] font-bold text-stone-800">Google Pay</span>
                 </div>
-                <div className="bg-white border border-stone-200 p-2 rounded-lg text-purple-800 shadow-2xs hover:border-amber-400 transition-colors">
-                  PhonePe
+                <div className="bg-white border border-stone-200 p-2.5 rounded-xl text-purple-900 shadow-2xs hover:border-amber-400 hover:shadow-xs transition-all flex flex-col items-center justify-center gap-1.5">
+                  <PhonePeLogo className="w-6 h-6 shrink-0" />
+                  <span className="text-[11px] font-bold text-[#5F259F]">PhonePe</span>
                 </div>
-                <div className="bg-white border border-stone-200 p-2 rounded-lg text-sky-800 shadow-2xs hover:border-amber-400 transition-colors">
-                  Paytm UPI
+                <div className="bg-white border border-stone-200 p-2.5 rounded-xl text-sky-900 shadow-2xs hover:border-amber-400 hover:shadow-xs transition-all flex flex-col items-center justify-center gap-1.5">
+                  <PaytmLogo className="w-11 h-6 shrink-0" />
+                  <span className="text-[11px] font-bold text-[#002E6E]">Paytm</span>
                 </div>
-                <div className="bg-white border border-stone-200 p-2 rounded-lg text-emerald-800 shadow-2xs hover:border-amber-400 transition-colors">
-                  BHIM UPI
+                <div className="bg-white border border-stone-200 p-2.5 rounded-xl text-emerald-900 shadow-2xs hover:border-amber-400 hover:shadow-xs transition-all flex flex-col items-center justify-center gap-1.5">
+                  <BhimLogo className="w-6 h-6 shrink-0" />
+                  <span className="text-[11px] font-bold text-[#00863F]">BHIM UPI</span>
                 </div>
-                <div className="bg-white border border-stone-200 p-2 rounded-lg text-stone-900 shadow-2xs hover:border-amber-400 transition-colors">
-                  CRED UPI
+                <div className="bg-white border border-stone-200 p-2.5 rounded-xl text-stone-900 shadow-2xs hover:border-amber-400 hover:shadow-xs transition-all flex flex-col items-center justify-center gap-1.5 col-span-2 sm:col-span-1">
+                  <CredLogo className="w-6 h-6 shrink-0" />
+                  <span className="text-[11px] font-bold text-stone-900">CRED UPI</span>
                 </div>
               </div>
 

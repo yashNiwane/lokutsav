@@ -1107,16 +1107,24 @@ export default function RegisterPage() {
                   </p>
                 </div>
 
-                <div className="py-3 space-y-1">
+                <div className="py-3 space-y-2">
                   <h4 className="font-bold text-stone-900 text-sm sm:text-base flex items-center gap-1.5">
                     <span>2.</span>
-                    <span>{lang === 'mr' ? 'प्रवेश शुल्क व परतावा (Registration Fee & Refund Policy)' : 'Registration Fee & Policy'}</span>
+                    <span>{lang === 'mr' ? 'प्रवेश शुल्क, किमान सहभाग व परतावा धोरण (Registration Fee & Refund Policy)' : 'Registration Fee, Minimum Participation & Refund Policy'}</span>
                   </h4>
                   <p>
                     {lang === 'mr'
-                      ? 'नोंदणी शुल्क प्रति प्रवेश ₹199 (जीएसटी समाविष्ट) आहे. एकदा तिकीट जनरेट झाल्यानंतर नोंदणी शुल्क कोणत्याही कारणास्तव परत केले जाणार नाही (Non-Refundable).'
-                      : 'The registration fee is ₹199 per entry (inclusive of GST). Once the entry pass/ticket is generated, fees are strictly non-refundable under any circumstances.'}
+                      ? 'नोंदणी शुल्क प्रति प्रवेश ₹199 (जीएसटी समाविष्ट) आहे. ही राज्यव्यापी स्पर्धा यशस्वीरीत्या पार पाडण्यासाठी किमान 1,000 स्पर्धकांचा सहभाग आवश्यक आहे. जर एकूण नोंदणीकृत स्पर्धकांची संख्या 1,000 पेक्षा कमी राहिली, तर सर्व सहभागी स्पर्धकांचे पैसे त्यांच्या मूळ खात्यात परत (Refund) केले जातील; या परताव्याच्या रकमेतून केवळ 3% रेझरपे (Razorpay) गेटवे व्यवहार शुल्क वजा करण्यात येईल. इतर सर्व सामान्य परिस्थितीत तिकीट जनरेट झाल्यानंतर शुल्क परत केले जात नाही.'
+                      : 'The registration fee is ₹199 per entry (inclusive of GST). A minimum threshold of 1,000 participants is required to conduct the competition. If the total number of participants is less than 1,000, all money will be refunded back to the participants, with a 3% Razorpay transaction fee deducted. Under all other standard circumstances, fees are non-refundable once the ticket is issued.'}
                   </p>
+                  <div className="bg-amber-50 border border-amber-200 rounded-lg p-2.5 text-[11px] sm:text-xs text-amber-900 font-medium flex items-center gap-2">
+                    <span className="shrink-0">🛡️</span>
+                    <span>
+                      {lang === 'mr'
+                        ? 'सुरक्षा हमी: १००० पेक्षा कमी स्पर्धक नोंदणी झाल्यास सर्व पैसे ३% रेझरपे शुल्क वजा करून थेट परत मिळतील.'
+                        : 'Protection Assurance: If total participation is under 1,000 entries, full fees will be refunded after a 3% Razorpay fee deduction.'}
+                    </span>
+                  </div>
                 </div>
 
                 <div className="py-3 space-y-1">

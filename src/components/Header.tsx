@@ -19,8 +19,26 @@ export default function Header() {
             <span className="inline-block w-2 h-2 rounded-full bg-amber-400 animate-pulse" />
             <span>{t.brand.badgeLive} • {t.brand.dates}</span>
           </div>
-          <div className="flex items-center gap-4">
-            <span className="hidden sm:inline font-medium text-amber-200">
+          <div className="flex items-center gap-3 sm:gap-4">
+            {/* Instagram link */}
+            <a
+              href="https://www.instagram.com/lok_utsav/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 text-amber-200 hover:text-white transition-colors text-xs font-semibold group"
+              title="Follow @lok_utsav on Instagram"
+            >
+              <div className="w-4 h-4 rounded-xs bg-gradient-to-tr from-amber-400 via-rose-500 to-purple-600 p-[1px] flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="w-full h-full">
+                  <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
+                  <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+                  <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
+                </svg>
+              </div>
+              <span className="hidden sm:inline">@lok_utsav</span>
+            </a>
+
+            <span className="hidden md:inline font-medium text-amber-200">
               {t.brand.entryFee}
             </span>
             {/* Language Switcher */}
@@ -191,6 +209,19 @@ export default function Header() {
             >
               {t.nav.judgingPortal}
             </Link>
+            <a
+              href="https://www.instagram.com/lok_utsav/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full flex items-center justify-center gap-2 py-2 text-xs font-bold text-stone-700 hover:text-pink-600 bg-stone-50 border border-stone-200 rounded-md transition-colors"
+            >
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4 text-pink-600">
+                <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
+                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+                <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
+              </svg>
+              <span>Follow @lok_utsav on Instagram</span>
+            </a>
           </div>
         </div>
       )}

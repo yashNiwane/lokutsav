@@ -30,6 +30,8 @@ export interface ParticipantEntry {
   paymentStatus: PaymentStatus;
   razorpayOrderId?: string;
   razorpayPaymentId?: string;
+  termsAccepted?: boolean;
+  termsAcceptedAt?: string;
   status: EntryStatus;
   finalScore?: number;
   finalRank?: number;

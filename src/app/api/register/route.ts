@@ -59,6 +59,7 @@ export async function POST(request: NextRequest) {
       videoUrl: videoUrl || undefined,
       entryFee: 199,
       paymentStatus: 'PENDING',
+      termsAccepted: false,
       status: 'PENDING_VERIFICATION',
     });
 

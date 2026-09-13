@@ -104,6 +104,8 @@ model Participant {
   paymentStatus      PaymentStatus         @default(PENDING)
   razorpayOrderId    String?
   razorpayPaymentId  String?
+  termsAccepted      Boolean               @default(true)
+  termsAcceptedAt    DateTime?             @default(now())
   status             EntryStatus           @default(PENDING_VERIFICATION)
   finalScore         Float?
   finalRank          Int?                  // 1 to 10 for official top 10 winners

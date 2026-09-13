@@ -167,6 +167,8 @@ export const dataStore = {
             paymentStatus: newEntry.paymentStatus as any,
             razorpayOrderId: newEntry.razorpayOrderId,
             razorpayPaymentId: newEntry.razorpayPaymentId,
+            termsAccepted: newEntry.termsAccepted ?? true,
+            termsAcceptedAt: newEntry.termsAcceptedAt ? new Date(newEntry.termsAcceptedAt) : new Date(),
             status: newEntry.status as any,
           },
         });
@@ -184,8 +186,10 @@ export const dataStore = {
   async updatePayment(
     ticketId: string,
     razorpayPaymentId: string,
-    razorpayOrderId?: string
+    razorpayOrderId?: string,
+    termsAccepted: boolean = true
   ): Promise<boolean> {
+    const acceptedAt = new Date();
     try {
       if (await canUsePrisma()) {
         await prisma.participant.updateMany({
@@ -195,6 +199,8 @@ export const dataStore = {
             status: 'APPROVED',
             razorpayPaymentId,
             razorpayOrderId,
+            termsAccepted,
+            termsAcceptedAt: acceptedAt,
           },
         });
       }
@@ -207,6 +213,8 @@ export const dataStore = {
       inMemoryEntries[idx].paymentStatus = 'COMPLETED';
       inMemoryEntries[idx].status = 'APPROVED';
       inMemoryEntries[idx].razorpayPaymentId = razorpayPaymentId;
+      inMemoryEntries[idx].termsAccepted = termsAccepted;
+      inMemoryEntries[idx].termsAcceptedAt = acceptedAt.toISOString();
       if (razorpayOrderId) inMemoryEntries[idx].razorpayOrderId = razorpayOrderId;
       return true;
     }

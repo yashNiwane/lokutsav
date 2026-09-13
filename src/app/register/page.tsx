@@ -312,6 +312,7 @@ export default function RegisterPage() {
                 razorpayPaymentId: response.razorpay_payment_id || `pay_${Date.now()}`,
                 razorpayOrderId: response.razorpay_order_id || razorpayOrder?.orderId,
                 razorpaySignature: response.razorpay_signature || 'test_signature',
+                termsAccepted: true,
               }),
             });
             const verifyData = await verifyRes.json();
@@ -374,6 +375,7 @@ export default function RegisterPage() {
           razorpayPaymentId: paymentId,
           razorpayOrderId: orderId,
           razorpaySignature: 'simulated_valid_signature',
+          termsAccepted: true,
         }),
       });
 

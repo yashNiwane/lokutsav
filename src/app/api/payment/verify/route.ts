@@ -4,7 +4,7 @@ import { dataStore } from '@/lib/db';
 
 export async function POST(request: NextRequest) {
   try {
-    const { ticketId, razorpayOrderId, razorpayPaymentId, razorpaySignature } = await request.json();
+    const { ticketId, razorpayOrderId, razorpayPaymentId, razorpaySignature, termsAccepted = true } = await request.json();
 
     if (!ticketId || !razorpayPaymentId) {
       return NextResponse.json(
@@ -26,8 +26,8 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Update payment in dataStore / database
-    await dataStore.updatePayment(ticketId, razorpayPaymentId, razorpayOrderId);
+    // Update payment and terms acceptance in dataStore / database
+    await dataStore.updatePayment(ticketId, razorpayPaymentId, razorpayOrderId, Boolean(termsAccepted));
 
     const updatedEntry = await dataStore.getEntryById(ticketId);
 

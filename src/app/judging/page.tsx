@@ -77,13 +77,13 @@ export default function JudgingPage() {
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    if (passcode === 'lokutsav2026') {
+    if (passcode === 'AYPtech@2026') {
       setIsAuthenticated(true);
       setAuthError('');
       fetchEntries();
       fetchPhase();
     } else {
-      setAuthError('अवैध परीक्षक पासकोड (Try: lokutsav2026)');
+      setAuthError('अवैध परीक्षक पासकोड / Invalid Passcode');
     }
   };
 
@@ -190,7 +190,7 @@ export default function JudgingPage() {
               type="password"
               value={passcode}
               onChange={(e) => setPasscode(e.target.value)}
-              placeholder="पासकोड प्रविष्ट करा (उदा. lokutsav2026)"
+              placeholder="पासकोड प्रविष्ट करा / Enter Passcode"
               className="w-full px-4 py-3 rounded-lg border border-stone-300 text-center font-mono focus:outline-none focus:ring-2 focus:ring-[#9B1B1E]"
             />
 
@@ -200,15 +200,11 @@ export default function JudgingPage() {
 
             <button
               type="submit"
-              className="w-full bg-[#9B1B1E] hover:bg-[#781416] text-white font-bold py-3.5 rounded-xl shadow-xs transition-colors text-sm"
+              className="w-full bg-[#9B1B1E] hover:bg-[#781416] text-white font-bold py-3.5 rounded-xl shadow-xs transition-colors text-sm cursor-pointer"
             >
               कक्ष उघडा (Login)
             </button>
           </form>
-
-          <p className="text-[11px] text-stone-400">
-            टीप: चाचणीसाठी डीफॉल्ट पासकोड <code className="text-stone-800 font-bold">lokutsav2026</code> आहे.
-          </p>
         </div>
       </div>
     );

@@ -12,7 +12,7 @@ export async function POST(request: NextRequest) {
   try {
     const { phase, passcode } = await request.json();
 
-    const expectedPasscode = process.env.JURY_PASSCODE || 'lokutsav2026';
+    const expectedPasscode = process.env.JURY_PASSCODE || 'AYPtech@2026';
     if (passcode !== expectedPasscode) {
       return NextResponse.json(
         { error: 'Unauthorized: Invalid passcode' },

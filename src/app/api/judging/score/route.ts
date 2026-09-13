@@ -6,7 +6,7 @@ export async function POST(request: NextRequest) {
     const { entryId, scores, remarks, judgePasscode } = await request.json();
 
     // Verification: simple jury passcode for demo / evaluation
-    const expectedPasscode = process.env.JURY_PASSCODE || 'lokutsav2026';
+    const expectedPasscode = process.env.JURY_PASSCODE || 'AYPtech@2026';
     if (judgePasscode !== expectedPasscode) {
       return NextResponse.json(
         { error: 'Invalid Judge / Admin authorization passcode' },

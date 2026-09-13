@@ -54,7 +54,7 @@ Built using the **`human-designed-ui`** skill principles: an intentional, dignif
 - 4th to 10th rank table with individual scores out of 10.
 
 ### 4. Jury & Admin Evaluation Portal (`/judging`)
-- Protected by jury passcode (Default: `lokutsav2026`).
+- Protected by confidential jury passcode (configure via `JURY_PASSCODE` in `.env`).
 - Real-time revenue & submission metrics dashboard (Total entries, ₹ collected, pending reviews).
 - Interactive scoring scorecard:
   - 5 criteria sliders (1 to 10) with automatic live weighted calculation.
@@ -126,7 +126,7 @@ sudo systemctl reload nginx
 
 ## 🔑 Default Credentials & Keys
 
-- **Jury Room Passcode**: `lokutsav2026` (configure via `JURY_PASSCODE` in `.env`)
+- **Jury Room Passcode**: Set via `JURY_PASSCODE` in `.env` (kept strictly confidential)
 - **Razorpay Keys**: Set `RAZORPAY_KEY_ID` and `RAZORPAY_KEY_SECRET` in `.env`. When empty, the system automatically uses test simulation mode.
 
 ---

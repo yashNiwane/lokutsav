@@ -36,4 +36,4 @@ docker compose exec -T web npx prisma db push --skip-generate || true
 docker compose exec -T web node prisma/seed.js || true
 
 echo "✅ Lokutsav is live on http://$(curl -s ifconfig.me):3000"
-echo "👑 Jury Room: http://$(curl -s ifconfig.me):3000/judging (Passcode: lokutsav2026)"
+echo "👑 Jury Room: http://$(curl -s ifconfig.me):3000/judging"

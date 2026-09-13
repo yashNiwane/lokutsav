@@ -1,26 +1,52 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --shendur: #9B1B1E;
+    --shendur-dark: #781416;
+    --haldi: #D97706;
+    --haldi-deep: #B45309;
+    --parchment: #FAF7F2;
+    --parchment-warm: #F4EFE6;
+    --basalt: #1C1917;
+    --basalt-soft: #292524;
+    --heritage-border: #E5D7C0;
+    --forest-leaf: #166534;
+  }
+
+  body {
+    background-color: #FAF7F2;
+    color: #1C1917;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  }
+
+  /* Cultural hairline accents */
+  .border-heritage {
+    border-color: #E5D7C0;
+  }
+
+  /* Subtle brass texture glow without generic AI neon */
+  .brass-shine {
+    background: linear-gradient(135deg, #FDE68A 0%, #D97706 50%, #92400E 100%);
+  }
+
+  .shendur-gradient {
+    background: linear-gradient(135deg, #9B1B1E 0%, #781416 100%);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Custom subtle scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #F4EFE6;
+}
+::-webkit-scrollbar-thumb {
+  background: #D5C7B0;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #B45309;
 }

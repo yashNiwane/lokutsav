@@ -1,0 +1,171 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum Role {
+  ADMIN
+  JUDGE
+  PARTICIPANT
+}
+
+enum CompetitionStatus {
+  UPCOMING
+  ACTIVE
+  JUDGING
+  COMPLETED
+}
+
+enum ParticipationCategory {
+  HOUSEHOLD          // घरगुती गणपती सजावट
+  SARVAJANIK_MANDAL  // सार्वजनिक गणेशोत्सव मंडळ
+}
+
+enum IdolType {
+  SHADU_MATI_CLAY           // शाडू मातीची मूर्ती
+  ECO_FRIENDLY_PAPER_PULP   // कागदी लगदा / पर्यावरणपूरक
+  TRADITIONAL_OTHER         // पारंपारिक / इतर
+}
+
+enum PaymentStatus {
+  PENDING
+  COMPLETED
+  FAILED
+}
+
+enum EntryStatus {
+  PENDING_VERIFICATION
+  APPROVED
+  FLAGGED
+  REJECTED
+}
+
+enum SponsorTier {
+  TITLE
+  POWERED_BY
+  GOLD
+  ASSOCIATE
+}
+
+model User {
+  id           String       @id @default(cuid())
+  email        String       @unique
+  name         String
+  phone        String?
+  role         Role         @default(PARTICIPANT)
+  passwordHash String?
+  evaluations  Evaluation[]
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+}
+
+model Competition {
+  id              String            @id @default(cuid())
+  slug            String            @unique @default("ganeshutsav-2026")
+  title           String            @default("Maharashtra Rajya Online Ganpati Decoration Competition 2026")
+  titleMr         String            @default("महाराष्ट्र राज्य ऑनलाइन गणेश सजावट स्पर्धा २०२६")
+  description     String
+  descriptionMr   String
+  year            Int               @default(2026)
+  entryFee        Int               @default(199)
+  prizePoolText   String            @default("₹1,50,000+ in Cash & Gifts")
+  prizePoolTextMr String            @default("₹१,५०,०००+ रोख व आकर्षक पारितोषिके")
+  status          CompetitionStatus @default(ACTIVE)
+  registrationEnd DateTime
+  judgingEnd      DateTime
+  entries         Participant[]
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+}
+
+model Participant {
+  id                 String                @id @default(cuid())
+  ticketId           String                @unique // e.g. LOK-2026-8941
+  competitionId      String
+  competition        Competition           @relation(fields: [competitionId], references: [id], onDelete: Cascade)
+  fullName           String
+  phone              String
+  email              String
+  district           String                // e.g. Pune, Mumbai, Kolhapur, Nagpur, etc.
+  city               String
+  address            String
+  category           ParticipationCategory @default(HOUSEHOLD)
+  idolType           IdolType              @default(SHADU_MATI_CLAY)
+  themeTitle         String
+  themeDescription   String
+  materialsUsed      String?
+  photoUrls          String                // JSON array of file paths / URLs
+  videoUrl           String?               // Link or uploaded local path
+  entryFee           Int                   @default(199)
+  paymentStatus      PaymentStatus         @default(PENDING)
+  razorpayOrderId    String?
+  razorpayPaymentId  String?
+  status             EntryStatus           @default(PENDING_VERIFICATION)
+  finalScore         Float?
+  finalRank          Int?                  // 1 to 10 for official top 10 winners
+  evaluations        Evaluation[]
+  createdAt          DateTime              @default(now())
+  updatedAt          DateTime              @updatedAt
+
+  @@index([district])
+  @@index([paymentStatus])
+  @@index([status])
+  @@index([finalRank])
+}
+
+model JudgingCriterion {
+  id            String   @id @default(cuid())
+  name          String
+  nameMr        String
+  description   String
+  descriptionMr String
+  maxScore      Int      @default(10)
+  weight        Float    @default(1.0)
+  sortOrder     Int      @default(0)
+  createdAt     DateTime @default(now())
+}
+
+model Evaluation {
+  id             String      @id @default(cuid())
+  participantId  String
+  participant    Participant @relation(fields: [participantId], references: [id], onDelete: Cascade)
+  judgeId        String
+  judge          User        @relation(fields: [judgeId], references: [id], onDelete: Cascade)
+  criteriaScores String      // JSON: { "criterionId": score }
+  totalScore     Float
+  remarks        String?
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
+
+  @@unique([participantId, judgeId])
+}
+
+model Sponsor {
+  id                   String      @id @default(cuid())
+  name                 String
+  tier                 SponsorTier @default(GOLD)
+  logoUrl              String
+  websiteUrl           String?
+  sponsoredCategory    String?
+  sponsoredCategoryMr  String?
+  description          String?
+  descriptionMr        String?
+  sortOrder            Int         @default(0)
+  isActive             Boolean     @default(true)
+  createdAt            DateTime    @default(now())
+  updatedAt            DateTime    @updatedAt
+}
+
+model FaqItem {
+  id        String   @id @default(cuid())
+  question   String
+  questionMr String
+  answer     String
+  answerMr   String
+  category   String   @default("general")
+  sortOrder  Int      @default(0)
+}

@@ -1,0 +1,49 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database Container
+  postgres:
+    image: postgres:16-alpine
+    container_name: lokutsav_postgres
+    restart: always
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-lokutsav_user}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-lokutsav_secure_password_2026}
+      POSTGRES_DB: ${POSTGRES_DB:-lokutsav_db}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-lokutsav_user} -d ${POSTGRES_DB:-lokutsav_db}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Lokutsav Web Application
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: lokutsav_app
+    restart: always
+    depends_on:
+      postgres:
+        condition: service_healthy
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - DATABASE_URL=postgresql://${POSTGRES_USER:-lokutsav_user}:${POSTGRES_PASSWORD:-lokutsav_secure_password_2026}@postgres:5432/${POSTGRES_DB:-lokutsav_db}?schema=public
+      - RAZORPAY_KEY_ID=${RAZORPAY_KEY_ID:-rzp_test_simulation}
+      - RAZORPAY_KEY_SECRET=${RAZORPAY_KEY_SECRET:-rzp_test_secret}
+      - JURY_PASSCODE=${JURY_PASSCODE:-lokutsav2026}
+      - NEXT_PUBLIC_APP_URL=${NEXT_PUBLIC_APP_URL:-http://localhost:3000}
+    volumes:
+      - uploads_data:/app/public/uploads
+
+volumes:
+  postgres_data:
+    driver: local
+  uploads_data:
+    driver: local

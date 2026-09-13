@@ -17,6 +17,8 @@ import {
   AlertCircle,
   FileText,
   Lock,
+  Video,
+  Film,
 } from 'lucide-react';
 import Link from 'next/link';
 
@@ -50,9 +52,68 @@ export default function RegisterPage() {
     videoUrl: '',
   });
 
-  // Photo upload state
+  // Photo & Video upload state
   const [uploadingPhoto, setUploadingPhoto] = useState(false);
   const [photoUrlInput, setPhotoUrlInput] = useState('');
+  const [uploadingVideo, setUploadingVideo] = useState(false);
+
+  const handleVideoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setUploadingVideo(true);
+    setErrorMessage('');
+
+    // Client-side 5-minute video duration validation
+    try {
+      const videoElement = document.createElement('video');
+      videoElement.preload = 'metadata';
+      const objUrl = URL.createObjectURL(file);
+      videoElement.src = objUrl;
+
+      await new Promise<void>((resolve, reject) => {
+        videoElement.onloadedmetadata = () => {
+          URL.revokeObjectURL(objUrl);
+          if (videoElement.duration > 300) {
+            reject(
+              new Error(
+                lang === 'mr'
+                  ? 'व्हिडिओचा कालावधी 5 मिनिटांपेक्षा जास्त आहे. कृपया 5 मिनिटांखालील व्हिडिओ निवडा.'
+                  : 'Video length exceeds the 5-minute maximum limit. Please select or trim a video under 5 minutes.'
+              )
+            );
+          } else {
+            resolve();
+          }
+        };
+        videoElement.onerror = () => {
+          resolve(); // Fallback if browser can't read metadata
+        };
+      });
+
+      const body = new FormData();
+      body.append('file', file);
+
+      const res = await fetch('/api/upload', {
+        method: 'POST',
+        body,
+      });
+
+      const data = await res.json();
+      if (data.success && data.url) {
+        setFormData((prev) => ({
+          ...prev,
+          videoUrl: data.url,
+        }));
+      } else {
+        setErrorMessage(data.error || 'Failed to upload video');
+      }
+    } catch (err: any) {
+      setErrorMessage(err.message || 'Video upload failed');
+    } finally {
+      setUploadingVideo(false);
+    }
+  };
 
   // Ticket & Order State
   const [ticketId, setTicketId] = useState('');
@@ -614,17 +675,72 @@ export default function RegisterPage() {
                 )}
               </div>
 
-              <div>
-                <label className="block font-semibold text-stone-800 mb-1">
-                  {t.form.decoration.videoLabel}
-                </label>
-                <input
-                  type="url"
-                  value={formData.videoUrl}
-                  onChange={(e) => setFormData({ ...formData, videoUrl: e.target.value })}
-                  placeholder={t.form.decoration.videoLinkPlaceholder}
-                  className="w-full px-4 py-3 rounded-lg border border-stone-300 focus:outline-none focus:ring-2 focus:ring-[#9B1B1E]/40"
-                />
+              {/* Direct Video File Upload (Max 5 minutes) */}
+              <div className="p-4 rounded-xl bg-stone-50 border border-stone-200 space-y-3">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
+                  <div>
+                    <label className="block font-semibold text-stone-800 text-sm">
+                      {t.form.decoration.videoLabel}
+                    </label>
+                    <p className="text-xs text-stone-500">
+                      {t.form.decoration.videoHint}
+                    </p>
+                  </div>
+                  <span className="self-start text-[11px] font-bold text-amber-900 bg-amber-100 border border-amber-300 px-2.5 py-0.5 rounded-full">
+                    {lang === 'mr' ? 'कमाल कालावधी: 5 मिनिटे' : 'Max Length: 5 Minutes'}
+                  </span>
+                </div>
+
+                {!formData.videoUrl ? (
+                  <label className="cursor-pointer border-2 border-dashed border-[#E5D7C0] hover:border-[#9B1B1E] bg-white rounded-xl p-6 flex flex-col items-center justify-center text-center transition-colors group">
+                    <div className="w-12 h-12 rounded-full bg-amber-50 text-[#9B1B1E] flex items-center justify-center mb-2 group-hover:scale-105 transition-transform">
+                      {uploadingVideo ? (
+                        <div className="w-6 h-6 border-2 border-[#9B1B1E] border-t-transparent rounded-full animate-spin" />
+                      ) : (
+                        <Video className="w-6 h-6" />
+                      )}
+                    </div>
+                    <span className="font-bold text-sm text-stone-800">
+                      {uploadingVideo
+                        ? (lang === 'mr' ? 'व्हिडिओ अपलोड होत आहे...' : 'Uploading video file...')
+                        : (lang === 'mr' ? 'व्हिडिओ निवडा व थेट अपलोड करा (Choose Video)' : 'Select Video File (Direct Upload)')}
+                    </span>
+                    <span className="text-xs text-stone-400 mt-1">
+                      MP4, MOV, WebM (YouTube लिंकची आवश्यकता नाही • कमाल 5 मिनिटे)
+                    </span>
+                    <input
+                      type="file"
+                      accept="video/mp4,video/quicktime,video/webm,video/m4v"
+                      onChange={handleVideoUpload}
+                      disabled={uploadingVideo}
+                      className="hidden"
+                    />
+                  </label>
+                ) : (
+                  <div className="space-y-3 bg-white p-4 rounded-xl border border-stone-200">
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs font-bold text-emerald-800 flex items-center gap-1.5">
+                        <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+                        <span>{lang === 'mr' ? 'व्हिडिओ थेट अपलोड झाला (5 मिनिटांच्या आत)' : 'Video uploaded directly (within 5-min limit)'}</span>
+                      </span>
+                      <button
+                        type="button"
+                        onClick={() => setFormData({ ...formData, videoUrl: '' })}
+                        className="text-xs font-bold text-red-600 hover:text-red-800 underline"
+                      >
+                        {lang === 'mr' ? 'व्हिडिओ बदला / काढा' : 'Remove / Change Video'}
+                      </button>
+                    </div>
+
+                    <div className="rounded-lg overflow-hidden bg-black aspect-16/9 max-h-64 flex items-center justify-center">
+                      <video
+                        src={formData.videoUrl}
+                        controls
+                        className="w-full h-full object-contain"
+                      />
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
 

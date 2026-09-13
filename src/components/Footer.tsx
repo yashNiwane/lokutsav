@@ -7,7 +7,7 @@ import { useLanguage } from '@/lib/language-context';
 import { Phone, Mail, MapPin, Heart, ShieldCheck } from 'lucide-react';
 
 export default function Footer() {
-  const { t } = useLanguage();
+  const { lang, t } = useLanguage();
 
   return (
     <footer className="bg-[#1C1917] text-stone-300 pt-16 pb-12 border-t-4 border-[#9B1B1E]">
@@ -72,6 +72,11 @@ export default function Footer() {
               <li>
                 <Link href="/#rules" className="hover:text-white transition-colors">
                   {t.nav.rules}
+                </Link>
+              </li>
+              <li>
+                <Link href="/referral" className="text-amber-400 hover:text-white transition-colors font-bold">
+                  🎁 {lang === 'mr' ? 'रेफरल रिवॉर्ड्स (Refer & Earn)' : 'Refer & Earn'}
                 </Link>
               </li>
             </ul>

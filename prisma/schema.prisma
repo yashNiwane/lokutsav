@@ -106,6 +106,9 @@ model Participant {
   razorpayPaymentId  String?
   termsAccepted      Boolean               @default(true)
   termsAcceptedAt    DateTime?             @default(now())
+  referralCode       String?               // e.g. LOK-2026-8941
+  referredBy         String?               // Ticket ID of person who referred
+  referralCount      Int                   @default(0)
   status             EntryStatus           @default(PENDING_VERIFICATION)
   finalScore         Float?
   finalRank          Int?                  // 1 to 10 for official top 10 winners

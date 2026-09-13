@@ -61,7 +61,24 @@ export default function RegisterPage() {
     materialsUsed: '',
     photoUrls: [] as string[],
     videoUrl: '',
+    referredBy: '',
   });
+
+  const [copiedReferral, setCopiedReferral] = useState(false);
+
+  // Auto-detect referral code from URL e.g. /register?ref=LOK-2026-8941
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search);
+      const ref = params.get('ref') || params.get('referral');
+      if (ref) {
+        setFormData((prev) => ({
+          ...prev,
+          referredBy: ref.trim().toUpperCase(),
+        }));
+      }
+    }
+  }, []);
 
   // Photo & Video upload state
   const [uploadingPhoto, setUploadingPhoto] = useState(false);
@@ -570,6 +587,38 @@ export default function RegisterPage() {
                   className="w-full px-4 py-3 rounded-lg border border-stone-300 focus:outline-none focus:ring-2 focus:ring-[#9B1B1E]/40"
                 />
               </div>
+
+              {/* Referral Code Field */}
+              <div className="bg-amber-50/60 p-4 rounded-xl border border-amber-200/80 space-y-1.5">
+                <div className="flex items-center justify-between">
+                  <label className="block font-semibold text-xs text-stone-800 uppercase tracking-wider flex items-center gap-1.5">
+                    <span>🎁</span>
+                    <span>{lang === 'mr' ? 'रेफरल कोड (Referral Code)' : 'Referral Code'}</span>
+                  </label>
+                  <span className="text-[11px] text-stone-500">
+                    {lang === 'mr' ? 'ऐच्छिक (Optional)' : 'Optional'}
+                  </span>
+                </div>
+                <div className="relative">
+                  <input
+                    type="text"
+                    value={formData.referredBy}
+                    onChange={(e) => setFormData({ ...formData, referredBy: e.target.value.toUpperCase() })}
+                    placeholder={lang === 'mr' ? 'उदा. LOK-2026-8941' : 'e.g. LOK-2026-8941'}
+                    className="w-full px-3.5 py-2.5 rounded-lg border border-stone-300 bg-white font-mono tracking-wider focus:outline-none focus:ring-2 focus:ring-[#9B1B1E]/40 uppercase text-xs sm:text-sm text-stone-900 placeholder:text-stone-400 placeholder:normal-case placeholder:tracking-normal"
+                  />
+                  {formData.referredBy && (
+                    <span className="absolute right-2.5 top-2.5 text-[11px] text-emerald-800 bg-emerald-100 px-2 py-0.5 rounded font-bold">
+                      ✓ {lang === 'mr' ? 'लागू' : 'Applied'}
+                    </span>
+                  )}
+                </div>
+                <p className="text-[11px] text-stone-500">
+                  {lang === 'mr'
+                    ? 'जर तुम्हाला एखाद्या स्पर्धकाने आमंत्रित केले असेल, तर त्यांचा तिकीट कोड येथे प्रविष्ट करा.'
+                    : 'If another participant invited you, enter their Ticket ID code here.'}
+                </p>
+              </div>
             </div>
 
             <div className="pt-4 border-t border-stone-100 flex justify-end">
@@ -1036,6 +1085,71 @@ export default function RegisterPage() {
                   <span className="text-stone-500 block">शुल्क स्थिती:</span>
                   <span className="font-bold text-emerald-700">₹199 पूर्ण (Paid via Razorpay)</span>
                 </div>
+              </div>
+            </div>
+
+            {/* Referral & Share Card */}
+            <div className="bg-gradient-to-br from-amber-50 to-orange-50/80 border-2 border-amber-300/90 rounded-2xl p-5 sm:p-6 max-w-md mx-auto text-left space-y-4 shadow-sm">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-amber-500 text-white flex items-center justify-center text-xl shadow-xs shrink-0">
+                  🎁
+                </div>
+                <div>
+                  <h3 className="font-serif font-black text-base text-stone-900">
+                    {lang === 'mr' ? 'रेफर करा आणि रोख बक्षिसे जिंका!' : 'Refer & Win Cash Rewards!'}
+                  </h3>
+                  <p className="text-xs text-stone-600">
+                    {lang === 'mr'
+                      ? 'मित्रांना आमंत्रित करा आणि "सांस्कृतिक राजदूत" सन्मान मिळवा!'
+                      : 'Invite friends to earn official Ambassador rewards!'}
+                  </p>
+                </div>
+              </div>
+
+              <div className="space-y-1.5">
+                <label className="block text-[11px] font-bold text-stone-700 uppercase tracking-wider">
+                  {lang === 'mr' ? 'तुमची खास रेफरल लिंक:' : 'Your Referral Link:'}
+                </label>
+                <div className="flex items-center gap-2 bg-white p-2 rounded-xl border border-amber-200 shadow-2xs">
+                  <input
+                    type="text"
+                    readOnly
+                    value={typeof window !== 'undefined' ? `${window.location.origin}/register?ref=${ticketId}` : `https://lokutsav.org/register?ref=${ticketId}`}
+                    className="w-full text-xs font-mono text-stone-700 bg-transparent outline-none truncate select-all px-1"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const link = typeof window !== 'undefined' ? `${window.location.origin}/register?ref=${ticketId}` : `https://lokutsav.org/register?ref=${ticketId}`;
+                      navigator.clipboard.writeText(link);
+                      setCopiedReferral(true);
+                      setTimeout(() => setCopiedReferral(false), 2500);
+                    }}
+                    className="px-3 py-1.5 rounded-lg bg-stone-900 hover:bg-stone-800 text-white text-xs font-bold shrink-0 transition-colors cursor-pointer"
+                  >
+                    {copiedReferral ? (lang === 'mr' ? '✓ कॉपी झाले!' : '✓ Copied!') : (lang === 'mr' ? 'कॉपी करा' : 'Copy')}
+                  </button>
+                </div>
+              </div>
+
+              {/* WhatsApp Share Button */}
+              <a
+                href={`https://wa.me/?text=${encodeURIComponent(
+                  `🚩 *लोकोत्सव २०२६ | महाराष्ट्र राज्य ऑनलाइन गणेश सजावट स्पर्धा*\n\nमी माझ्या बाप्पाच्या देखाव्याची अधिकृत नोंदणी केली आहे! (प्रवेशिका: ${ticketId})\n\nतुम्हीही तुमच्या घरगुती गणपती किंवा मंडळाच्या सजावटीची नोंदणी करा आणि रोख पारितोषिके जिंका.\n\n👉 माझ्या रेफरल लिंकवरून लगेच नोंदणी करा:\n${typeof window !== 'undefined' ? window.location.origin : 'https://lokutsav.org'}/register?ref=${ticketId}`
+                )}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full flex items-center justify-center gap-2.5 bg-[#25D366] hover:bg-[#20bd5a] text-white py-3 px-4 rounded-xl font-bold text-sm shadow-xs transition-all active:scale-98 cursor-pointer"
+              >
+                <Share2 className="w-4 h-4" />
+                <span>{lang === 'mr' ? 'व्हॉट्सॲपवर मित्रांना शेअर करा' : 'Share on WhatsApp'}</span>
+              </a>
+
+              <div className="pt-2 border-t border-amber-200/80 flex items-center justify-between text-[11px] text-stone-600">
+                <span>रेफरल कोड: <strong className="font-mono text-stone-900">{ticketId}</strong></span>
+                <Link href="/referral" className="font-bold text-[#9B1B1E] hover:underline">
+                  {lang === 'mr' ? 'रेफरल नियम व स्थिती पहा' : 'View Rewards'} →
+                </Link>
               </div>
             </div>
 

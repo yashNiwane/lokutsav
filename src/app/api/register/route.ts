@@ -20,6 +20,7 @@ export async function POST(request: NextRequest) {
       materialsUsed = '',
       photoUrls = [],
       videoUrl = '',
+      referredBy = '',
     } = body;
 
     // Basic validation
@@ -60,6 +61,7 @@ export async function POST(request: NextRequest) {
       entryFee: 199,
       paymentStatus: 'PENDING',
       termsAccepted: false,
+      referredBy: referredBy ? referredBy.trim().toUpperCase() : undefined,
       status: 'PENDING_VERIFICATION',
     });
 

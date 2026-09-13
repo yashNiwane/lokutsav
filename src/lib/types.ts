@@ -32,6 +32,9 @@ export interface ParticipantEntry {
   razorpayPaymentId?: string;
   termsAccepted?: boolean;
   termsAcceptedAt?: string;
+  referralCode?: string;
+  referredBy?: string;
+  referralCount?: number;
   status: EntryStatus;
   finalScore?: number;
   finalRank?: number;

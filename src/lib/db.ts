@@ -169,6 +169,9 @@ export const dataStore = {
             razorpayPaymentId: newEntry.razorpayPaymentId,
             termsAccepted: newEntry.termsAccepted ?? true,
             termsAcceptedAt: newEntry.termsAcceptedAt ? new Date(newEntry.termsAcceptedAt) : new Date(),
+            referralCode: newEntry.referralCode || newEntry.ticketId,
+            referredBy: newEntry.referredBy || null,
+            referralCount: 0,
             status: newEntry.status as any,
           },
         });
@@ -179,6 +182,8 @@ export const dataStore = {
       // Prisma insertion fallback
     }
 
+    newEntry.referralCode = newEntry.referralCode || newEntry.ticketId;
+    newEntry.referralCount = 0;
     inMemoryEntries.unshift(newEntry);
     return newEntry;
   },
@@ -203,6 +208,19 @@ export const dataStore = {
             termsAcceptedAt: acceptedAt,
           },
         });
+
+        // Increment referrer count if applicable
+        const entry = await prisma.participant.findUnique({ where: { ticketId } });
+        if (entry?.referredBy) {
+          await prisma.participant.updateMany({
+            where: {
+              OR: [{ ticketId: entry.referredBy }, { referralCode: entry.referredBy }],
+            },
+            data: {
+              referralCount: { increment: 1 },
+            },
+          });
+        }
       }
     } catch {
       // fallback
@@ -216,6 +234,16 @@ export const dataStore = {
       inMemoryEntries[idx].termsAccepted = termsAccepted;
       inMemoryEntries[idx].termsAcceptedAt = acceptedAt.toISOString();
       if (razorpayOrderId) inMemoryEntries[idx].razorpayOrderId = razorpayOrderId;
+
+      // Increment referral in in-memory
+      const refCode = inMemoryEntries[idx].referredBy;
+      if (refCode) {
+        const referrer = inMemoryEntries.find((e) => e.ticketId === refCode || e.referralCode === refCode);
+        if (referrer) {
+          referrer.referralCount = (referrer.referralCount || 0) + 1;
+        }
+      }
+
       return true;
     }
     return false;
@@ -263,6 +291,73 @@ export const dataStore = {
       return inMemoryEntries[idx];
     }
     return null;
+  },
+
+  async getReferralStats(code: string): Promise<{
+    found: boolean;
+    ticketId?: string;
+    fullName?: string;
+    district?: string;
+    referralCount: number;
+    referredEntries?: Array<{ ticketId: string; fullName: string; date: string; status: string }>;
+  }> {
+    const clean = code.trim();
+    try {
+      if (await canUsePrisma()) {
+        const user = await prisma.participant.findFirst({
+          where: {
+            OR: [{ ticketId: clean }, { referralCode: clean }],
+          },
+        });
+        if (user) {
+          const referred = await prisma.participant.findMany({
+            where: {
+              referredBy: clean,
+              paymentStatus: 'COMPLETED',
+            },
+            select: { ticketId: true, fullName: true, createdAt: true, status: true },
+          });
+
+          return {
+            found: true,
+            ticketId: user.ticketId,
+            fullName: user.fullName,
+            district: user.district,
+            referralCount: referred.length || user.referralCount || 0,
+            referredEntries: referred.map((r) => ({
+              ticketId: r.ticketId,
+              fullName: r.fullName,
+              date: r.createdAt.toISOString(),
+              status: r.status,
+            })),
+          };
+        }
+      }
+    } catch {
+      // fallback
+    }
+
+    const memUser = inMemoryEntries.find((e) => e.ticketId === clean || e.referralCode === clean);
+    if (memUser) {
+      const referred = inMemoryEntries.filter(
+        (e) => (e.referredBy === clean || e.referredBy === memUser.ticketId) && e.paymentStatus === 'COMPLETED'
+      );
+      return {
+        found: true,
+        ticketId: memUser.ticketId,
+        fullName: memUser.fullName,
+        district: memUser.district,
+        referralCount: referred.length || memUser.referralCount || 0,
+        referredEntries: referred.map((r) => ({
+          ticketId: r.ticketId,
+          fullName: r.fullName,
+          date: r.createdAt,
+          status: r.status,
+        })),
+      };
+    }
+
+    return { found: false, referralCount: 0 };
   },
 
   getCriteria(): Criterion[] {

@@ -116,6 +116,10 @@ export default function Header() {
           <Link href="/#rules" className="hover:text-[#9B1B1E] transition-colors">
             {t.nav.rules}
           </Link>
+          <Link href="/referral" className="hover:text-[#9B1B1E] transition-colors flex items-center gap-1 text-amber-800 font-bold">
+            <span>🎁</span>
+            <span>{lang === 'mr' ? 'रेफरल' : 'Referral'}</span>
+          </Link>
         </nav>
 
         {/* Action button */}
@@ -191,6 +195,14 @@ export default function Header() {
               className="p-2.5 rounded-md bg-stone-100 hover:bg-stone-200 text-stone-800"
             >
               {t.nav.rules}
+            </Link>
+            <Link
+              href="/referral"
+              onClick={() => setMobileMenuOpen(false)}
+              className="p-2.5 rounded-md bg-amber-100/70 hover:bg-amber-100 text-amber-950 font-bold flex items-center justify-between"
+            >
+              <span>{lang === 'mr' ? '🎁 रेफरल रिवॉर्ड्स (Refer & Win)' : '🎁 Refer & Win Rewards'}</span>
+              <span className="text-[10px] bg-amber-300 text-stone-900 px-2 py-0.5 rounded font-bold">New</span>
             </Link>
           </div>
 

@@ -1163,7 +1163,7 @@ export default function RegisterPage() {
                   </p>
                 </div>
 
-                <div className="pt-3 space-y-1">
+                <div className="py-3 space-y-1">
                   <h4 className="font-bold text-stone-900 text-sm sm:text-base flex items-center gap-1.5">
                     <span>6.</span>
                     <span>{lang === 'mr' ? 'प्रमाणपत्र व सन्मान (Certificates & Awards)' : 'Certificates & Recognition'}</span>
@@ -1172,6 +1172,18 @@ export default function RegisterPage() {
                     {lang === 'mr'
                       ? 'प्रत्येक वैध सहभागी स्पर्धकाला डिजिटल सहभाग प्रमाणपत्र (QR Verified E-Certificate) दिले जाईल. विजेत्यांना राज्य, विभाग व जिल्हास्तरावर रोख बक्षिसे व स्मृतिचिन्ह प्रदान केले जातील.'
                       : 'Every valid registered entrant receives an official QR-verified Certificate of Participation. Winners across State, Division, and District tiers receive cash awards, trophies, and honor scrolls.'}
+                  </p>
+                </div>
+
+                <div className="pt-3 space-y-1">
+                  <h4 className="font-bold text-stone-900 text-sm sm:text-base flex items-center gap-1.5">
+                    <span>7.</span>
+                    <span>{lang === 'mr' ? 'प्रायोजक आणि बक्षिसांमध्ये बदल (Sponsors & Prizes Policy)' : 'Sponsors & Prize Revisions'}</span>
+                  </h4>
+                  <p>
+                    {lang === 'mr'
+                      ? 'स्पर्धेचे अधिकृत प्रायोजक (Sponsors) आणि जाहीर करण्यात आलेली बक्षिसे किंवा त्यांचे स्वरूप (Prizes & Awards) स्पर्धा कालावधी दरम्यान परिस्थितीनुसार बदलू शकतात. आवश्यकतेनुसार प्रायोजक जोडणे, बदलणे किंवा बक्षिसांच्या रचनेत फेरबदल करण्याचे सर्व अधिकार आयोजक व संयोजन समितीकडे राखीव आहेत.'
+                      : 'Official sponsors and announced prize structures/amounts are subject to update, modification, or change during the competition timeline. The organizing committee reserves full rights to modify sponsors and prize distributions as required.'}
                   </p>
                 </div>
               </div>

@@ -6,7 +6,7 @@ import { CheckCircle2, AlertCircle, FileText } from 'lucide-react';
 import Link from 'next/link';
 
 export default function RulesSection() {
-  const { lang, t } = useLanguage();
+  const { t } = useLanguage();
 
   const rulesList = [
     t.rules.r1,
@@ -45,20 +45,12 @@ export default function RulesSection() {
           ))}
         </div>
 
-        <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
-          <Link
-            href="/rules"
-            className="inline-flex items-center gap-2 bg-white hover:bg-stone-50 text-stone-800 border border-[#E5D7C0] px-7 py-3.5 rounded-xl font-bold text-sm shadow-2xs transition-all"
-          >
-            <FileText className="w-4 h-4 text-[#9B1B1E]" />
-            <span>{lang === 'mr' ? 'संपूर्ण अधिकृत नियमावली व अटी वाचा (10 Chapters)' : 'Read Official Rule Book (10 Chapters)'}</span>
-          </Link>
-
+        <div className="mt-8 text-center">
           <Link
             href="/register"
             className="inline-flex items-center gap-2 bg-[#9B1B1E] hover:bg-[#781416] text-white px-8 py-3.5 rounded-xl font-bold text-sm shadow-sm transition-all"
           >
-            <span>{lang === 'mr' ? 'सर्व नियम मान्य आहेत - आताच नोंदणी करा (₹199)' : 'I Agree to Rules - Register (₹199)'}</span>
+            <span>सर्व नियम मान्य आहेत - आताच नोंदणी करा (₹199)</span>
           </Link>
         </div>
       </div>

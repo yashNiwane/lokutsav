@@ -70,8 +70,13 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/#rules" className="hover:text-white transition-colors">
-                  {t.nav.rules}
+                <Link href="/rules" className="hover:text-white transition-colors">
+                  {t.nav.rules} (Rule Book)
+                </Link>
+              </li>
+              <li>
+                <Link href="/terms" className="hover:text-white transition-colors text-xs text-stone-400">
+                  नियम व अटी (Terms & Conditions)
                 </Link>
               </li>
             </ul>
@@ -98,28 +103,35 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Col 4: District Coverage Badge */}
-          <div className="bg-stone-900/80 p-5 rounded-lg border border-stone-800 space-y-3">
-            <span className="text-xs uppercase font-bold text-amber-400 tracking-wider">
-              राज्यव्यापी सहभाग
-            </span>
-            <p className="text-xs text-stone-400 leading-relaxed">
-              कोकण, पश्चिम महाराष्ट्र, मराठवाडा, विदर्भ आणि खान्देश मधील सर्व 36 जिल्ह्यांतील भाविकांसाठी खुली स्पर्धा.
+          {/* Col 4: Registration CTA */}
+          <div className="bg-stone-900/90 p-5 rounded-xl border border-stone-800 space-y-3">
+            <h4 className="font-serif text-base font-bold text-white">
+              स्पर्धेत सहभागी व्हा
+            </h4>
+            <p className="text-xs text-stone-400">
+              अवघ्या ₹199 मध्ये सहभाग नोंदवा आणि जिंका मानाची सुवर्ण ट्रॉफी व रोख बक्षिसे.
             </p>
-            <div className="pt-2">
-              <Link
-                href="/register"
-                className="block text-center bg-amber-600 hover:bg-amber-500 text-stone-950 font-bold text-xs py-2.5 px-4 rounded transition-colors"
-              >
-                नोंदणी करा (₹199)
-              </Link>
-            </div>
+            <Link
+              href="/register"
+              className="block text-center bg-amber-600 hover:bg-amber-500 text-stone-950 font-bold text-xs py-2.5 px-4 rounded transition-colors"
+            >
+              नोंदणी करा (₹199)
+            </Link>
           </div>
         </div>
 
         {/* Bottom divider & copyright */}
         <div className="pt-8 border-t border-stone-800 flex flex-col sm:flex-row items-center justify-between text-xs text-stone-500 gap-4">
           <p>{t.footer.copyright}</p>
+          <div className="flex items-center gap-3">
+            <Link href="/terms" className="hover:text-stone-300 underline transition-colors">
+              नियम व अटी (Terms & Conditions)
+            </Link>
+            <span>•</span>
+            <Link href="/rules" className="hover:text-stone-300 underline transition-colors">
+              अधिकृत नियमावली (Rule Book)
+            </Link>
+          </div>
           <p className="flex items-center gap-1">
             महाराष्ट्राच्या समृद्ध संस्कृतीला सादर समर्पित
           </p>

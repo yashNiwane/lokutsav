@@ -95,7 +95,7 @@ export default function Header() {
           <Link href="/sponsors" className="hover:text-[#9B1B1E] transition-colors">
             {t.nav.sponsors}
           </Link>
-          <Link href="/#rules" className="hover:text-[#9B1B1E] transition-colors">
+          <Link href="/rules" className="hover:text-[#9B1B1E] transition-colors">
             {t.nav.rules}
           </Link>
         </nav>
@@ -168,7 +168,7 @@ export default function Header() {
               {t.nav.sponsors}
             </Link>
             <Link
-              href="/#rules"
+              href="/rules"
               onClick={() => setMobileMenuOpen(false)}
               className="p-2.5 rounded-md bg-stone-100 hover:bg-stone-200 text-stone-800"
             >

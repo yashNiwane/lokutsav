@@ -91,59 +91,61 @@ export default function ReferralPage() {
             <span>{lang === 'mr' ? 'लोकोत्सव सांस्कृतिक राजदूत अभियान • १०% थेट कमिशन' : 'Cultural Ambassador Program • 10% Cash Commission'}</span>
           </span>
           <h1 className="font-serif font-black text-3xl sm:text-4xl lg:text-5xl text-stone-900 tracking-tight">
-            {lang === 'mr' ? 'रेफर करा आणि मिळवा थेट १०% रोख कमिशन!' : 'Refer Friends & Earn 10% Cash Commission!'}
+            {lang === 'mr' ? 'रेफर करा आणि प्रत्येक नोंदणीवर मिळवा १०% कमिशन!' : 'Refer Friends & Earn 10% Commission on Each Referral!'}
           </h1>
           <p className="text-stone-600 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed">
             {lang === 'mr'
-              ? 'तुमच्या रेफरल लिंकवरून होणाऱ्या प्रत्येक ₹९९ च्या यशस्वी नोंदणीवर मिळवा थेट १०% (₹९.९०) रोख कमिशन! आपल्या मित्रांना, आप्तेष्टांना व गणेश मंडळांना सहभागी करा आणि अमर्याद कमाई करा.'
-              : 'Earn a 10% direct cash commission (₹9.90) on every ₹99 verified registration made through your referral code or link. Invite friends and earn without limits!'}
+              ? 'तुमच्या रेफरल लिंकवरून होणाऱ्या प्रत्येक यशस्वी नोंदणीवर मिळवा थेट १०% रोख कमिशन! आपल्या मित्रांना, आप्तेष्टांना व गणेश मंडळांना सहभागी करा आणि अमर्याद कमाई करा.'
+              : 'Earn a 10% direct cash commission on every verified registration made through your referral code or link. Invite friends and mandals to earn without limits!'}
           </p>
         </div>
 
-        {/* 10% Commission Showcase Cards */}
-        <div className="bg-gradient-to-br from-amber-500 via-orange-600 to-[#9B1B1E] p-6 sm:p-8 rounded-3xl text-white shadow-lg space-y-6">
-          <div className="text-center space-y-1">
-            <span className="text-xs uppercase tracking-widest font-bold text-amber-200 bg-black/20 px-3 py-1 rounded-full inline-block">
-              {lang === 'mr' ? '💰 थेट कमाईचे गणित' : '💰 Commission Earnings Structure'}
+        {/* 10% Commission Highlights Banner */}
+        <div className="bg-gradient-to-br from-[#9B1B1E] via-[#B82428] to-amber-700 p-6 sm:p-8 rounded-3xl text-white shadow-xl space-y-6">
+          <div className="text-center space-y-2">
+            <span className="text-xs uppercase tracking-widest font-bold text-amber-200 bg-black/25 px-3.5 py-1 rounded-full inline-block">
+              {lang === 'mr' ? '💰 विशेष रेफरल ऑफर' : '💰 Special Ambassador Offer'}
             </span>
-            <h2 className="font-serif font-black text-2xl sm:text-3xl text-white">
-              {lang === 'mr' ? 'प्रत्येक नोंदणीवर १०% हमखास कमिशन' : '10% Guaranteed Cash on Every Registration'}
+            <h2 className="font-serif font-black text-2xl sm:text-4xl text-white">
+              {lang === 'mr' ? 'प्रत्येक रेफरलवर थेट १०% रोख कमिशन' : '10% Cash Commission on Every Referral'}
             </h2>
-            <p className="text-amber-100 text-xs sm:text-sm">
-              {lang === 'mr' ? 'प्रवेश शुल्क: ₹९९ | तुमचे कमिशन: १०% = ₹९.९० प्रति नोंदणी' : 'Entry Fee: ₹99 | Your Commission: 10% = ₹9.90 per registration'}
+            <p className="text-amber-100 text-xs sm:text-sm max-w-xl mx-auto">
+              {lang === 'mr'
+                ? 'तुमच्या लिंक किंवा कोडवरून झालेल्या प्रत्येक नोंदीवर थेट १०% कमिशन तुमच्या खात्यात जमा केले जाईल.'
+                : 'Get 10% direct cash commission transferred to your account for every participant who registers using your link.'}
             </p>
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center">
-            <div className="bg-white/10 backdrop-blur-md p-4 rounded-2xl border border-white/20">
-              <span className="text-xs text-amber-200 block font-medium">{lang === 'mr' ? '१ नोंदणी' : '1 Registration'}</span>
-              <p className="text-2xl sm:text-3xl font-serif font-black text-white mt-1">₹९.९०</p>
-              <span className="text-[11px] text-amber-100/90 block mt-1">{lang === 'mr' ? '१०% थेट कमिशन' : '10% Commission'}</span>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
+            <div className="bg-white/10 backdrop-blur-md p-4 sm:p-5 rounded-2xl border border-white/20 text-center space-y-1">
+              <span className="text-2xl block">⚡</span>
+              <p className="font-serif font-bold text-base text-amber-200">
+                {lang === 'mr' ? 'पहिल्या नोंदणीपासून लागू' : 'From 1st Registration'}
+              </p>
+              <p className="text-xs text-white/80 leading-relaxed">
+                {lang === 'mr' ? 'कोणतीही वाट न पाहता पहिल्याच रेफरलपासून थेट १०% कमिशन सुरू' : 'Earn 10% commission starting from your very first invite'}
+              </p>
             </div>
 
-            <div className="bg-white/20 backdrop-blur-md p-4 rounded-2xl border-2 border-amber-300 shadow-md">
-              <span className="text-xs text-amber-200 block font-bold">{lang === 'mr' ? '१० नोंदणी' : '10 Registrations'}</span>
-              <p className="text-2xl sm:text-3xl font-serif font-black text-amber-300 mt-1">₹९९.००</p>
-              <span className="text-[11px] text-emerald-200 block mt-1 font-bold">
-                {lang === 'mr' ? 'स्वतःची फी १००% वसूल!' : '100% Fee Recovered!'}
-              </span>
+            <div className="bg-white/15 backdrop-blur-md p-4 sm:p-5 rounded-2xl border-2 border-amber-300 shadow-md text-center space-y-1">
+              <span className="text-2xl block">♾️</span>
+              <p className="font-serif font-bold text-base text-amber-200">
+                {lang === 'mr' ? 'अमर्याद कमाईची संधी' : 'Unlimited Earning'}
+              </p>
+              <p className="text-xs text-white/90 leading-relaxed">
+                {lang === 'mr' ? 'रेफरल संख्येवर कोणतीही मर्यादा नाही — जितके जास्त रेफरल, तितकी जास्त कमाई' : 'No upper limit — the more friends you refer, the more you earn'}
+              </p>
             </div>
 
-            <div className="bg-white/10 backdrop-blur-md p-4 rounded-2xl border border-white/20">
-              <span className="text-xs text-amber-200 block font-medium">{lang === 'mr' ? '५० नोंदणी' : '50 Registrations'}</span>
-              <p className="text-2xl sm:text-3xl font-serif font-black text-white mt-1">₹४९५.००</p>
-              <span className="text-[11px] text-amber-100/90 block mt-1">{lang === 'mr' ? 'थेट रोख कमिशन' : 'Direct Cash'}</span>
+            <div className="bg-white/10 backdrop-blur-md p-4 sm:p-5 rounded-2xl border border-white/20 text-center space-y-1">
+              <span className="text-2xl block">📲</span>
+              <p className="font-serif font-bold text-base text-amber-200">
+                {lang === 'mr' ? 'थेट UPI / बँक खात्यात' : 'Direct Account Payout'}
+              </p>
+              <p className="text-xs text-white/80 leading-relaxed">
+                {lang === 'mr' ? 'कमिशन रक्कम थेट आपल्या UPI किंवा बँक खात्यात सुरक्षितपणे वितरीत' : 'Commission directly and securely transferred to your UPI or Bank'}
+              </p>
             </div>
-
-            <div className="bg-white/10 backdrop-blur-md p-4 rounded-2xl border border-white/20">
-              <span className="text-xs text-amber-200 block font-medium">{lang === 'mr' ? '१०० नोंदणी' : '100 Registrations'}</span>
-              <p className="text-2xl sm:text-3xl font-serif font-black text-white mt-1">₹९९०.००</p>
-              <span className="text-[11px] text-amber-100/90 block mt-1">{lang === 'mr' ? 'अमर्याद कमाई' : 'Unlimited Cash'}</span>
-            </div>
-          </div>
-
-          <div className="text-center text-xs text-amber-100/90 pt-1">
-            <span>✨ {lang === 'mr' ? 'कमिशन रक्कम थेट तुमच्या UPI किंवा बँक खात्यात वितरीत केली जाईल.' : 'Commission payout transferred directly to your UPI or Bank Account.'}</span>
           </div>
         </div>
 
@@ -158,7 +160,7 @@ export default function ReferralPage() {
             </h3>
             <p className="text-xs sm:text-sm text-stone-600 leading-relaxed">
               {lang === 'mr'
-                ? 'स्पर्धेत ₹९९ भरून नोंदणी केल्यावर प्राप्त होणारा युनिक तिकीट क्रमांक (उदा. LOK-2026-8941) हाच तुमचा अधिकृत रेफरल कोड आहे.'
+                ? 'स्पर्धेत नोंदणी केल्यावर प्राप्त होणारा युनिक तिकीट क्रमांक (उदा. LOK-2026-8941) हाच तुमचा अधिकृत रेफरल कोड आहे.'
                 : 'Your unique registration Ticket ID (e.g. LOK-2026-8941) acts as your permanent referral ambassador code.'}
             </p>
           </div>
@@ -186,8 +188,8 @@ export default function ReferralPage() {
             </h3>
             <p className="text-xs sm:text-sm text-stone-600 leading-relaxed">
               {lang === 'mr'
-                ? 'प्रत्येक यशस्वी नोंदणीवर १०% (₹९.९०) रोख कमिशन, १०+ रेफरल्सवर राजदूत प्रमाणपत्र, आणि टॉप ३ रेफरर्सना भव्य रोख पारितोषिके!'
-                : 'Earn 10% (₹9.90) cash commission on every registration, ambassador certificate on 10+ referrals, and grand cash awards for top referrers!'}
+                ? 'प्रत्येक यशस्वी नोंदणीवर थेट १०% रोख कमिशन, १०+ रेफरल्सवर राजदूत प्रमाणपत्र, आणि टॉप ३ रेफरर्सना भव्य रोख पारितोषिके!'
+                : 'Earn 10% cash commission on every registration, ambassador certificate on 10+ referrals, and grand cash awards for top referrers!'}
             </p>
           </div>
         </div>
@@ -201,7 +203,7 @@ export default function ReferralPage() {
                 {lang === 'mr' ? 'रेफरल पुरस्कार व कमिशन श्रेणी' : 'Ambassador Rewards & Commission Tiers'}
               </h2>
               <p className="text-xs text-stone-500">
-                {lang === 'mr' ? 'प्रत्येक यशस्वी ₹९९ भरलेल्या नोंदणीवर १०% थेट कमिशन + विशेष सन्मान' : '10% Cash Commission + Special Trophies on every verified registration'}
+                {lang === 'mr' ? 'प्रत्येक यशस्वी नोंदणीवर १०% थेट कमिशन + विशेष सन्मान' : '10% Cash Commission + Special Trophies on every verified registration'}
               </p>
             </div>
           </div>
@@ -209,10 +211,10 @@ export default function ReferralPage() {
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-center">
             <div className="p-4 rounded-xl bg-stone-50 border border-stone-200 space-y-2">
               <span className="text-xs font-bold text-stone-600 uppercase tracking-wide">
-                {lang === 'mr' ? 'प्रत्येक नोंदणीवर (Base Rate)' : 'Per Registration'}
+                {lang === 'mr' ? 'प्रत्येक नोंदणीवर' : 'On Every Registration'}
               </span>
               <p className="font-serif font-black text-xl text-[#9B1B1E]">
-                {lang === 'mr' ? '१०% थेट कमिशन (₹९.९०)' : '10% Direct Cash (₹9.90)'}
+                {lang === 'mr' ? '१०% थेट रोख कमिशन' : '10% Direct Cash Commission'}
               </p>
               <p className="text-xs text-stone-500">
                 {lang === 'mr' ? 'पहिल्या नोंदणीपासून हमखास कमाई' : 'Earned from your very 1st referral'}
@@ -224,10 +226,10 @@ export default function ReferralPage() {
                 {lang === 'mr' ? 'रौप्य राजदूत (१०+ रेफरल)' : 'Silver Tier (10+ Referrals)'}
               </span>
               <p className="font-serif font-black text-xl text-amber-900">
-                {lang === 'mr' ? '₹९९+ कमिशन + ई-प्रशस्तिपत्र' : '₹99+ Cash + Official Certificate'}
+                {lang === 'mr' ? '१०% कमिशन + ई-प्रशस्तिपत्र' : '10% Cash + Official Certificate'}
               </p>
               <p className="text-xs text-stone-500">
-                {lang === 'mr' ? 'नोंदणी फी १००% वसूल + अधिकृत राजदूत प्रमाणपत्र' : '100% Entry Fee back + QR verified honor scroll'}
+                {lang === 'mr' ? '१०+ रेफरल्सवर अधिकृत सांस्कृतिक राजदूत सन्मानपत्र' : 'QR verified honor scroll with 10+ referrals'}
               </p>
             </div>
 
@@ -338,7 +340,7 @@ export default function ReferralPage() {
                       ₹{totalEarnings}
                     </p>
                     <span className="text-[10px] text-emerald-700 font-medium block">
-                      (₹9.90 / नोंदणी)
+                      {lang === 'mr' ? '१०% थेट कमिशन' : '10% Cash Commission'}
                     </span>
                   </div>
                 </div>
@@ -406,7 +408,7 @@ export default function ReferralPage() {
                         </div>
                         <div className="text-right">
                           <span className="inline-block text-emerald-700 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded font-bold text-[11px]">
-                            + ₹9.90 (१०%)
+                            {lang === 'mr' ? '१०% कमिशन' : '10% Commission'}
                           </span>
                           <span className="text-[10px] text-stone-400 block">✓ नोंदणीकृत</span>
                         </div>
@@ -417,8 +419,8 @@ export default function ReferralPage() {
               ) : (
                 <p className="text-xs text-stone-500 text-center pt-2">
                   {lang === 'mr'
-                    ? 'अद्याप कोणीही तुमच्या कोडवरून नोंदणी केलेली नाही. आजच आपली लिंक शेअर करून प्रति नोंदणी १०% (₹९.९०) कमवा!'
-                    : 'No participants have registered with your code yet. Share your link today to start earning 10% (₹9.90) per registration!'}
+                    ? 'अद्याप कोणीही तुमच्या कोडवरून नोंदणी केलेली नाही. आजच आपली लिंक शेअर करून प्रत्येक नोंदणीवर १०% कमिशन मिळवा!'
+                    : 'No participants have registered with your code yet. Share your link today to start earning 10% commission on each referral!'}
                 </p>
               )}
             </div>

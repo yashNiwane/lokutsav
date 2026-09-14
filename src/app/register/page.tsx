@@ -1364,20 +1364,20 @@ export default function RegisterPage() {
                   </h3>
                   <p className="text-xs text-stone-600">
                     {lang === 'mr'
-                      ? 'प्रत्येक नोंदणीवर १०% (₹९.९०) थेट रोख कमिशन कमवा!'
-                      : 'Earn 10% (₹9.90) cash commission on every registration!'}
+                      ? 'प्रत्येक यशस्वी नोंदणीवर थेट १०% रोख कमिशन कमवा!'
+                      : 'Earn 10% cash commission on every registration!'}
                   </p>
                 </div>
               </div>
 
               <div className="bg-white/80 p-2.5 rounded-xl border border-amber-200 text-xs text-stone-700 space-y-1">
                 <span className="font-bold text-[#9B1B1E] block">
-                  {lang === 'mr' ? '💰 थेट १०% कमिशन सूत्र:' : '💰 10% Commission Structure:'}
+                  {lang === 'mr' ? '💰 थेट १०% कमिशन:' : '💰 10% Cash Commission:'}
                 </span>
                 <p className="text-[11px] text-stone-600">
                   {lang === 'mr'
-                    ? 'तुमच्या लिंकवरून मित्राने ₹९९ भरून नोंदणी करताच प्रति नोंदणी ₹९.९० तुमच्या खात्यात जमा केले जातील. १० मित्रांवर ₹९९ (तुमची फी १००% वसूल!)'
-                    : 'Get ₹9.90 (10%) on every ₹99 registration made with your link. 10 friends = ₹99 (100% of your fee recovered!)'}
+                    ? 'तुमच्या रेफरल लिंकवरून होणाऱ्या प्रत्येक नोंदणीवर तुम्हाला थेट १०% रोख कमिशन मिळेल. जास्तीत जास्त मित्रांना जोडा आणि अमर्याद कमाई करा!'
+                    : 'Earn a direct 10% cash commission on each participant who registers using your referral link. Refer more friends to earn unlimited cash!'}
                 </p>
               </div>
 

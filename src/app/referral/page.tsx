@@ -152,7 +152,7 @@ export default function ReferralPage() {
                 {lang === 'mr' ? 'रेफरल पुरस्कार श्रेणी' : 'Ambassador Reward Tiers'}
               </h2>
               <p className="text-xs text-stone-500">
-                {lang === 'mr' ? 'प्रत्येक यशस्वी ₹299 भरलेल्या नोंदणीवर गुण मोजले जातील' : 'Points counted upon verified registration'}
+                {lang === 'mr' ? 'प्रत्येक यशस्वी ₹99 भरलेल्या नोंदणीवर गुण मोजले जातील' : 'Points counted upon verified registration'}
               </p>
             </div>
           </div>
@@ -355,15 +355,15 @@ export default function ReferralPage() {
           </h2>
           <p className="text-xs sm:text-sm text-stone-300 max-w-xl mx-auto leading-relaxed">
             {lang === 'mr'
-              ? 'केवळ ₹299 मध्ये आपल्या बाप्पाच्या सजावटीची नोंदणी करा, अधिकृत तिकीट मिळवा आणि स्वतःचा रेफरल कोड सक्रिय करा.'
-              : 'Register your Ganpati decoration for just ₹299, receive your official ticket pass, and activate your personal ambassador code.'}
+              ? 'केवळ ₹99 मध्ये आपल्या बाप्पाच्या सजावटीची नोंदणी करा, अधिकृत तिकीट मिळवा आणि स्वतःचा रेफरल कोड सक्रिय करा.'
+              : 'Register your Ganpati decoration for just ₹99, receive your official ticket pass, and activate your personal ambassador code.'}
           </p>
           <div className="pt-2">
             <Link
               href="/register"
               className="inline-flex items-center gap-2 bg-[#9B1B1E] hover:bg-[#781416] text-white px-8 py-3.5 rounded-xl font-bold text-sm shadow-md transition-all active:scale-98"
             >
-              <span>{lang === 'mr' ? 'आता नोंदणी करा (₹299)' : 'Register Now (₹299)'}</span>
+              <span>{lang === 'mr' ? 'आता नोंदणी करा (₹99)' : 'Register Now (₹99)'}</span>
               <ArrowRight className="w-4 h-4" />
             </Link>
           </div>

@@ -173,7 +173,7 @@ export default function Footer() {
                 href="/register"
                 className="block text-center bg-amber-600 hover:bg-amber-500 text-stone-950 font-bold text-xs py-2.5 px-4 rounded transition-colors"
               >
-                नोंदणी करा (₹299)
+                नोंदणी करा (₹99)
               </Link>
             </div>
           </div>

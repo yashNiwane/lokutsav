@@ -105,7 +105,7 @@ export default function PrizeSection() {
               href="/register"
               className="inline-flex items-center gap-2 bg-[#9B1B1E] hover:bg-[#781416] text-white px-6 py-3 rounded-xl font-bold text-sm shadow-sm transition-all"
             >
-              <span>नोंदणी करा (₹299)</span>
+              <span>नोंदणी करा (₹99)</span>
             </Link>
           </div>
         </div>

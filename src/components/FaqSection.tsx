@@ -12,8 +12,8 @@ export default function FaqSection() {
     {
       qEn: 'What is the registration fee and how do I pay?',
       qMr: 'नोंदणी शुल्क किती आहे आणि ते कसे भरायचे?',
-      aEn: 'The entry fee is a nominal ₹299 per decoration entry. You can pay online securely using UPI (Google Pay, PhonePe, Paytm), Netbanking, or Debit/Credit Cards via our Razorpay integration.',
-      aMr: 'नोंदणी शुल्क प्रति सजावट केवळ ₹299 आहे. तुम्ही थेट UPI (Google Pay, PhonePe, Paytm), नेटबँकिंग किंवा डेबिट/क्रेडिट कार्डद्वारे सुरक्षितपणे ऑनलाइन भरणा करू शकता.',
+      aEn: 'The entry fee is a nominal ₹99 per decoration entry. You can pay online securely using UPI (Google Pay, PhonePe, Paytm), Netbanking, or Debit/Credit Cards via our Razorpay integration.',
+      aMr: 'नोंदणी शुल्क प्रति सजावट केवळ ₹99 आहे. तुम्ही थेट UPI (Google Pay, PhonePe, Paytm), नेटबँकिंग किंवा डेबिट/क्रेडिट कार्डद्वारे सुरक्षितपणे ऑनलाइन भरणा करू शकता.',
     },
     {
       qEn: 'How many photos and videos can I submit?',
@@ -36,8 +36,8 @@ export default function FaqSection() {
     {
       qEn: 'When do I receive my participation certificate?',
       qMr: 'सहभाग प्रमाणपत्र कधी आणि कसे मिळेल?',
-      aEn: 'Immediately upon successful registration and payment of ₹299, your official Lokutsav Ticket ID is generated. The verified digital Certificate of Participation will be available for instant download and sent to your registered email.',
-      aMr: 'नोंदणी व ₹299 शुल्क भरणा यशस्वी होताच तुम्हाला अधिकृत तिकीट क्रमांक मिळतो. पडताळणी पूर्ण झाल्यानंतर डिजिटल सहभाग प्रमाणपत्र थेट तुमच्या ईमेलवर व संकेतस्थळावरून डाऊनलोड करता येईल.',
+      aEn: 'Immediately upon successful registration and payment of ₹99, your official Lokutsav Ticket ID is generated. The verified digital Certificate of Participation will be available for instant download and sent to your registered email.',
+      aMr: 'नोंदणी व ₹99 शुल्क भरणा यशस्वी होताच तुम्हाला अधिकृत तिकीट क्रमांक मिळतो. पडताळणी पूर्ण झाल्यानंतर डिजिटल सहभाग प्रमाणपत्र थेट तुमच्या ईमेलवर व संकेतस्थळावरून डाऊनलोड करता येईल.',
     },
   ];
 

@@ -71,7 +71,7 @@ export default async function GalleryPage() {
             href="/register"
             className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-[#9B1B1E] hover:bg-[#781416] text-white px-8 py-3.5 rounded-xl font-bold text-sm shadow-sm transition-all"
           >
-            <span>आपला देखावा नोंदवा (₹299)</span>
+            <span>आपला देखावा नोंदवा (₹99)</span>
             <ArrowRight className="w-4 h-4 text-amber-300" />
           </Link>
 

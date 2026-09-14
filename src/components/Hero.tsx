@@ -119,7 +119,7 @@ export default function Hero() {
                 href="/register"
                 className="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-stone-950 font-black text-xs sm:text-sm px-5 py-2.5 rounded-xl shadow-lg border border-amber-300 transition-all hover:scale-105 active:scale-95 whitespace-nowrap self-start sm:self-auto"
               >
-                <span>{lang === 'mr' ? 'सहभाग नोंदवा (₹२९९)' : 'Enter Now (₹299)'}</span>
+                <span>{lang === 'mr' ? 'सहभाग नोंदवा (₹९९)' : 'Enter Now (₹99)'}</span>
                 <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
@@ -151,7 +151,7 @@ export default function Hero() {
               {t.brand.entryFee}
             </p>
             <p className="font-serif text-2xl sm:text-3xl font-black text-amber-700">
-              {lang === 'mr' ? '₹299 मात्र' : '₹299 Only'}
+              {lang === 'mr' ? '₹99 मात्र' : '₹99 Only'}
             </p>
             <p className="text-[11px] text-stone-600 mt-1 font-medium">
               {lang === 'mr' ? 'सुलभ UPI व कार्ड पेमेंट्स' : 'Instant UPI & Cards'}

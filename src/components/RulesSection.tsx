@@ -50,7 +50,7 @@ export default function RulesSection() {
             href="/register"
             className="inline-flex items-center gap-2 bg-[#9B1B1E] hover:bg-[#781416] text-white px-8 py-3.5 rounded-xl font-bold text-sm shadow-sm transition-all"
           >
-            <span>सर्व नियम मान्य आहेत - आताच नोंदणी करा (₹299)</span>
+            <span>सर्व नियम मान्य आहेत - आताच नोंदणी करा (₹99)</span>
           </Link>
         </div>
       </div>

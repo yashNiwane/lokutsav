@@ -139,7 +139,7 @@ export const dataStore = {
               titleMr: 'महाराष्ट्र राज्य ऑनलाइन गणेश सजावट स्पर्धा 2026',
               description: 'State-level Ganpati decoration competition',
               descriptionMr: 'राज्यस्तरीय गणेश सजावट स्पर्धा',
-              entryFee: 299,
+              entryFee: 99,
               registrationEnd: new Date('2026-09-30T23:59:59Z'),
               judgingEnd: new Date('2026-10-05T23:59:59Z'),
             },

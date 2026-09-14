@@ -27,10 +27,10 @@ export default function HowToParticipate() {
     },
     {
       num: '03',
-      titleMr: '₹299 शुल्क भरा व तिकीट मिळवा',
-      titleEn: 'Pay ₹299 & Get Entry Ticket',
-      descMr: 'UPI (GPay/PhonePe/Paytm) किंवा कार्डद्वारे ₹299 भरणा करून अधिकृत प्रवेश तिकीट तात्काळ डाऊनलोड करा.',
-      descEn: 'Pay ₹299 via UPI Intent or Card and instantly download your verified digital entry pass.',
+      titleMr: '₹99 शुल्क भरा व तिकीट मिळवा',
+      titleEn: 'Pay ₹99 & Get Entry Ticket',
+      descMr: 'UPI (GPay/PhonePe/Paytm) किंवा कार्डद्वारे ₹99 भरणा करून अधिकृत प्रवेश तिकीट तात्काळ डाऊनलोड करा.',
+      descEn: 'Pay ₹99 via UPI Intent or Card and instantly download your verified digital entry pass.',
       icon: <CreditCard className="w-6 h-6 text-emerald-700" />,
     },
   ];
@@ -96,7 +96,7 @@ export default function HowToParticipate() {
               href="/register"
               className="inline-flex items-center gap-2 bg-[#9B1B1E] hover:bg-[#781416] text-white px-8 py-3.5 rounded-xl font-bold text-sm shadow-sm transition-all"
             >
-              <span>आताच नोंदणी करा (₹299)</span>
+              <span>आताच नोंदणी करा (₹99)</span>
               <ArrowRight className="w-4 h-4 text-amber-300" />
             </Link>
           </div>

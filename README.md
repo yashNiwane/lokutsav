@@ -46,7 +46,7 @@ Built using the **`human-designed-ui`** skill principles: an intentional, dignif
   - Theme Story & Materials list
   - Multi-file photo upload stored directly on the VPS disk via `/api/upload`
   - Optional video walkthrough link (YouTube / Google Drive)
-- **Step 3: ₹299 Payment**: Razorpay integration with live checkout & simulation mode.
+- **Step 3: ₹99 Payment**: Razorpay integration with live checkout & simulation mode.
 - **Step 4: Official Lokutsav Entry Ticket**: Unique Ticket ID (e.g. `LOK-2026-8941`), printable badge, and WhatsApp sharing.
 
 ### 3. Official Top 10 Winners & Leaderboard (`/winners`)

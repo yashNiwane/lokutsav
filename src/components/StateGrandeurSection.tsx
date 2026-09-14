@@ -162,7 +162,7 @@ export default function StateGrandeurSection() {
               href="/register"
               className="inline-flex items-center gap-2 bg-[#9B1B1E] hover:bg-[#781416] text-white px-8 py-3.5 rounded-xl font-bold text-sm shadow-sm transition-all"
             >
-              <span>आपल्या विभागाचे प्रतिनिधित्व करा — नोंदणी करा (₹299)</span>
+              <span>आपल्या विभागाचे प्रतिनिधित्व करा — नोंदणी करा (₹99)</span>
             </Link>
           </div>
         </div>

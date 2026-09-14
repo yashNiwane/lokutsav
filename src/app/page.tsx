@@ -5,7 +5,6 @@ import PrizeSection from '@/components/PrizeSection';
 import CriteriaSection from '@/components/CriteriaSection';
 import HowToParticipate from '@/components/HowToParticipate';
 import FeaturedGallery from '@/components/FeaturedGallery';
-import SponsorsSection from '@/components/SponsorsSection';
 import RulesSection from '@/components/RulesSection';
 import FaqSection from '@/components/FaqSection';
 import { dataStore } from '@/lib/db';
@@ -28,7 +27,6 @@ export default async function HomePage() {
       ) : (
         <FeaturedGallery initialEntries={entries} />
       )}
-      <SponsorsSection />
       <RulesSection />
       <FaqSection />
     </div>

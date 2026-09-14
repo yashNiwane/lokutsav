@@ -1536,12 +1536,12 @@ export default function RegisterPage() {
                 <div className="pt-3 space-y-1">
                   <h4 className="font-bold text-stone-900 text-sm sm:text-base flex items-center gap-1.5">
                     <span>7.</span>
-                    <span>{lang === 'mr' ? 'प्रायोजक आणि बक्षिसांमध्ये बदल (Sponsors & Prizes Policy)' : 'Sponsors & Prize Revisions'}</span>
+                    <span>{lang === 'mr' ? 'बक्षीस वितरण धोरण (Prize Distribution Policy)' : 'Prize Distribution Policy'}</span>
                   </h4>
                   <p>
                     {lang === 'mr'
-                      ? 'स्पर्धेचे अधिकृत प्रायोजक (Sponsors) आणि जाहीर करण्यात आलेली बक्षिसे किंवा त्यांचे स्वरूप (Prizes & Awards) स्पर्धा कालावधी दरम्यान परिस्थितीनुसार बदलू शकतात. आवश्यकतेनुसार प्रायोजक जोडणे, बदलणे किंवा बक्षिसांच्या रचनेत फेरबदल करण्याचे सर्व अधिकार आयोजक व संयोजन समितीकडे राखीव आहेत.'
-                      : 'Official sponsors and announced prize structures/amounts are subject to update, modification, or change during the competition timeline. The organizing committee reserves full rights to modify sponsors and prize distributions as required.'}
+                      ? 'स्पर्धेचे निकाल अधिकृत ज्युरी मंडळाद्वारे जाहीर झाल्यानंतर विजेत्यांना रोख पारितोषिके व सन्मानचिन्हे अधिकृतरीत्या प्रदान केली जातील. संयोजन समितीचा निर्णय अंतिम व सर्वमान्य राहील.'
+                      : 'Cash prizes and mementos will be officially conferred to all winners following the announcement of final results by the jury panel. The organizing committee decision is final.'}
                   </p>
                 </div>
               </div>

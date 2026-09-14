@@ -43,7 +43,7 @@ export const translations = {
       rank4to10: '4था ते 10वा क्रमांक (उत्तेजनार्थ)',
       trophy: 'मानाची सुवर्ण/रजत ट्रॉफी',
       certificate: 'राज्यस्तरीय अधिकृत गौरव प्रमाणपत्र',
-      sponsorGift: 'प्रायोजकांकडून विशेष भेटवस्तू हॅम्पर्स',
+      sponsorGift: 'अधिकृत राज्यस्तरीय सन्मानपत्र व गौरव चिन्ह',
       mediaFeature: 'राज्यस्तरीय वृत्तपत्र व सोशल मीडियावर विशेष मुलाखत',
     },
     criteriaSection: {
@@ -224,7 +224,7 @@ export const translations = {
       rank4to10: '4th to 10th Rank (Merit Awards)',
       trophy: 'Prestigious Gold / Silver Plated Trophy',
       certificate: 'Official State Level Certificate of Excellence',
-      sponsorGift: 'Exclusive Brand Gift Hampers & Vouchers',
+      sponsorGift: 'Official State Level Honors & Mementos',
       mediaFeature: 'Featured spotlight across State media & press',
     },
     criteriaSection: {

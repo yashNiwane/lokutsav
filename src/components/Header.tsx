@@ -110,9 +110,6 @@ export default function Header() {
           <Link href="/#how-to-enter" className="hover:text-[#9B1B1E] transition-colors text-amber-800">
             {t.nav.howToEnter}
           </Link>
-          <Link href="/sponsors" className="hover:text-[#9B1B1E] transition-colors">
-            {t.nav.sponsors}
-          </Link>
           <Link href="/#rules" className="hover:text-[#9B1B1E] transition-colors">
             {t.nav.rules}
           </Link>
@@ -181,13 +178,6 @@ export default function Header() {
               className="p-2.5 rounded-md bg-stone-100 hover:bg-stone-200 text-stone-800"
             >
               {t.nav.howToEnter}
-            </Link>
-            <Link
-              href="/sponsors"
-              onClick={() => setMobileMenuOpen(false)}
-              className="p-2.5 rounded-md bg-stone-100 hover:bg-stone-200 text-stone-800"
-            >
-              {t.nav.sponsors}
             </Link>
             <Link
               href="/#rules"

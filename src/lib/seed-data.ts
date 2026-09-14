@@ -8,8 +8,8 @@ export const OFFICIAL_PRIZES: PrizeItem[] = [
     cashAmount: 51000,
     cashText: '₹51,000 Cash',
     cashTextMr: '₹51,000 रोख पारितोषिक',
-    perks: ['Grand Gold Plated Trophy', 'Title Sponsor Gift Hamper worth ₹15,000', 'State-wide Media Coverage', 'Certificate of Honor'],
-    perksMr: ['मानाची सुवर्णजडित ट्रॉफी', 'मुख्य प्रायोजकांकडून ₹15,000 चा विशेष हॅम्पर', 'राज्यस्तरीय वृत्तपत्र व माध्यम प्रसिद्धी', 'अधिकृत सन्मानपत्र'],
+    perks: ['Grand Gold Plated Trophy', 'State-wide Media Coverage', 'Official Certificate of Honor'],
+    perksMr: ['मानाची सुवर्णजडित ट्रॉफी', 'राज्यस्तरीय वृत्तपत्र व माध्यम प्रसिद्धी', 'अधिकृत सन्मानपत्र'],
     badgeColor: 'bg-amber-600 text-white',
   },
   {
@@ -19,8 +19,8 @@ export const OFFICIAL_PRIZES: PrizeItem[] = [
     cashAmount: 31000,
     cashText: '₹31,000 Cash',
     cashTextMr: '₹31,000 रोख पारितोषिक',
-    perks: ['Silver Plated Trophy', 'Sponsor Hamper worth ₹10,000', 'Certificate of Honor'],
-    perksMr: ['मानाची रजत ट्रॉफी', 'प्रायोजकांकडून ₹10,000 चा हॅम्पर', 'अधिकृत सन्मानपत्र'],
+    perks: ['Silver Plated Trophy', 'Official Certificate of Honor', 'State Recognition'],
+    perksMr: ['मानाची रजत ट्रॉफी', 'अधिकृत सन्मानपत्र', 'राज्यस्तरीय सन्मान गौरव'],
     badgeColor: 'bg-slate-500 text-white',
   },
   {
@@ -30,8 +30,8 @@ export const OFFICIAL_PRIZES: PrizeItem[] = [
     cashAmount: 21000,
     cashText: '₹21,000 Cash',
     cashTextMr: '₹21,000 रोख पारितोषिक',
-    perks: ['Bronze Plated Trophy', 'Sponsor Hamper worth ₹7,500', 'Certificate of Honor'],
-    perksMr: ['कांस्य ट्रॉफी', 'प्रायोजकांकडून ₹7,500 चा हॅम्पर', 'अधिकृत सन्मानपत्र'],
+    perks: ['Bronze Plated Trophy', 'Official Certificate of Honor', 'State Recognition'],
+    perksMr: ['कांस्य ट्रॉफी', 'अधिकृत सन्मानपत्र', 'राज्यस्तरीय सन्मान गौरव'],
     badgeColor: 'bg-amber-800 text-white',
   },
   {
@@ -41,8 +41,8 @@ export const OFFICIAL_PRIZES: PrizeItem[] = [
     cashAmount: 5000,
     cashText: '₹5,000 Cash Each (7 Winners)',
     cashTextMr: 'प्रत्येकी ₹5,000 रोख (7 विजेते)',
-    perks: ['Maha Lokutsav Memento', 'Sponsor Gift Box', 'Certificate of Merit'],
-    perksMr: ['महा लोकोत्सव सन्मानचिन्ह', 'प्रायोजक गिफ्ट बॉक्स', 'गुणवत्ता प्रमाणपत्र'],
+    perks: ['Maha Lokutsav Memento', 'Certificate of Merit', 'Digital Showcase'],
+    perksMr: ['महा लोकोत्सव सन्मानचिन्ह', 'गुणवत्ता प्रमाणपत्र', 'डिजिटल दालन गौरव'],
     badgeColor: 'bg-stone-700 text-white',
   },
 ];

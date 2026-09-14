@@ -239,11 +239,11 @@ export default function RegisterPage() {
   // Step 2 submission -> generates ticket & creates Razorpay order
   const handleProceedToPayment = async (e?: React.SyntheticEvent) => {
     if (e) e.preventDefault();
-    if (!formData.themeTitle.trim() || !formData.themeDescription.trim()) {
+    if (!formData.themeTitle.trim()) {
       setErrorMessage(
         lang === 'mr'
-          ? 'कृपया सजावटीचे नाव व माहिती भरा'
-          : 'Please enter the decoration theme title and description'
+          ? 'कृपया देखावा / सजावटीचे नाव भरा'
+          : 'Please enter the decoration theme title'
       );
       return;
     }
@@ -728,59 +728,23 @@ export default function RegisterPage() {
 
                 <div>
                   <label className="block font-semibold text-stone-800 mb-1">
-                    {t.form.decoration.idolType}
+                    {t.form.decoration.themeTitle} <span className="text-red-600">*</span>
                   </label>
-                  <select
-                    value={formData.idolType}
-                    onChange={(e) => setFormData({ ...formData, idolType: e.target.value })}
-                    className="w-full px-4 py-3 rounded-lg border border-stone-300 bg-white focus:outline-none focus:ring-2 focus:ring-[#9B1B1E]/40"
-                  >
-                    <option value="SHADU_MATI_CLAY">{t.form.decoration.shadu}</option>
-                    <option value="ECO_FRIENDLY_PAPER_PULP">{t.form.decoration.paperPulp}</option>
-                    <option value="TRADITIONAL_OTHER">{t.form.decoration.traditional}</option>
-                  </select>
+                  <input
+                    type="text"
+                    required
+                    value={formData.themeTitle}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        themeTitle: e.target.value,
+                        themeDescription: e.target.value,
+                      })
+                    }
+                    placeholder={t.form.decoration.themeTitlePlaceholder}
+                    className="w-full px-4 py-3 rounded-lg border border-stone-300 focus:outline-none focus:ring-2 focus:ring-[#9B1B1E]/40"
+                  />
                 </div>
-              </div>
-
-              <div>
-                <label className="block font-semibold text-stone-800 mb-1">
-                  {t.form.decoration.themeTitle} <span className="text-red-600">*</span>
-                </label>
-                <input
-                  type="text"
-                  required
-                  value={formData.themeTitle}
-                  onChange={(e) => setFormData({ ...formData, themeTitle: e.target.value })}
-                  placeholder={t.form.decoration.themeTitlePlaceholder}
-                  className="w-full px-4 py-3 rounded-lg border border-stone-300 focus:outline-none focus:ring-2 focus:ring-[#9B1B1E]/40"
-                />
-              </div>
-
-              <div>
-                <label className="block font-semibold text-stone-800 mb-1">
-                  {t.form.decoration.themeDesc} <span className="text-red-600">*</span>
-                </label>
-                <textarea
-                  rows={4}
-                  required
-                  value={formData.themeDescription}
-                  onChange={(e) => setFormData({ ...formData, themeDescription: e.target.value })}
-                  placeholder={t.form.decoration.themeDescPlaceholder}
-                  className="w-full px-4 py-3 rounded-lg border border-stone-300 focus:outline-none focus:ring-2 focus:ring-[#9B1B1E]/40"
-                />
-              </div>
-
-              <div>
-                <label className="block font-semibold text-stone-800 mb-1">
-                  {t.form.decoration.materials}
-                </label>
-                <input
-                  type="text"
-                  value={formData.materialsUsed}
-                  onChange={(e) => setFormData({ ...formData, materialsUsed: e.target.value })}
-                  placeholder={t.form.decoration.materialsPlaceholder}
-                  className="w-full px-4 py-3 rounded-lg border border-stone-300 focus:outline-none focus:ring-2 focus:ring-[#9B1B1E]/40"
-                />
               </div>
 
               {/* Photo Upload Section */}

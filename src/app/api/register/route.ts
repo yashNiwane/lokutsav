@@ -24,9 +24,9 @@ export async function POST(request: NextRequest) {
     } = body;
 
     // Basic validation
-    if (!fullName || !phone || !district || !themeTitle || !themeDescription) {
+    if (!fullName || !phone || !district || !themeTitle) {
       return NextResponse.json(
-        { error: 'Please provide all required fields (Name, Phone, District, Theme Title, Theme Description)' },
+        { error: 'Please provide all required fields (Name, Phone, District, Theme Title)' },
         { status: 400 }
       );
     }
@@ -52,10 +52,10 @@ export async function POST(request: NextRequest) {
       city: city || district,
       address: address || `${city}, ${district}`,
       category,
-      idolType,
+      idolType: idolType || 'SHADU_MATI_CLAY',
       themeTitle,
-      themeDescription,
-      materialsUsed,
+      themeDescription: themeDescription || themeTitle,
+      materialsUsed: materialsUsed || '',
       photoUrls,
       videoUrl: videoUrl || undefined,
       entryFee: 199,

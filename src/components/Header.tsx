@@ -11,7 +11,7 @@ export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 bg-[#FAF7F2]/95 backdrop-blur-md border-b border-[#E5D7C0] transition-colors">
+    <header className="relative md:sticky md:top-0 z-50 bg-[#FAF7F2]/95 backdrop-blur-md border-b border-[#E5D7C0] transition-colors">
       {/* Top micro-banner */}
       <div className="bg-[#9B1B1E] text-[#FFF9F0] text-xs font-medium py-1.5 px-4">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
@@ -143,7 +143,7 @@ export default function Header() {
         <div className="flex items-center gap-2 lg:hidden">
           <Link
             href="/register"
-            className="bg-[#9B1B1E] text-white text-xs font-bold px-3 py-1.5 rounded-md"
+            className="hidden sm:inline-flex bg-[#9B1B1E] text-white text-xs font-bold px-3 py-1.5 rounded-md whitespace-nowrap shrink-0"
           >
             {t.nav.registerNow} (₹199)
           </Link>

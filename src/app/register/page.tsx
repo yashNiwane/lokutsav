@@ -1296,7 +1296,7 @@ export default function RegisterPage() {
 
                 {/* WhatsApp Broadcast Channel Link */}
                 <a
-                  href={process.env.NEXT_PUBLIC_WHATSAPP_CHANNEL_URL || 'https://whatsapp.com/channel/0029VaLokutsav2026'}
+                  href={process.env.NEXT_PUBLIC_WHATSAPP_CHANNEL_URL || 'https://whatsapp.com/channel/0029VbDSNyQJENxurPmDye1C'}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex flex-col justify-between p-3.5 rounded-xl border border-emerald-200 bg-gradient-to-br from-emerald-50/70 via-green-50/40 to-teal-50/50 hover:border-emerald-400 hover:shadow-xs transition-all group cursor-pointer"

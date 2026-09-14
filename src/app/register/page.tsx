@@ -1070,6 +1070,57 @@ export default function RegisterPage() {
               <p>{t.form.payment.included}</p>
             </div>
 
+            {/* Terms and Conditions Checkbox */}
+            <div className="bg-amber-50/70 border border-amber-200/80 rounded-xl p-3.5 sm:p-4 text-xs sm:text-sm text-stone-800 transition-colors">
+              <label className="flex items-start gap-3 cursor-pointer select-none">
+                <input
+                  type="checkbox"
+                  id="termsAgreement"
+                  checked={agreedToTerms}
+                  onChange={(e) => {
+                    setAgreedToTerms(e.target.checked);
+                    if (errorMessage) setErrorMessage('');
+                  }}
+                  className="mt-0.5 h-4 w-4 rounded border-stone-300 text-[#9B1B1E] focus:ring-[#9B1B1E] accent-[#9B1B1E] cursor-pointer shrink-0"
+                />
+                <span className="leading-relaxed text-xs sm:text-sm text-stone-800">
+                  {lang === 'mr' ? (
+                    <>
+                      मी स्पर्धेचे सर्व{' '}
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          setShowTermsModal(true);
+                        }}
+                        className="font-bold text-[#9B1B1E] hover:text-[#781416] underline decoration-stone-400 hover:decoration-[#9B1B1E] underline-offset-2 cursor-pointer inline"
+                      >
+                        नियम आणि अटी (Terms & Conditions)
+                      </button>{' '}
+                      वाचल्या आहेत आणि मला त्या पूर्णपणे मान्य आहेत. मी पुष्टी करतो/करते की मी दिलेली माहिती खरी असून सादर केलेली सजावट अधिकृत नियमांचे पालन करते.
+                    </>
+                  ) : (
+                    <>
+                      I have read and agree to all the{' '}
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          setShowTermsModal(true);
+                        }}
+                        className="font-bold text-[#9B1B1E] hover:text-[#781416] underline decoration-stone-400 hover:decoration-[#9B1B1E] underline-offset-2 cursor-pointer inline"
+                      >
+                        Terms & Conditions
+                      </button>{' '}
+                      of the competition. I confirm that all submitted details and materials comply with official guidelines.
+                    </>
+                  )}
+                </span>
+              </label>
+            </div>
+
             {/* UPI Intent Highlight Section */}
             <div className="bg-stone-50 p-4 rounded-xl border border-stone-200 space-y-3">
               <div className="flex items-center justify-between">
@@ -1133,58 +1184,7 @@ export default function RegisterPage() {
               </p>
             </div>
 
-            <div className="space-y-3 pt-2">
-              {/* Terms and Conditions Checkbox */}
-              <div className="bg-amber-50/70 border border-amber-200/80 rounded-xl p-3.5 sm:p-4 text-xs sm:text-sm text-stone-800 transition-colors">
-                <label className="flex items-start gap-3 cursor-pointer select-none">
-                  <input
-                    type="checkbox"
-                    id="termsAgreement"
-                    checked={agreedToTerms}
-                    onChange={(e) => {
-                      setAgreedToTerms(e.target.checked);
-                      if (errorMessage) setErrorMessage('');
-                    }}
-                    className="mt-0.5 h-4 w-4 rounded border-stone-300 text-[#9B1B1E] focus:ring-[#9B1B1E] accent-[#9B1B1E] cursor-pointer shrink-0"
-                  />
-                  <span className="leading-relaxed text-xs sm:text-sm text-stone-800">
-                    {lang === 'mr' ? (
-                      <>
-                        मी स्पर्धेचे सर्व{' '}
-                        <button
-                          type="button"
-                          onClick={(e) => {
-                            e.preventDefault();
-                            e.stopPropagation();
-                            setShowTermsModal(true);
-                          }}
-                          className="font-bold text-[#9B1B1E] hover:text-[#781416] underline decoration-stone-400 hover:decoration-[#9B1B1E] underline-offset-2 cursor-pointer inline"
-                        >
-                          नियम आणि अटी (Terms & Conditions)
-                        </button>{' '}
-                        वाचल्या आहेत आणि मला त्या पूर्णपणे मान्य आहेत. मी पुष्टी करतो/करते की मी दिलेली माहिती खरी असून सादर केलेली सजावट अधिकृत नियमांचे पालन करते.
-                      </>
-                    ) : (
-                      <>
-                        I have read and agree to all the{' '}
-                        <button
-                          type="button"
-                          onClick={(e) => {
-                            e.preventDefault();
-                            e.stopPropagation();
-                            setShowTermsModal(true);
-                          }}
-                          className="font-bold text-[#9B1B1E] hover:text-[#781416] underline decoration-stone-400 hover:decoration-[#9B1B1E] underline-offset-2 cursor-pointer inline"
-                        >
-                          Terms & Conditions
-                        </button>{' '}
-                        of the competition. I confirm that all submitted details and materials comply with official guidelines.
-                      </>
-                    )}
-                  </span>
-                </label>
-              </div>
-
+            <div className="space-y-3 pt-1">
               <button
                 type="button"
                 onClick={launchRazorpayCheckout}

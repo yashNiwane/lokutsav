@@ -316,20 +316,28 @@ export default function RegisterPage() {
   // Step 2 submission -> generates ticket & creates Razorpay order
   const handleProceedToPayment = async (e?: React.SyntheticEvent) => {
     if (e) e.preventDefault();
-    if (!formData.themeTitle.trim()) {
+
+    const hasPhoto = formData.photoUrls.length > 0;
+    const hasVideo = !!(formData.videoUrl && formData.videoUrl.trim().length > 0);
+
+    if (!hasPhoto && !hasVideo) {
       setErrorMessage(
         lang === 'mr'
-          ? 'कृपया देखावा / सजावटीचे नाव भरा'
-          : 'Please enter the decoration theme title'
+          ? 'कृपया सजावटीचा किमान १ फोटो किंवा १ व्हिडिओ जोडा'
+          : 'Please upload at least one photo or video of your decoration'
       );
       return;
     }
 
-    if (formData.photoUrls.length === 0) {
-      formData.photoUrls = [
-        'https://images.unsplash.com/photo-1567591370504-20a2e7c54ef5?auto=format&fit=crop&w=1200&q=80',
-      ];
-    }
+    const effectiveTitle =
+      formData.themeTitle.trim() ||
+      (lang === 'mr' ? `${formData.fullName} - गणेश सजावट 2026` : `${formData.fullName}'s Ganpati Decoration 2026`);
+
+    const payload = {
+      ...formData,
+      themeTitle: effectiveTitle,
+      themeDescription: formData.themeDescription.trim() || effectiveTitle,
+    };
 
     setIsSubmitting(true);
     setErrorMessage('');
@@ -338,7 +346,7 @@ export default function RegisterPage() {
       const res = await fetch('/api/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(payload),
       });
 
       const data = await res.json();
@@ -818,11 +826,13 @@ export default function RegisterPage() {
 
                 <div>
                   <label className="block font-semibold text-stone-800 mb-1">
-                    {t.form.decoration.themeTitle} <span className="text-red-600">*</span>
+                    {t.form.decoration.themeTitle}{' '}
+                    <span className="text-xs font-normal text-stone-500">
+                      ({lang === 'mr' ? 'ऐच्छिक' : 'Optional'})
+                    </span>
                   </label>
                   <input
                     type="text"
-                    required
                     value={formData.themeTitle}
                     onChange={(e) =>
                       setFormData({
@@ -837,15 +847,41 @@ export default function RegisterPage() {
                 </div>
               </div>
 
+              {/* Photo OR Video requirement banner */}
+              <div className="p-3.5 rounded-xl bg-amber-50/90 border border-amber-300/80 flex items-start gap-2.5 text-xs text-amber-950 shadow-2xs">
+                <span className="text-base shrink-0 leading-none mt-0.5">📸</span>
+                <div>
+                  <span className="font-bold text-amber-900">
+                    {lang === 'mr' ? 'फोटो किंवा व्हिडिओ आवश्यक (कोणतेही एक):' : 'Photo OR Video Required (Any One):'}
+                  </span>{' '}
+                  <span className="text-stone-700">
+                    {lang === 'mr'
+                      ? 'तुम्ही खालीलपैकी फोटो किंवा कमाल ३ मिनिटांचा व्हिडिओ यांपैकी कोणतेही एक (किंवा दोन्ही) जोडू शकता.'
+                      : 'You can upload either decoration photos or a 3-minute video tour (or both).'}
+                  </span>
+                </div>
+              </div>
+
               {/* Photo Upload Section */}
               <div className="p-4 rounded-xl bg-stone-50 border border-stone-200 space-y-3">
-                <div>
-                  <label className="block font-semibold text-stone-800 text-sm">
-                    {t.form.decoration.photosLabel}
-                  </label>
-                  <p className="text-xs text-stone-500">
-                    {t.form.decoration.photosHint}
-                  </p>
+                <div className="flex items-center justify-between gap-2">
+                  <div>
+                    <label className="block font-semibold text-stone-800 text-sm">
+                      {t.form.decoration.photosLabel}
+                    </label>
+                    <p className="text-xs text-stone-500">
+                      {t.form.decoration.photosHint}
+                    </p>
+                  </div>
+                  {formData.photoUrls.length > 0 ? (
+                    <span className="text-[11px] font-bold text-emerald-800 bg-emerald-100 border border-emerald-300 px-2.5 py-0.5 rounded-full shrink-0">
+                      ✓ {formData.photoUrls.length} {lang === 'mr' ? 'फोटो जोडले' : 'Photos added'}
+                    </span>
+                  ) : formData.videoUrl ? (
+                    <span className="text-[11px] font-medium text-stone-500 bg-stone-200/80 px-2 py-0.5 rounded-full shrink-0">
+                      {lang === 'mr' ? 'व्हिडिओ जोडला असल्याने ऐच्छिक' : 'Optional (video uploaded)'}
+                    </span>
+                  ) : null}
                 </div>
 
                 <div className="flex flex-wrap items-center gap-3">
@@ -909,9 +945,20 @@ export default function RegisterPage() {
                       {t.form.decoration.videoHint}
                     </p>
                   </div>
-                  <span className="self-start text-[11px] font-bold text-amber-900 bg-amber-100 border border-amber-300 px-2.5 py-0.5 rounded-full">
-                    {lang === 'mr' ? 'कमाल कालावधी: 3 मिनिटे' : 'Max Length: 3 Minutes'}
-                  </span>
+                  <div className="flex items-center gap-2">
+                    {formData.videoUrl ? (
+                      <span className="text-[11px] font-bold text-emerald-800 bg-emerald-100 border border-emerald-300 px-2.5 py-0.5 rounded-full shrink-0">
+                        ✓ {lang === 'mr' ? 'व्हिडिओ जोडला' : 'Video added'}
+                      </span>
+                    ) : formData.photoUrls.length > 0 ? (
+                      <span className="text-[11px] font-medium text-stone-500 bg-stone-200/80 px-2 py-0.5 rounded-full shrink-0">
+                        {lang === 'mr' ? 'फोटो जोडले असल्याने ऐच्छिक' : 'Optional (photos uploaded)'}
+                      </span>
+                    ) : null}
+                    <span className="self-start text-[11px] font-bold text-amber-900 bg-amber-100 border border-amber-300 px-2.5 py-0.5 rounded-full">
+                      {lang === 'mr' ? 'कमाल कालावधी: 3 मिनिटे' : 'Max Length: 3 Minutes'}
+                    </span>
+                  </div>
                 </div>
 
                 {!formData.videoUrl ? (

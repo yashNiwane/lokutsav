@@ -19,10 +19,10 @@ export default function HowToParticipate() {
     },
     {
       num: '02',
-      titleMr: 'सजावटीचे फोटो व व्हिडिओ जोडा',
-      titleEn: 'Upload Photos & Video',
-      descMr: 'घरगुती किंवा मंडळाच्या देखाव्याचे ३ ते ५ स्पष्ट फोटो आणि १ ते २ मिनिटांचा व्हिडिओ वॉकथ्रू लिंक जोडा.',
-      descEn: 'Upload 3 to 5 high-resolution photos and an optional video tour link of your decoration.',
+      titleMr: 'सजावटीचे फोटो किंवा व्हिडिओ जोडा',
+      titleEn: 'Upload Photos or Video',
+      descMr: 'घरगुती किंवा मंडळाच्या देखाव्याचे स्पष्ट फोटो किंवा कमाल ३ मिनिटांचा व्हिडिओ थेट जोडा.',
+      descEn: 'Upload clear photos or a direct video tour (max 3 minutes) of your decoration.',
       icon: <Camera className="w-6 h-6 text-amber-700" />,
     },
     {

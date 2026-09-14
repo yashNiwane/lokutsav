@@ -24,19 +24,28 @@ export async function POST(request: NextRequest) {
     } = body;
 
     // Basic validation
-    if (!fullName || !phone || !district || !themeTitle) {
+    if (!fullName || !phone || !district) {
       return NextResponse.json(
-        { error: 'Please provide all required fields (Name, Phone, District, Theme Title)' },
+        { error: 'Please provide all required fields (Name, Phone, District)' },
         { status: 400 }
       );
     }
 
-    if (!photoUrls || photoUrls.length === 0) {
+    const hasPhotos = Array.isArray(photoUrls) && photoUrls.length > 0;
+    const hasVideo = !!(videoUrl && typeof videoUrl === 'string' && videoUrl.trim().length > 0);
+
+    if (!hasPhotos && !hasVideo) {
       return NextResponse.json(
-        { error: 'Please provide at least one photo of your Ganpati decoration' },
+        { error: 'Please provide at least one photo or a video of your Ganpati decoration' },
         { status: 400 }
       );
     }
+
+    // Default theme title if omitted
+    const finalThemeTitle =
+      themeTitle && typeof themeTitle === 'string' && themeTitle.trim().length > 0
+        ? themeTitle.trim()
+        : `${fullName} - गणेश सजावट 2026`;
 
     // Generate unique Ticket ID: LOK-2026-XXXX
     const randomCode = Math.floor(1000 + Math.random() * 9000);
@@ -53,11 +62,11 @@ export async function POST(request: NextRequest) {
       address: address || `${city}, ${district}`,
       category,
       idolType: idolType || 'SHADU_MATI_CLAY',
-      themeTitle,
-      themeDescription: themeDescription || themeTitle,
+      themeTitle: finalThemeTitle,
+      themeDescription: themeDescription || finalThemeTitle,
       materialsUsed: materialsUsed || '',
-      photoUrls,
-      videoUrl: videoUrl || undefined,
+      photoUrls: hasPhotos ? photoUrls : [],
+      videoUrl: hasVideo ? videoUrl.trim() : undefined,
       entryFee: 199,
       paymentStatus: 'PENDING',
       termsAccepted: false,

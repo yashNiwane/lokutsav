@@ -299,9 +299,12 @@ export const dataStore = {
     fullName?: string;
     district?: string;
     referralCount: number;
+    commissionEarned?: number;
+    commissionRate?: number;
     referredEntries?: Array<{ ticketId: string; fullName: string; date: string; status: string }>;
   }> {
     const clean = code.trim();
+    const COMMISSION_PER_REGISTRATION = 9.9; // 10% of ₹99 registration fee
     try {
       if (await canUsePrisma()) {
         const user = await prisma.participant.findFirst({
@@ -318,12 +321,15 @@ export const dataStore = {
             select: { ticketId: true, fullName: true, createdAt: true, status: true },
           });
 
+          const count = referred.length || user.referralCount || 0;
           return {
             found: true,
             ticketId: user.ticketId,
             fullName: user.fullName,
             district: user.district,
-            referralCount: referred.length || user.referralCount || 0,
+            referralCount: count,
+            commissionEarned: Number((count * COMMISSION_PER_REGISTRATION).toFixed(2)),
+            commissionRate: 10,
             referredEntries: referred.map((r) => ({
               ticketId: r.ticketId,
               fullName: r.fullName,
@@ -342,12 +348,15 @@ export const dataStore = {
       const referred = inMemoryEntries.filter(
         (e) => (e.referredBy === clean || e.referredBy === memUser.ticketId) && e.paymentStatus === 'COMPLETED'
       );
+      const count = referred.length || memUser.referralCount || 0;
       return {
         found: true,
         ticketId: memUser.ticketId,
         fullName: memUser.fullName,
         district: memUser.district,
-        referralCount: referred.length || memUser.referralCount || 0,
+        referralCount: count,
+        commissionEarned: Number((count * COMMISSION_PER_REGISTRATION).toFixed(2)),
+        commissionRate: 10,
         referredEntries: referred.map((r) => ({
           ticketId: r.ticketId,
           fullName: r.fullName,
@@ -357,7 +366,7 @@ export const dataStore = {
       };
     }
 
-    return { found: false, referralCount: 0 };
+    return { found: false, referralCount: 0, commissionEarned: 0, commissionRate: 10 };
   },
 
   getCriteria(): Criterion[] {

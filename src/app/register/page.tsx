@@ -769,8 +769,8 @@ export default function RegisterPage() {
                 </div>
                 <p className="text-[11px] text-stone-500">
                   {lang === 'mr'
-                    ? 'जर तुम्हाला एखाद्या स्पर्धकाने आमंत्रित केले असेल, तर त्यांचा तिकीट कोड येथे प्रविष्ट करा.'
-                    : 'If another participant invited you, enter their Ticket ID code here.'}
+                    ? 'जर तुम्हाला एखाद्या स्पर्धकाने आमंत्रित केले असेल, तर त्यांचा तिकीट कोड येथे प्रविष्ट करा (त्यांना १०% कमिशन प्राप्त होईल).'
+                    : 'If another participant invited you, enter their Ticket ID code here (they will earn 10% commission).'}
                 </p>
               </div>
             </div>
@@ -1360,14 +1360,25 @@ export default function RegisterPage() {
                 </div>
                 <div>
                   <h3 className="font-serif font-black text-base text-stone-900">
-                    {lang === 'mr' ? 'रेफर करा आणि रोख बक्षिसे जिंका!' : 'Refer & Win Cash Rewards!'}
+                    {lang === 'mr' ? 'रेफर करा आणि १०% रोख कमिशन मिळवा!' : 'Refer & Earn 10% Cash Commission!'}
                   </h3>
                   <p className="text-xs text-stone-600">
                     {lang === 'mr'
-                      ? 'मित्रांना आमंत्रित करा आणि "सांस्कृतिक राजदूत" सन्मान मिळवा!'
-                      : 'Invite friends to earn official Ambassador rewards!'}
+                      ? 'प्रत्येक नोंदणीवर १०% (₹९.९०) थेट रोख कमिशन कमवा!'
+                      : 'Earn 10% (₹9.90) cash commission on every registration!'}
                   </p>
                 </div>
+              </div>
+
+              <div className="bg-white/80 p-2.5 rounded-xl border border-amber-200 text-xs text-stone-700 space-y-1">
+                <span className="font-bold text-[#9B1B1E] block">
+                  {lang === 'mr' ? '💰 थेट १०% कमिशन सूत्र:' : '💰 10% Commission Structure:'}
+                </span>
+                <p className="text-[11px] text-stone-600">
+                  {lang === 'mr'
+                    ? 'तुमच्या लिंकवरून मित्राने ₹९९ भरून नोंदणी करताच प्रति नोंदणी ₹९.९० तुमच्या खात्यात जमा केले जातील. १० मित्रांवर ₹९९ (तुमची फी १००% वसूल!)'
+                    : 'Get ₹9.90 (10%) on every ₹99 registration made with your link. 10 friends = ₹99 (100% of your fee recovered!)'}
+                </p>
               </div>
 
               <div className="space-y-1.5">
@@ -1378,13 +1389,13 @@ export default function RegisterPage() {
                   <input
                     type="text"
                     readOnly
-                    value={typeof window !== 'undefined' ? `${window.location.origin}/register?ref=${ticketId}` : `https://lokutsav.org/register?ref=${ticketId}`}
+                    value={typeof window !== 'undefined' ? `${window.location.origin}/register?ref=${ticketId}` : `https://lokutsav.com/register?ref=${ticketId}`}
                     className="w-full text-xs font-mono text-stone-700 bg-transparent outline-none truncate select-all px-1"
                   />
                   <button
                     type="button"
                     onClick={() => {
-                      const link = typeof window !== 'undefined' ? `${window.location.origin}/register?ref=${ticketId}` : `https://lokutsav.org/register?ref=${ticketId}`;
+                      const link = typeof window !== 'undefined' ? `${window.location.origin}/register?ref=${ticketId}` : `https://lokutsav.com/register?ref=${ticketId}`;
                       navigator.clipboard.writeText(link);
                       setCopiedReferral(true);
                       setTimeout(() => setCopiedReferral(false), 2500);
@@ -1399,7 +1410,7 @@ export default function RegisterPage() {
               {/* WhatsApp Share Button */}
               <a
                 href={`https://wa.me/?text=${encodeURIComponent(
-                  `🚩 *लोकोत्सव २०२६ | महाराष्ट्र राज्य ऑनलाइन गणेश सजावट स्पर्धा*\n\nमी माझ्या बाप्पाच्या देखाव्याची अधिकृत नोंदणी केली आहे! (प्रवेशिका: ${ticketId})\n\nतुम्हीही तुमच्या घरगुती गणपती किंवा मंडळाच्या सजावटीची नोंदणी करा आणि रोख पारितोषिके जिंका.\n\n👉 माझ्या रेफरल लिंकवरून लगेच नोंदणी करा:\n${typeof window !== 'undefined' ? window.location.origin : 'https://lokutsav.org'}/register?ref=${ticketId}`
+                  `🚩 *लोकोत्सव २०२६ | महाराष्ट्र राज्य ऑनलाइन गणेश सजावट स्पर्धा*\n\nमी माझ्या बाप्पाच्या देखाव्याची अधिकृत नोंदणी केली आहे! (प्रवेशिका: ${ticketId})\n\nतुम्हीही तुमच्या घरगुती गणपती किंवा मंडळाच्या सजावटीची केवळ ₹९९ मध्ये नोंदणी करा आणि रोख पारितोषिके जिंका.\n\n👉 माझ्या रेफरल लिंकवरून लगेच नोंदणी करा:\n${typeof window !== 'undefined' ? window.location.origin : 'https://lokutsav.com'}/register?ref=${ticketId}`
                 )}`}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -1412,7 +1423,7 @@ export default function RegisterPage() {
               <div className="pt-2 border-t border-amber-200/80 flex items-center justify-between text-[11px] text-stone-600">
                 <span>रेफरल कोड: <strong className="font-mono text-stone-900">{ticketId}</strong></span>
                 <Link href="/referral" className="font-bold text-[#9B1B1E] hover:underline">
-                  {lang === 'mr' ? 'रेफरल नियम व स्थिती पहा' : 'View Rewards'} →
+                  {lang === 'mr' ? 'रेफरल कमिशन व स्थिती पहा' : 'View Commission & Status'} →
                 </Link>
               </div>
             </div>

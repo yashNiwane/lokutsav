@@ -95,7 +95,7 @@ export default function Hero() {
               </span>
               <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#9B1B1E]/90 backdrop-blur-md border border-amber-300/40 text-white text-[11px] sm:text-xs font-bold shadow-lg">
                 <Trophy className="w-3.5 h-3.5 text-amber-300" />
-                <span>{lang === 'mr' ? '₹१,५०,०००+ रोख बक्षिसे' : '₹1,50,000+ Cash Rewards'}</span>
+                <span>{lang === 'mr' ? '₹२,००,०००+ रोख बक्षिसे' : '₹2,00,000+ Cash Rewards'}</span>
               </span>
             </div>
 
@@ -136,7 +136,7 @@ export default function Hero() {
               {t.hero.statPrizePool}
             </p>
             <p className="font-serif text-2xl sm:text-3xl font-black text-[#9B1B1E]">
-              ₹1,50,000+
+              ₹2,00,000+
             </p>
             <p className="text-[11px] text-stone-600 mt-1 font-medium">
               {lang === 'mr' ? 'रोख रक्कम + मानाच्या ट्रॉफीज' : 'Cash Rewards + Trophies'}

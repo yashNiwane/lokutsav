@@ -24,7 +24,7 @@ export const translations = {
     },
     hero: {
       headline: 'तुमच्या घरच्या बाप्पाची सजावट पोहोचवा अवघ्या महाराष्ट्रातील घराघरांपर्यंत!',
-      subheadline: 'महाराष्ट्राचा सर्वात मोठा सांस्कृतिक महामंच! केवळ ₹199 मध्ये सहभाग नोंदवा, आपल्या सजावटीचे फोटो व व्हिडिओ पाठवा आणि जिंका मानाची सुवर्ण ट्रॉफी व ₹1,50,000+ रोख पारितोषिके!',
+      subheadline: 'महाराष्ट्राचा सर्वात मोठा सांस्कृतिक महामंच! केवळ ₹199 मध्ये सहभाग नोंदवा, आपल्या सजावटीचे फोटो व व्हिडिओ पाठवा आणि जिंका मानाची सुवर्ण ट्रॉफी व ₹2,00,000+ रोख पारितोषिके!',
       registerCta: 'आताच नोंदणी करा (₹199)',
       exploreGallery: 'सजावट दालन पहा',
       statParticipants: 'नोंदणीकृत स्पर्धक',
@@ -205,7 +205,7 @@ export const translations = {
     },
     hero: {
       headline: 'Showcase Your Bappa’s Artistry Across Every Home in Maharashtra!',
-      subheadline: "Maharashtra's Largest Cultural Mahamanch! Register online for just ₹199, submit your decoration photos & video walkthrough, and compete for Prestigious Gold Trophies & ₹1,50,000+ in Cash Rewards!",
+      subheadline: "Maharashtra's Largest Cultural Mahamanch! Register online for just ₹199, submit your decoration photos & video walkthrough, and compete for Prestigious Gold Trophies & ₹2,00,000+ in Cash Rewards!",
       registerCta: 'Enter Competition (₹199)',
       exploreGallery: 'Explore Gallery',
       statParticipants: 'Registered Participants',

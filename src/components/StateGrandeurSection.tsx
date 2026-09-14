@@ -76,10 +76,10 @@ export default function StateGrandeurSection() {
               <Trophy className="w-6 h-6" />
             </div>
             <h3 className="font-serif font-black text-xl text-stone-900">
-              ₹1,50,000+ भव्य पारितोषिके
+              ₹2,00,000+ भव्य पारितोषिके
             </h3>
             <p className="text-xs text-stone-600 leading-relaxed">
-              प्रथम क्रमांकास मानाची सुवर्ण ट्रॉफी व ₹51,000 रोख, तर अव्वल 10 विजेत्यांना रोख रकमा व मानाची सन्मानचिन्हे.
+              प्रथम क्रमांकास मानाची सुवर्ण ट्रॉफी व ₹1,11,111 रोख, तर अव्वल 10 विजेत्यांना रोख रकमा व मानाची सन्मानचिन्हे.
             </p>
           </div>
 

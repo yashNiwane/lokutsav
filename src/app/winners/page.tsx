@@ -68,7 +68,7 @@ export default async function WinnersPage() {
           <div className="grid grid-cols-3 gap-3 max-w-lg mx-auto text-center text-xs font-bold">
             <div className="bg-amber-50 border border-amber-200 p-3 rounded-xl text-amber-900">
               <span className="block text-stone-500 text-[10px]">१st Rank</span>
-              <span className="font-serif text-lg text-[#9B1B1E]">₹51,000</span>
+              <span className="font-serif text-lg text-[#9B1B1E]">₹1,11,111</span>
             </div>
             <div className="bg-stone-50 border border-stone-200 p-3 rounded-xl text-stone-800">
               <span className="block text-stone-500 text-[10px]">२nd Rank</span>
@@ -178,7 +178,7 @@ export default async function WinnersPage() {
                     </span>
                     <p className="font-serif font-black text-xl text-[#9B1B1E]">
                       {entry.finalRank === 1
-                        ? '₹51,000 रोख + सुवर्ण ट्रॉफी'
+                        ? '₹1,11,111 रोख + सुवर्ण ट्रॉफी'
                         : entry.finalRank === 2
                         ? '₹31,000 रोख + रजत ट्रॉफी'
                         : '₹21,000 रोख + कांस्य ट्रॉफी'}

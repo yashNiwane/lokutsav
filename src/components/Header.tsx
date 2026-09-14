@@ -38,7 +38,23 @@ export default function Header() {
               <span className="hidden sm:inline">@lok_utsav</span>
             </a>
 
-            <span className="hidden md:inline font-medium text-amber-200">
+            {/* Facebook link */}
+            <a
+              href="https://www.facebook.com/profile.php?id=61594526752691"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 text-amber-200 hover:text-white transition-colors text-xs font-semibold group"
+              title="Follow Lok Utsav on Facebook"
+            >
+              <div className="w-4 h-4 rounded-xs bg-[#1877F2] p-[1px] flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                <svg viewBox="0 0 24 24" fill="currentColor" className="w-full h-full text-white">
+                  <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                </svg>
+              </div>
+              <span className="hidden md:inline">Facebook</span>
+            </a>
+
+            <span className="hidden lg:inline font-medium text-amber-200">
               {t.brand.entryFee}
             </span>
             {/* Language Switcher */}

@@ -1263,7 +1263,7 @@ export default function RegisterPage() {
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                 {/* Instagram Channel Link */}
                 <a
                   href="https://www.instagram.com/lok_utsav/"
@@ -1309,15 +1309,43 @@ export default function RegisterPage() {
                     </div>
                     <div>
                       <span className="text-xs font-bold text-stone-900 block group-hover:text-emerald-700 transition-colors">
-                        WhatsApp Channel
+                        WhatsApp
                       </span>
                       <span className="text-[11px] text-stone-500 block">
-                        {lang === 'mr' ? 'ब्रॉडकास्ट चॅनेल' : 'Broadcast Channel'}
+                        {lang === 'mr' ? 'ब्रॉडकास्ट चॅनेल' : 'Broadcast'}
                       </span>
                     </div>
                   </div>
                   <span className="inline-flex items-center justify-center gap-1.5 w-full bg-[#25D366] hover:bg-[#20bd5a] text-white text-xs font-bold py-2 px-3 rounded-lg shadow-2xs transition-all">
-                    <span>{lang === 'mr' ? 'चॅनेल जॉईन करा' : 'Join Channel'}</span>
+                    <span>{lang === 'mr' ? 'जॉईन करा' : 'Join'}</span>
+                    <ExternalLink className="w-3.5 h-3.5" />
+                  </span>
+                </a>
+
+                {/* Facebook Page Link */}
+                <a
+                  href="https://www.facebook.com/profile.php?id=61594526752691"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex flex-col justify-between p-3.5 rounded-xl border border-blue-200 bg-gradient-to-br from-blue-50/70 via-indigo-50/40 to-sky-50/50 hover:border-blue-400 hover:shadow-xs transition-all group cursor-pointer"
+                >
+                  <div className="flex items-center gap-2.5 mb-3">
+                    <div className="w-8 h-8 rounded-lg bg-[#1877F2] text-white flex items-center justify-center shrink-0 shadow-2xs group-hover:scale-105 transition-transform p-1.5">
+                      <svg viewBox="0 0 24 24" fill="currentColor" className="w-full h-full">
+                        <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                      </svg>
+                    </div>
+                    <div>
+                      <span className="text-xs font-bold text-stone-900 block group-hover:text-blue-700 transition-colors">
+                        Facebook
+                      </span>
+                      <span className="text-[11px] text-stone-500 block">
+                        {lang === 'mr' ? 'अधिकृत पेज' : 'Official Page'}
+                      </span>
+                    </div>
+                  </div>
+                  <span className="inline-flex items-center justify-center gap-1.5 w-full bg-[#1877F2] hover:bg-[#166fe5] text-white text-xs font-bold py-2 px-3 rounded-lg shadow-2xs transition-all">
+                    <span>{lang === 'mr' ? 'फॉलो करा' : 'Follow'}</span>
                     <ExternalLink className="w-3.5 h-3.5" />
                   </span>
                 </a>

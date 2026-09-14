@@ -10,8 +10,6 @@ services:
       POSTGRES_USER: ${POSTGRES_USER:-lokutsav_user}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-lokutsav_secure_password_2026}
       POSTGRES_DB: ${POSTGRES_DB:-lokutsav_db}
-    ports:
-      - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
@@ -31,7 +29,7 @@ services:
       postgres:
         condition: service_healthy
     ports:
-      - "3000:3000"
+      - "3001:3000"
     environment:
       - NODE_ENV=production
       - DATABASE_URL=postgresql://${POSTGRES_USER:-lokutsav_user}:${POSTGRES_PASSWORD:-lokutsav_secure_password_2026}@postgres:5432/${POSTGRES_DB:-lokutsav_db}?schema=public

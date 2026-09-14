@@ -23,47 +23,25 @@ export function GooglePayLogo({ className = 'w-5 h-5' }: { className?: string })
   );
 }
 
-export function PhonePeLogo({ className = 'w-5 h-5' }: { className?: string }) {
+export function PhonePeLogo({ className = 'w-6 h-6' }: { className?: string }) {
   return (
-    <svg viewBox="0 0 48 48" className={className} aria-label="PhonePe">
-      <circle cx="24" cy="24" r="24" fill="#5F259F" />
-      <path
-        d="M33.6 19.5c0-3.6-2.9-6.5-6.5-6.5H19v22h4.5v-7.2h3.6c3.6 0 6.5-2.9 6.5-6.5v-1.8zm-4.5 1.8c0 1.1-.9 2-2 2h-3.6v-5.8h3.6c1.1 0 2 .9 2 2v1.8z"
-        fill="#FFFFFF"
-      />
-      <path
-        d="M27.2 27.8l5.8 8.2h-5.4l-4.5-6.7c1.5-.3 2.9-.8 4.1-1.5z"
-        fill="#FFFFFF"
-      />
-    </svg>
+    <img
+      src="/phonepe.png"
+      alt="PhonePe"
+      className={`${className} object-contain`}
+      loading="lazy"
+    />
   );
 }
 
-export function PaytmLogo({ className = 'w-5 h-5' }: { className?: string }) {
+export function PaytmLogo({ className = 'w-10 h-6' }: { className?: string }) {
   return (
-    <svg viewBox="0 0 60 24" className={className} aria-label="Paytm">
-      <rect width="60" height="24" rx="5" fill="#002E6E" />
-      <text
-        x="18"
-        y="16"
-        fill="#FFFFFF"
-        fontSize="12"
-        fontWeight="900"
-        fontFamily="sans-serif"
-      >
-        Pay
-      </text>
-      <text
-        x="42"
-        y="16"
-        fill="#00BAF2"
-        fontSize="12"
-        fontWeight="900"
-        fontFamily="sans-serif"
-      >
-        tm
-      </text>
-    </svg>
+    <img
+      src="/Paytm-Logo.wine.webp"
+      alt="Paytm"
+      className={`${className} object-contain`}
+      loading="lazy"
+    />
   );
 }
 
@@ -77,15 +55,14 @@ export function BhimLogo({ className = 'w-5 h-5' }: { className?: string }) {
   );
 }
 
-export function CredLogo({ className = 'w-5 h-5' }: { className?: string }) {
+export function CredLogo({ className = 'w-6 h-6' }: { className?: string }) {
   return (
-    <svg viewBox="0 0 32 32" className={className} aria-label="CRED">
-      <rect width="32" height="32" rx="7" fill="#121212" />
-      <path
-        d="M8 8h16v16H8V8zm3 3v10h10V11H11zm3 3h4v4h-4v-4z"
-        fill="#FFFFFF"
-      />
-    </svg>
+    <img
+      src="/cred.png"
+      alt="CRED"
+      className={`${className} object-contain rounded-md`}
+      loading="lazy"
+    />
   );
 }
 

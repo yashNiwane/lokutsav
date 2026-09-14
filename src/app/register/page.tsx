@@ -1372,12 +1372,12 @@ export default function RegisterPage() {
 
               <div className="bg-white/80 p-2.5 rounded-xl border border-amber-200 text-xs text-stone-700 space-y-1">
                 <span className="font-bold text-[#9B1B1E] block">
-                  {lang === 'mr' ? '💰 थेट १०% कमिशन:' : '💰 10% Cash Commission:'}
+                  {lang === 'mr' ? '💰 थेट १०% कमिशन (गणेश विसर्जन दिवशी वितरण):' : '💰 10% Cash Commission (Disbursed on Ganesh Visarjan):'}
                 </span>
                 <p className="text-[11px] text-stone-600">
                   {lang === 'mr'
-                    ? 'तुमच्या रेफरल लिंकवरून होणाऱ्या प्रत्येक नोंदणीवर तुम्हाला थेट १०% रोख कमिशन मिळेल. जास्तीत जास्त मित्रांना जोडा आणि अमर्याद कमाई करा!'
-                    : 'Earn a direct 10% cash commission on each participant who registers using your referral link. Refer more friends to earn unlimited cash!'}
+                    ? 'तुमच्या रेफरल लिंकवरून होणाऱ्या प्रत्येक नोंदणीवर तुम्हाला १०% कमिशन मिळेल. संकलित झालेली संपूर्ण रक्कम गणेश विसर्जन (अनंत चतुर्दशी) दिवशी थेट तुमच्या खात्यात जमा केली जाईल!'
+                    : 'Earn a direct 10% cash commission on each participant who registers using your referral link. Total accumulated earnings will be disbursed on Ganesh Visarjan!'}
                 </p>
               </div>
 

@@ -123,7 +123,7 @@ export default function ReferralPage() {
                 {lang === 'mr' ? 'पहिल्या नोंदणीपासून लागू' : 'From 1st Registration'}
               </p>
               <p className="text-xs text-white/80 leading-relaxed">
-                {lang === 'mr' ? 'कोणतीही वाट न पाहता पहिल्याच रेफरलपासून थेट १०% कमिशन सुरू' : 'Earn 10% commission starting from your very first invite'}
+                {lang === 'mr' ? 'कोणतीही वाट न पाहता पहिल्याच रेफरलपासून थेट १०% कमिशन जमा होण्यास सुरुवात' : 'Earn 10% commission starting from your very first invite'}
               </p>
             </div>
 
@@ -138,14 +138,23 @@ export default function ReferralPage() {
             </div>
 
             <div className="bg-white/10 backdrop-blur-md p-4 sm:p-5 rounded-2xl border border-white/20 text-center space-y-1">
-              <span className="text-2xl block">📲</span>
+              <span className="text-2xl block">🗓️</span>
               <p className="font-serif font-bold text-base text-amber-200">
-                {lang === 'mr' ? 'थेट UPI / बँक खात्यात' : 'Direct Account Payout'}
+                {lang === 'mr' ? 'गणेश विसर्जनाला थेट वितरण' : 'Payout on Ganesh Visarjan'}
               </p>
               <p className="text-xs text-white/80 leading-relaxed">
-                {lang === 'mr' ? 'कमिशन रक्कम थेट आपल्या UPI किंवा बँक खात्यात सुरक्षितपणे वितरीत' : 'Commission directly and securely transferred to your UPI or Bank'}
+                {lang === 'mr' ? 'एकूण जमा झालेले १०% कमिशन गणेश विसर्जन दिवशी थेट बँक खात्यात / UPI वर दिले जाईल' : 'Total 10% commission will be disbursed directly on Ganesh Visarjan via UPI/Bank transfer'}
               </p>
             </div>
+          </div>
+
+          <div className="bg-black/25 border border-amber-300/40 text-amber-100 px-4 py-2.5 rounded-xl text-center text-xs font-medium flex items-center justify-center gap-2">
+            <span>📢</span>
+            <span>
+              {lang === 'mr'
+                ? 'महत्त्वाची नोंद: सर्व रेफरल कमिशन रक्कम गणेश विसर्जन (अनंत चतुर्दशी) दिवशी एकत्रितपणे थेट बँक खात्यात / UPI वर पाठवली जाईल.'
+                : 'Important: All accumulated referral cash commissions will be disbursed directly to your UPI/Account on Ganesh Visarjan.'}
+            </span>
           </div>
         </div>
 
@@ -184,12 +193,12 @@ export default function ReferralPage() {
               3
             </div>
             <h3 className="font-serif font-bold text-lg text-stone-900">
-              {lang === 'mr' ? '१०% कमिशन व सन्मान मिळवा' : 'Earn 10% Cash & Rewards'}
+              {lang === 'mr' ? 'गणेश विसर्जनाला कमिशन मिळवा' : 'Commission on Ganesh Visarjan'}
             </h3>
             <p className="text-xs sm:text-sm text-stone-600 leading-relaxed">
               {lang === 'mr'
-                ? 'प्रत्येक यशस्वी नोंदणीवर थेट १०% रोख कमिशन, १०+ रेफरल्सवर राजदूत प्रमाणपत्र, आणि टॉप ३ रेफरर्सना भव्य रोख पारितोषिके!'
-                : 'Earn 10% cash commission on every registration, ambassador certificate on 10+ referrals, and grand cash awards for top referrers!'}
+                ? 'प्रत्येक यशस्वी नोंदणीवर १०% कमिशन जमा होईल आणि गणेश विसर्जन दिवशी ही संपूर्ण रक्कम थेट तुमच्या बँक / UPI खात्यात दिली जाईल!'
+                : 'Earn 10% commission on every registration, with full disbursement directly to your UPI/bank on Ganesh Visarjan!'}
             </p>
           </div>
         </div>
@@ -203,7 +212,7 @@ export default function ReferralPage() {
                 {lang === 'mr' ? 'रेफरल पुरस्कार व कमिशन श्रेणी' : 'Ambassador Rewards & Commission Tiers'}
               </h2>
               <p className="text-xs text-stone-500">
-                {lang === 'mr' ? 'प्रत्येक यशस्वी नोंदणीवर १०% थेट कमिशन + विशेष सन्मान' : '10% Cash Commission + Special Trophies on every verified registration'}
+                {lang === 'mr' ? 'प्रत्येक यशस्वी नोंदणीवर १०% थेट कमिशन (गणेश विसर्जन दिवशी थेट वितरण)' : '10% Cash Commission disbursed on Ganesh Visarjan + Special Awards'}
               </p>
             </div>
           </div>
@@ -217,7 +226,7 @@ export default function ReferralPage() {
                 {lang === 'mr' ? '१०% थेट रोख कमिशन' : '10% Direct Cash Commission'}
               </p>
               <p className="text-xs text-stone-500">
-                {lang === 'mr' ? 'पहिल्या नोंदणीपासून हमखास कमाई' : 'Earned from your very 1st referral'}
+                {lang === 'mr' ? 'गणेश विसर्जन दिवशी थेट वितरण' : 'Disbursed on Ganesh Visarjan'}
               </p>
             </div>
 
@@ -340,7 +349,7 @@ export default function ReferralPage() {
                       ₹{totalEarnings}
                     </p>
                     <span className="text-[10px] text-emerald-700 font-medium block">
-                      {lang === 'mr' ? '१०% थेट कमिशन' : '10% Cash Commission'}
+                      {lang === 'mr' ? 'गणेश विसर्जन दिवशी थेट वितरण' : 'Disbursed on Ganesh Visarjan'}
                     </span>
                   </div>
                 </div>

@@ -138,6 +138,12 @@ export default function Header() {
         {/* Action button */}
         <div className="hidden sm:flex items-center gap-3">
           <Link
+            href="/analytics"
+            className="text-xs font-semibold px-2.5 py-2 rounded-md text-stone-600 hover:text-stone-900 hover:bg-stone-200/60 transition-colors border border-[#E5D7C0]"
+          >
+            📊 {lang === 'mr' ? 'ॲनालिटिक्स' : 'Analytics'}
+          </Link>
+          <Link
             href="/judging"
             className="text-xs font-semibold px-3 py-2 rounded-md text-stone-600 hover:text-stone-900 hover:bg-stone-200/60 transition-colors border border-[#E5D7C0]"
           >
@@ -219,6 +225,13 @@ export default function Header() {
               className="w-full text-center bg-[#9B1B1E] text-white font-bold py-3 rounded-lg text-sm shadow-xs"
             >
               {t.nav.registerNow} (₹99)
+            </Link>
+            <Link
+              href="/analytics"
+              onClick={() => setMobileMenuOpen(false)}
+              className="w-full text-center text-xs font-semibold py-2 text-stone-600 bg-stone-100 rounded-md"
+            >
+              📊 {lang === 'mr' ? 'वेबसाईट ॲनालिटिक्स' : 'Website Analytics'}
             </Link>
             <Link
               href="/judging"

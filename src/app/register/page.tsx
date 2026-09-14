@@ -24,6 +24,7 @@ import {
   ExternalLink,
 } from 'lucide-react';
 import Link from 'next/link';
+import { trackJourney } from '@/lib/tracker';
 
 declare global {
   interface Window {
@@ -39,6 +40,7 @@ export default function RegisterPage() {
   const [errorMessage, setErrorMessage] = useState('');
   const [agreedToTerms, setAgreedToTerms] = useState(false);
   const [showTermsModal, setShowTermsModal] = useState(false);
+  const [lastActiveField, setLastActiveField] = useState<string>('personal_details');
 
   // Form State
   const [formData, setFormData] = useState({
@@ -60,6 +62,40 @@ export default function RegisterPage() {
 
   const [copiedReferral, setCopiedReferral] = useState(false);
   const [existingTicket, setExistingTicket] = useState<string | null>(null);
+
+  // Initial Journey Tracking on page load
+  useEffect(() => {
+    trackJourney({
+      step: 1,
+      stageName: 'STEP_1_PERSONAL',
+      eventType: 'STEP_ENTER',
+      category: formData.category,
+      district: formData.district,
+    });
+  }, []);
+
+  // Drop-off heartbeat tracking on page exit/unload
+  useEffect(() => {
+    const handleBeforeUnload = () => {
+      if (step < 4) {
+        const stageName = step === 1 ? 'STEP_1_PERSONAL' : step === 2 ? 'STEP_2_DECORATION' : 'STEP_3_PAYMENT';
+        trackJourney({
+          step,
+          stageName,
+          eventType: 'DROP_OFF',
+          field: lastActiveField,
+          fullName: formData.fullName,
+          phone: formData.phone,
+          district: formData.district,
+          category: formData.category,
+          photosCount: formData.photoUrls.length,
+          hasVideo: !!formData.videoUrl,
+        });
+      }
+    };
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    return () => window.removeEventListener('beforeunload', handleBeforeUnload);
+  }, [step, lastActiveField, formData]);
 
   // Auto-detect referral code from URL & sync with session
   useEffect(() => {
@@ -258,10 +294,20 @@ export default function RegisterPage() {
         });
         const data = await res.json();
         if (data.success && data.url) {
-          setFormData((prev) => ({
-            ...prev,
-            photoUrls: [...prev.photoUrls, data.url],
-          }));
+          setFormData((prev) => {
+            const updated = [...prev.photoUrls, data.url];
+            trackJourney({
+              step: 2,
+              stageName: 'STEP_2_DECORATION',
+              eventType: 'PHOTO_UPLOAD',
+              field: 'photos',
+              photosCount: updated.length,
+            });
+            return {
+              ...prev,
+              photoUrls: updated,
+            };
+          });
         } else {
           setErrorMessage(data.error || 'Failed to upload photo');
         }
@@ -298,10 +344,30 @@ export default function RegisterPage() {
           ? 'कृपया सर्व आवश्यक माहिती भरा (नाव, फोन, जिल्हा)'
           : 'Please fill in all required fields (Name, Phone, District)'
       );
+      trackJourney({
+        step: 1,
+        stageName: 'STEP_1_PERSONAL',
+        eventType: 'FIELD_INTERACT',
+        field: !formData.fullName.trim() ? 'fullName' : !formData.phone.trim() ? 'phone' : 'district',
+        fullName: formData.fullName,
+        phone: formData.phone,
+        district: formData.district,
+      });
       return;
     }
     setErrorMessage('');
     setStep(2);
+    setLastActiveField('photos');
+    trackJourney({
+      step: 2,
+      stageName: 'STEP_2_DECORATION',
+      eventType: 'STEP_ENTER',
+      fullName: formData.fullName,
+      phone: formData.phone,
+      email: formData.email,
+      district: formData.district,
+      category: formData.category,
+    });
     if (typeof window !== 'undefined') {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
@@ -320,6 +386,16 @@ export default function RegisterPage() {
           ? 'कृपया सजावटीचा किमान १ फोटो किंवा १ व्हिडिओ जोडा'
           : 'Please upload at least one photo or video of your decoration'
       );
+      trackJourney({
+        step: 2,
+        stageName: 'STEP_2_DECORATION',
+        eventType: 'FIELD_INTERACT',
+        field: 'photos',
+        fullName: formData.fullName,
+        phone: formData.phone,
+        district: formData.district,
+        photosCount: 0,
+      });
       return;
     }
 
@@ -352,6 +428,20 @@ export default function RegisterPage() {
           localStorage.setItem('lokutsav_my_ticket', data.ticketId);
         }
         setStep(3);
+        setLastActiveField('payment_screen');
+        trackJourney({
+          step: 3,
+          stageName: 'STEP_3_PAYMENT',
+          eventType: 'STEP_ENTER',
+          ticketId: data.ticketId,
+          fullName: formData.fullName,
+          phone: formData.phone,
+          district: formData.district,
+          category: formData.category,
+          photosCount: formData.photoUrls.length,
+          hasVideo: !!formData.videoUrl,
+          paymentStatus: 'ORDER_CREATED',
+        });
       } else {
         setErrorMessage(data.error || 'नोंदणी अयशस्वी झाली');
       }
@@ -363,11 +453,22 @@ export default function RegisterPage() {
   };
 
   // Step 3 -> Launch Razorpay Checkout Modal
-  // Step 3 -> Launch Razorpay Checkout Modal
   const launchRazorpayCheckout = async () => {
     if (!agreedToTerms) {
       setAgreedToTerms(true); // Auto-accept to avoid blocking
     }
+
+    setLastActiveField('razorpay_modal');
+    trackJourney({
+      step: 3,
+      stageName: 'PAYMENT_INITIATED',
+      eventType: 'PAYMENT_INITIATED',
+      field: 'razorpay_modal',
+      ticketId,
+      fullName: formData.fullName,
+      phone: formData.phone,
+      district: formData.district,
+    });
 
     const keyId =
       razorpayOrder?.keyId ||
@@ -466,6 +567,16 @@ export default function RegisterPage() {
                 localStorage.setItem('lokutsav_payment_status', 'COMPLETED');
               }
               setStep(4);
+              trackJourney({
+                step: 4,
+                stageName: 'STEP_4_COMPLETED',
+                eventType: 'PAYMENT_COMPLETED',
+                ticketId,
+                paymentStatus: 'COMPLETED',
+                fullName: formData.fullName,
+                phone: formData.phone,
+                district: formData.district,
+              });
             } else {
               setErrorMessage(verifyData.error || 'Payment verification failed');
             }
@@ -477,7 +588,18 @@ export default function RegisterPage() {
         },
         modal: {
           ondismiss: function () {
-            console.log('Payment window closed by user');
+            setLastActiveField('razorpay_modal');
+            trackJourney({
+              step: 3,
+              stageName: 'STEP_3_PAYMENT',
+              eventType: 'PAYMENT_FAILED',
+              field: 'razorpay_modal',
+              ticketId,
+              fullName: formData.fullName,
+              phone: formData.phone,
+              district: formData.district,
+              metadata: { reason: 'User dismissed checkout modal' },
+            });
           },
         },
       };
@@ -486,6 +608,16 @@ export default function RegisterPage() {
         const rzp = new RazorpayConstructor(options);
         rzp.on('payment.failed', function (resp: any) {
           setErrorMessage(`Payment failed: ${resp.error?.description || 'Transaction cancelled'}`);
+          trackJourney({
+            step: 3,
+            stageName: 'STEP_3_PAYMENT',
+            eventType: 'PAYMENT_FAILED',
+            field: 'razorpay_modal',
+            ticketId,
+            fullName: formData.fullName,
+            phone: formData.phone,
+            metadata: { error: resp.error?.description },
+          });
         });
         rzp.open();
         return;
@@ -536,6 +668,16 @@ export default function RegisterPage() {
           localStorage.setItem('lokutsav_payment_status', 'COMPLETED');
         }
         setStep(4);
+        trackJourney({
+          step: 4,
+          stageName: 'STEP_4_COMPLETED',
+          eventType: 'PAYMENT_COMPLETED',
+          ticketId,
+          paymentStatus: 'COMPLETED',
+          fullName: formData.fullName,
+          phone: formData.phone,
+          district: formData.district,
+        });
       } else {
         setErrorMessage(data.error || 'Payment verification failed');
       }

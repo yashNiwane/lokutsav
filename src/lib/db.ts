@@ -19,6 +19,8 @@ if (process.env.NODE_ENV !== 'production') {
 
 // In-memory persistent cache for zero-setup local dev / demo mode when database is not yet seeded
 let inMemoryEntries: ParticipantEntry[] = [...INITIAL_ENTRIES];
+let inMemoryJourneySessions: any[] = [];
+let inMemoryJourneyEvents: any[] = [];
 let isPostgresAvailable: boolean | null = null;
 
 async function canUsePrisma(): Promise<boolean> {
@@ -376,4 +378,438 @@ export const dataStore = {
   getSponsors(): SponsorItem[] {
     return SPONSORS_LIST;
   },
+
+  // ==========================================
+  // User Journey Analytics & Drop-off Tracking
+  // ==========================================
+  async trackJourney(payload: {
+    sessionId: string;
+    step?: number;
+    stageName: string;
+    eventType?: string;
+    field?: string;
+    category?: string;
+    district?: string;
+    fullName?: string;
+    phone?: string;
+    email?: string;
+    themeTitle?: string;
+    photosCount?: number;
+    hasVideo?: boolean;
+    ticketId?: string;
+    paymentStatus?: string;
+    deviceType?: string;
+    referrer?: string;
+    metadata?: any;
+  }): Promise<boolean> {
+    const stepNum = Number(payload.step) || 1;
+    const isSuccess = payload.eventType === 'PAYMENT_COMPLETED' || payload.paymentStatus === 'COMPLETED';
+
+    try {
+      if (await canUsePrisma()) {
+        const existing = await prisma.userJourneySession.findUnique({
+          where: { sessionId: payload.sessionId },
+        });
+
+        const maxStep = Math.max(existing?.maxStepReached || 1, stepNum);
+        const droppedAt = isSuccess ? null : payload.stageName;
+        const dropField = isSuccess ? null : (payload.field || existing?.dropOffField || null);
+
+        await prisma.userJourneySession.upsert({
+          where: { sessionId: payload.sessionId },
+          create: {
+            sessionId: payload.sessionId,
+            currentStep: stepNum,
+            maxStepReached: maxStep,
+            stageName: payload.stageName,
+            isCompleted: isSuccess,
+            droppedOffAt: droppedAt,
+            dropOffField: dropField,
+            category: payload.category || undefined,
+            district: payload.district || undefined,
+            fullName: payload.fullName || undefined,
+            phone: payload.phone || undefined,
+            email: payload.email || undefined,
+            themeTitle: payload.themeTitle || undefined,
+            photosCount: payload.photosCount !== undefined ? payload.photosCount : 0,
+            hasVideo: payload.hasVideo || false,
+            ticketId: payload.ticketId || undefined,
+            paymentStatus: payload.paymentStatus || (isSuccess ? 'COMPLETED' : 'NOT_INITIATED'),
+            deviceType: payload.deviceType || 'mobile',
+            referrer: payload.referrer || undefined,
+          },
+          update: {
+            currentStep: stepNum,
+            maxStepReached: maxStep,
+            stageName: payload.stageName,
+            isCompleted: isSuccess ? true : (existing?.isCompleted ?? false),
+            droppedOffAt: droppedAt,
+            dropOffField: dropField,
+            category: payload.category || existing?.category || undefined,
+            district: payload.district || existing?.district || undefined,
+            fullName: payload.fullName || existing?.fullName || undefined,
+            phone: payload.phone || existing?.phone || undefined,
+            email: payload.email || existing?.email || undefined,
+            themeTitle: payload.themeTitle || existing?.themeTitle || undefined,
+            photosCount: payload.photosCount !== undefined ? payload.photosCount : (existing?.photosCount ?? 0),
+            hasVideo: payload.hasVideo !== undefined ? payload.hasVideo : (existing?.hasVideo ?? false),
+            ticketId: payload.ticketId || existing?.ticketId || undefined,
+            paymentStatus: payload.paymentStatus || existing?.paymentStatus || (isSuccess ? 'COMPLETED' : 'NOT_INITIATED'),
+            deviceType: payload.deviceType || existing?.deviceType || 'mobile',
+          },
+        });
+
+        // Record granular event
+        await prisma.userJourneyEvent.create({
+          data: {
+            sessionId: payload.sessionId,
+            eventType: payload.eventType || 'STEP_ENTER',
+            step: stepNum,
+            stageName: payload.stageName,
+            field: payload.field || null,
+            metadata: payload.metadata ? JSON.stringify(payload.metadata) : null,
+          },
+        });
+
+        return true;
+      }
+    } catch (e) {
+      console.warn('⚡ [Lokutsav Analytics] Prisma write error, recording in memory:', e);
+    }
+
+    // In-memory fallback
+    const idx = inMemoryJourneySessions.findIndex((s) => s.sessionId === payload.sessionId);
+    const now = new Date();
+    const existing = idx !== -1 ? inMemoryJourneySessions[idx] : null;
+    const maxStep = Math.max(existing?.maxStepReached || 1, stepNum);
+    const droppedAt = isSuccess ? null : payload.stageName;
+    const dropField = isSuccess ? null : (payload.field || existing?.dropOffField || null);
+
+    const sessionObj = {
+      sessionId: payload.sessionId,
+      currentStep: stepNum,
+      maxStepReached: maxStep,
+      stageName: payload.stageName,
+      isCompleted: isSuccess ? true : (existing?.isCompleted ?? false),
+      droppedOffAt: droppedAt,
+      dropOffField: dropField,
+      category: payload.category || existing?.category || 'HOUSEHOLD',
+      district: payload.district || existing?.district || 'Pune',
+      fullName: payload.fullName || existing?.fullName || '',
+      phone: payload.phone || existing?.phone || '',
+      email: payload.email || existing?.email || '',
+      themeTitle: payload.themeTitle || existing?.themeTitle || '',
+      photosCount: payload.photosCount !== undefined ? payload.photosCount : (existing?.photosCount ?? 0),
+      hasVideo: payload.hasVideo !== undefined ? payload.hasVideo : (existing?.hasVideo ?? false),
+      ticketId: payload.ticketId || existing?.ticketId || '',
+      paymentStatus: payload.paymentStatus || existing?.paymentStatus || (isSuccess ? 'COMPLETED' : 'NOT_INITIATED'),
+      deviceType: payload.deviceType || existing?.deviceType || 'mobile',
+      referrer: payload.referrer || existing?.referrer || 'direct',
+      createdAt: existing?.createdAt || now,
+      updatedAt: now,
+    };
+
+    if (idx !== -1) {
+      inMemoryJourneySessions[idx] = sessionObj;
+    } else {
+      inMemoryJourneySessions.push(sessionObj);
+    }
+
+    inMemoryJourneyEvents.push({
+      id: 'ev_' + Date.now() + '_' + Math.random().toString(36).substring(2, 6),
+      sessionId: payload.sessionId,
+      eventType: payload.eventType || 'STEP_ENTER',
+      step: stepNum,
+      stageName: payload.stageName,
+      field: payload.field || null,
+      metadata: payload.metadata ? JSON.stringify(payload.metadata) : null,
+      createdAt: now,
+    });
+
+    return true;
+  },
+
+  async getAnalyticsSummary(timeRange: string = 'all'): Promise<{
+    overview: {
+      totalSessions: number;
+      completed: number;
+      droppedOff: number;
+      conversionRate: number;
+      dropOffRate: number;
+    };
+    funnel: Array<{
+      step: number;
+      name: string;
+      nameMr: string;
+      count: number;
+      conversionFromPrev: number;
+      dropOffCount: number;
+      dropOffRate: number;
+    }>;
+    stuckPoints: Array<{
+      field: string;
+      label: string;
+      labelMr: string;
+      dropOffCount: number;
+      percentage: number;
+    }>;
+    deviceBreakdown: Array<{
+      device: string;
+      count: number;
+      completed: number;
+      conversionRate: number;
+    }>;
+    districtStats: Array<{
+      district: string;
+      sessions: number;
+      completed: number;
+      dropOffRate: number;
+    }>;
+    incompleteLeads: Array<{
+      sessionId: string;
+      fullName: string;
+      phone: string;
+      district: string;
+      maxStepReached: number;
+      droppedOffAt: string;
+      dropOffField: string;
+      lastActive: string;
+    }>;
+    recentEvents: Array<{
+      id: string;
+      sessionId: string;
+      eventType: string;
+      step: number;
+      stageName: string;
+      field: string | null;
+      createdAt: string;
+    }>;
+  }> {
+    let sessions: any[] = [];
+    let events: any[] = [];
+
+    // Filter date calculation
+    let dateFilter: Date | null = null;
+    if (timeRange === 'today') {
+      dateFilter = new Date();
+      dateFilter.setHours(0, 0, 0, 0);
+    } else if (timeRange === '7days') {
+      dateFilter = new Date();
+      dateFilter.setDate(dateFilter.getDate() - 7);
+    } else if (timeRange === '30days') {
+      dateFilter = new Date();
+      dateFilter.setDate(dateFilter.getDate() - 30);
+    }
+
+    try {
+      if (await canUsePrisma()) {
+        const whereClause = dateFilter ? { createdAt: { gte: dateFilter } } : {};
+        sessions = await prisma.userJourneySession.findMany({
+          where: whereClause,
+          orderBy: { updatedAt: 'desc' },
+        });
+        events = await prisma.userJourneyEvent.findMany({
+          where: whereClause,
+          orderBy: { createdAt: 'desc' },
+          take: 50,
+        });
+      }
+    } catch {
+      // fallback
+    }
+
+    if (sessions.length === 0 && inMemoryJourneySessions.length > 0) {
+      sessions = inMemoryJourneySessions.filter((s) => (!dateFilter ? true : new Date(s.createdAt) >= dateFilter));
+      events = inMemoryJourneyEvents
+        .filter((e) => (!dateFilter ? true : new Date(e.createdAt) >= dateFilter))
+        .slice(-50)
+        .reverse();
+    }
+
+    // Also include registered participants from main Participant table to guarantee live accuracy
+    let participantCount = 0;
+    try {
+      if (await canUsePrisma()) {
+        participantCount = await prisma.participant.count({
+          where: { paymentStatus: 'COMPLETED' },
+        });
+      } else {
+        participantCount = inMemoryEntries.filter((e) => e.paymentStatus === 'COMPLETED').length;
+      }
+    } catch {
+      participantCount = inMemoryEntries.filter((e) => e.paymentStatus === 'COMPLETED').length;
+    }
+
+    const totalSessions = sessions.length;
+    const completedSessions = sessions.filter((s) => s.isCompleted || s.paymentStatus === 'COMPLETED');
+    const completedCount = Math.max(completedSessions.length, participantCount);
+    const droppedOffCount = Math.max(0, totalSessions - completedCount);
+    const conversionRate = totalSessions > 0 ? Number(((completedCount / totalSessions) * 100).toFixed(1)) : 0;
+    const dropOffRate = totalSessions > 0 ? Number(((droppedOffCount / totalSessions) * 100).toFixed(1)) : 0;
+
+    // Funnel Steps Calculation
+    // Step 1: Visited Register & Started Personal Details
+    const step1Count = sessions.filter((s) => (s.maxStepReached || s.currentStep || 1) >= 1).length || totalSessions;
+    // Step 2: Completed Personal & Reached Decoration / Uploads
+    const step2Count = sessions.filter((s) => (s.maxStepReached || s.currentStep || 1) >= 2).length;
+    // Step 3: Completed Decoration/Photos & Reached Payment Review
+    const step3Count = sessions.filter((s) => (s.maxStepReached || s.currentStep || 1) >= 3).length;
+    // Step 4: Initiated Payment Checkout / Verified
+    const step4Count = completedCount;
+
+    const funnel = [
+      {
+        step: 1,
+        name: 'Step 1: Personal Details',
+        nameMr: 'टप्पा १: वैयक्तिक माहिती',
+        count: step1Count,
+        conversionFromPrev: 100,
+        dropOffCount: Math.max(0, step1Count - step2Count),
+        dropOffRate: step1Count > 0 ? Number((((step1Count - step2Count) / step1Count) * 100).toFixed(1)) : 0,
+      },
+      {
+        step: 2,
+        name: 'Step 2: Decoration Details & Photos',
+        nameMr: 'टप्पा २: सजावट व फोटो अपलोड',
+        count: step2Count,
+        conversionFromPrev: step1Count > 0 ? Number(((step2Count / step1Count) * 100).toFixed(1)) : 0,
+        dropOffCount: Math.max(0, step2Count - step3Count),
+        dropOffRate: step2Count > 0 ? Number((((step2Count - step3Count) / step2Count) * 100).toFixed(1)) : 0,
+      },
+      {
+        step: 3,
+        name: 'Step 3: Review & Payment Confirmation',
+        nameMr: 'टप्पा ३: पडताळणी व शुल्क ₹९९',
+        count: step3Count,
+        conversionFromPrev: step2Count > 0 ? Number(((step3Count / step2Count) * 100).toFixed(1)) : 0,
+        dropOffCount: Math.max(0, step3Count - step4Count),
+        dropOffRate: step3Count > 0 ? Number((((step3Count - step4Count) / step3Count) * 100).toFixed(1)) : 0,
+      },
+      {
+        step: 4,
+        name: 'Completed: Verified & Ticket Generated',
+        nameMr: 'यशस्वी: तिकीट वितरीत',
+        count: step4Count,
+        conversionFromPrev: step3Count > 0 ? Number(((step4Count / step3Count) * 100).toFixed(1)) : 0,
+        dropOffCount: 0,
+        dropOffRate: 0,
+      },
+    ];
+
+    // Stuck Points / Drop-off Fields Analysis
+    const fieldCounts: Record<string, number> = {};
+    const uncompleted = sessions.filter((s) => !s.isCompleted && s.paymentStatus !== 'COMPLETED');
+    uncompleted.forEach((s) => {
+      const key = s.dropOffField || (s.maxStepReached === 1 ? 'personal_details' : s.maxStepReached === 2 ? 'photos_upload' : 'payment_screen');
+      fieldCounts[key] = (fieldCounts[key] || 0) + 1;
+    });
+
+    const fieldLabels: Record<string, { label: string; labelMr: string }> = {
+      photos_upload: { label: 'Decoration Photos / Video Upload', labelMr: 'सजावटीचे फोटो / व्हिडिओ अपलोड' },
+      photos: { label: 'Decoration Photos / Video Upload', labelMr: 'सजावटीचे फोटो / व्हिडिओ अपलोड' },
+      phone: { label: 'WhatsApp Phone Number Input', labelMr: 'व्हॉट्सॲप फोन नंबर नोंदणी' },
+      payment_screen: { label: 'Payment Gateway (₹99 Fee Hesitation)', labelMr: 'पेमेंट स्क्रीन (₹९९ शुल्क)' },
+      razorpay_modal: { label: 'Razorpay UPI Modal Dismissed', labelMr: 'UPI पेमेंट विंडो बंद केली' },
+      personal_details: { label: 'Personal Information Form', labelMr: 'वैयक्तिक माहिती फॉर्म' },
+      district: { label: 'District / City Selection', labelMr: 'जिल्हा / शहर निवड' },
+      address: { label: 'Address & Mandal Details', labelMr: 'पत्ता व तपशील' },
+      themeDescription: { label: 'Decoration Concept & Description', labelMr: 'देखाव्याची संकल्पना / वर्णन' },
+    };
+
+    const stuckPoints = Object.entries(fieldCounts)
+      .map(([field, count]) => {
+        const meta = fieldLabels[field] || { label: field, labelMr: field };
+        return {
+          field,
+          label: meta.label,
+          labelMr: meta.labelMr,
+          dropOffCount: count,
+          percentage: uncompleted.length > 0 ? Number(((count / uncompleted.length) * 100).toFixed(1)) : 0,
+        };
+      })
+      .sort((a, b) => b.dropOffCount - a.dropOffCount)
+      .slice(0, 6);
+
+    // Device breakdown
+    const deviceMap: Record<string, { count: number; completed: number }> = {
+      mobile: { count: 0, completed: 0 },
+      desktop: { count: 0, completed: 0 },
+      tablet: { count: 0, completed: 0 },
+    };
+    sessions.forEach((s) => {
+      const d = (s.deviceType || 'mobile').toLowerCase();
+      const target = deviceMap[d] || deviceMap['mobile'];
+      target.count += 1;
+      if (s.isCompleted || s.paymentStatus === 'COMPLETED') target.completed += 1;
+    });
+
+    const deviceBreakdown = Object.entries(deviceMap).map(([device, data]) => ({
+      device: device.charAt(0).toUpperCase() + device.slice(1),
+      count: data.count,
+      completed: data.completed,
+      conversionRate: data.count > 0 ? Number(((data.completed / data.count) * 100).toFixed(1)) : 0,
+    }));
+
+    // District stats
+    const districtMap: Record<string, { sessions: number; completed: number }> = {};
+    sessions.forEach((s) => {
+      if (s.district) {
+        if (!districtMap[s.district]) districtMap[s.district] = { sessions: 0, completed: 0 };
+        districtMap[s.district].sessions += 1;
+        if (s.isCompleted || s.paymentStatus === 'COMPLETED') districtMap[s.district].completed += 1;
+      }
+    });
+
+    const districtStats = Object.entries(districtMap)
+      .map(([district, data]) => ({
+        district,
+        sessions: data.sessions,
+        completed: data.completed,
+        dropOffRate: data.sessions > 0 ? Number((((data.sessions - data.completed) / data.sessions) * 100).toFixed(1)) : 0,
+      }))
+      .sort((a, b) => b.sessions - a.sessions)
+      .slice(0, 8);
+
+    // Incomplete leads (users who gave phone or name but dropped off)
+    const incompleteLeads = uncompleted
+      .filter((s) => s.fullName || s.phone)
+      .slice(0, 20)
+      .map((s) => ({
+        sessionId: s.sessionId,
+        fullName: s.fullName || 'अनामिक स्पर्धक (Anonymous)',
+        phone: s.phone || 'उपलब्ध नाही',
+        district: s.district || 'नोंदवलेला नाही',
+        maxStepReached: s.maxStepReached || 1,
+        droppedOffAt: s.droppedOffAt || 'STEP_1_PERSONAL',
+        dropOffField: s.dropOffField || 'photos',
+        lastActive: s.updatedAt ? new Date(s.updatedAt).toISOString() : new Date().toISOString(),
+      }));
+
+    const recentEvents = events.slice(0, 30).map((e) => ({
+      id: e.id,
+      sessionId: e.sessionId,
+      eventType: e.eventType,
+      step: e.step,
+      stageName: e.stageName,
+      field: e.field,
+      createdAt: e.createdAt ? new Date(e.createdAt).toISOString() : new Date().toISOString(),
+    }));
+
+    return {
+      overview: {
+        totalSessions,
+        completed: completedCount,
+        droppedOff: droppedOffCount,
+        conversionRate,
+        dropOffRate,
+      },
+      funnel,
+      stuckPoints,
+      deviceBreakdown,
+      districtStats,
+      incompleteLeads,
+      recentEvents,
+    };
+  },
 };
+

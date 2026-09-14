@@ -174,3 +174,53 @@ model FaqItem {
   category   String   @default("general")
   sortOrder  Int      @default(0)
 }
+
+model UserJourneySession {
+  id               String             @id @default(cuid())
+  sessionId        String             @unique
+  currentStep      Int                @default(1)
+  maxStepReached   Int                @default(1)
+  stageName        String             @default("STEP_1_PERSONAL")
+  isCompleted      Boolean            @default(false)
+  droppedOffAt     String?            // e.g. "STEP_1_PERSONAL", "STEP_2_DECORATION", "STEP_3_PAYMENT"
+  dropOffField     String?            // e.g. "photos", "phone", "razorpay_modal"
+  category         String?
+  district         String?
+  fullName         String?
+  phone            String?
+  email            String?
+  themeTitle       String?
+  photosCount      Int                @default(0)
+  hasVideo         Boolean            @default(false)
+  ticketId         String?
+  paymentStatus    String             @default("NOT_INITIATED")
+  deviceType       String?            @default("mobile")
+  referrer         String?
+  source           String?
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
+  events           UserJourneyEvent[]
+
+  @@index([stageName])
+  @@index([isCompleted])
+  @@index([droppedOffAt])
+  @@index([createdAt])
+}
+
+model UserJourneyEvent {
+  id          String              @id @default(cuid())
+  sessionId   String
+  session     UserJourneySession? @relation(fields: [sessionId], references: [sessionId], onDelete: Cascade)
+  eventType   String              // "STEP_ENTER", "FIELD_INTERACTION", "PHOTO_UPLOAD", "PAYMENT_INITIATED", "PAYMENT_COMPLETED", "DROP_OFF"
+  step        Int                 @default(1)
+  stageName   String
+  field       String?
+  metadata    String?             // JSON string for arbitrary extra details
+  createdAt   DateTime            @default(now())
+
+  @@index([sessionId])
+  @@index([eventType])
+  @@index([stageName])
+  @@index([createdAt])
+}
+

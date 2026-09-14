@@ -71,7 +71,7 @@ model Competition {
   description     String
   descriptionMr   String
   year            Int               @default(2026)
-  entryFee        Int               @default(199)
+  entryFee        Int               @default(299)
   prizePoolText   String            @default("₹1,50,000+ in Cash & Gifts")
   prizePoolTextMr String            @default("₹1,50,000+ रोख व आकर्षक पारितोषिके")
   status          CompetitionStatus @default(ACTIVE)
@@ -100,7 +100,7 @@ model Participant {
   materialsUsed      String?
   photoUrls          String                // JSON array of file paths / URLs
   videoUrl           String?               // Link or uploaded local path
-  entryFee           Int                   @default(199)
+  entryFee           Int                   @default(299)
   paymentStatus      PaymentStatus         @default(PENDING)
   razorpayOrderId    String?
   razorpayPaymentId  String?

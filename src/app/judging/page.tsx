@@ -204,7 +204,7 @@ export default function JudgingPage() {
       e.ticketId.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  const totalRevenue = entries.length * 199;
+  const totalRevenue = entries.length * 299;
   const scoredCount = entries.filter((e) => e.finalScore !== undefined).length;
 
   if (!isAuthenticated) {

@@ -15,7 +15,7 @@ async function main() {
       description: 'State-wide online Ganpati decoration competition across all 36 districts of Maharashtra.',
       descriptionMr: 'महाराष्ट्रातील सर्व 36 जिल्ह्यांसाठी भव्य राज्यस्तरीय ऑनलाइन गणेश सजावट स्पर्धा.',
       year: 2026,
-      entryFee: 199,
+      entryFee: 299,
       prizePoolText: '₹1,50,000+ in Cash & Gold Trophies',
       prizePoolTextMr: '₹1,50,000+ रोख व मानाच्या सुवर्ण ट्रॉफीज',
       registrationEnd: new Date('2026-09-30T23:59:59Z'),

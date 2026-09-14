@@ -148,7 +148,7 @@ export default function Header() {
             className="inline-flex items-center gap-2 bg-[#9B1B1E] hover:bg-[#781416] text-white px-4 py-2.5 rounded-lg text-sm font-bold shadow-sm transition-all hover:shadow-md active:scale-98"
           >
             <span>{t.nav.registerNow}</span>
-            <span className="bg-white/20 text-xs px-1.5 py-0.5 rounded font-mono">₹199</span>
+            <span className="bg-white/20 text-xs px-1.5 py-0.5 rounded font-mono">₹299</span>
           </Link>
         </div>
 
@@ -158,7 +158,7 @@ export default function Header() {
             href="/register"
             className="hidden sm:inline-flex bg-[#9B1B1E] text-white text-xs font-bold px-3 py-1.5 rounded-md whitespace-nowrap shrink-0"
           >
-            {t.nav.registerNow} (₹199)
+            {t.nav.registerNow} (₹299)
           </Link>
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -218,7 +218,7 @@ export default function Header() {
               onClick={() => setMobileMenuOpen(false)}
               className="w-full text-center bg-[#9B1B1E] text-white font-bold py-3 rounded-lg text-sm shadow-xs"
             >
-              {t.nav.registerNow} (₹199)
+              {t.nav.registerNow} (₹299)
             </Link>
             <Link
               href="/judging"

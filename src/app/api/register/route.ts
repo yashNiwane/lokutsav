@@ -67,7 +67,7 @@ export async function POST(request: NextRequest) {
       materialsUsed: materialsUsed || '',
       photoUrls: hasPhotos ? photoUrls : [],
       videoUrl: hasVideo ? videoUrl.trim() : undefined,
-      entryFee: 199,
+      entryFee: 299,
       paymentStatus: 'PENDING',
       termsAccepted: false,
       referredBy: referredBy ? referredBy.trim().toUpperCase() : undefined,
@@ -75,7 +75,7 @@ export async function POST(request: NextRequest) {
     });
 
     // Generate Razorpay Order
-    const order = await createRegistrationOrder(ticketId, 199);
+    const order = await createRegistrationOrder(ticketId, 299);
 
     return NextResponse.json({
       success: true,

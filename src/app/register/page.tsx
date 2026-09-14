@@ -396,7 +396,7 @@ export default function RegisterPage() {
     if (RazorpayConstructor) {
       const options = {
         key: keyId,
-        amount: razorpayOrder?.amount || 19900,
+        amount: razorpayOrder?.amount || 29900,
         currency: razorpayOrder?.currency || 'INR',
         name: 'लोकोत्सव 2026 | Lokutsav',
         description: `महाराष्ट्र राज्य गणेश सजावट स्पर्धा नोंदणी (${ticketId})`,
@@ -1073,7 +1073,7 @@ export default function RegisterPage() {
                 <span>
                   {isSubmitting
                     ? lang === 'mr' ? 'प्रक्रिया सुरू आहे...' : 'Processing...'
-                    : lang === 'mr' ? 'पुढील पायरी: ₹199 भरणा' : 'Proceed to ₹199 Payment'}
+                    : lang === 'mr' ? 'पुढील पायरी: ₹299 भरणा' : 'Proceed to ₹299 Payment'}
                 </span>
                 <ArrowRight className="w-5 h-5" />
               </button>
@@ -1091,7 +1091,7 @@ export default function RegisterPage() {
             <div className="bg-amber-50/70 p-5 rounded-xl border border-amber-200 space-y-3">
               <div className="flex items-center justify-between text-sm">
                 <span className="text-stone-700">{t.form.payment.feeLabel}</span>
-                <span className="font-bold text-stone-900 font-mono">₹199.00</span>
+                <span className="font-bold text-stone-900 font-mono">₹299.00</span>
               </div>
               <div className="flex items-center justify-between text-sm">
                 <span className="text-stone-700">{t.form.payment.gstLabel}</span>
@@ -1099,7 +1099,7 @@ export default function RegisterPage() {
               </div>
               <div className="pt-2 border-t border-amber-200 flex items-center justify-between text-base font-black">
                 <span className="text-stone-900">{t.form.payment.totalLabel}</span>
-                <span className="font-serif text-2xl text-[#9B1B1E]">₹199 मात्र</span>
+                <span className="font-serif text-2xl text-[#9B1B1E]">₹299 मात्र</span>
               </div>
             </div>
 
@@ -1174,7 +1174,7 @@ export default function RegisterPage() {
                 <span>
                   {isSubmitting
                     ? 'रेझरपे सुरू होत आहे...'
-                    : 'UPI (GPay/PhonePe/Paytm) किंवा कार्ड द्वारे ₹199 भरा'}
+                    : 'UPI (GPay/PhonePe/Paytm) किंवा कार्ड द्वारे ₹299 भरा'}
                 </span>
               </button>
 
@@ -1240,7 +1240,7 @@ export default function RegisterPage() {
                 </div>
                 <div>
                   <span className="text-stone-500 block">शुल्क स्थिती:</span>
-                  <span className="font-bold text-emerald-700">₹199 पूर्ण (Paid via Razorpay)</span>
+                  <span className="font-bold text-emerald-700">₹299 पूर्ण (Paid via Razorpay)</span>
                 </div>
               </div>
             </div>
@@ -1524,8 +1524,8 @@ export default function RegisterPage() {
                   </h4>
                   <p>
                     {lang === 'mr'
-                      ? 'नोंदणी शुल्क प्रति प्रवेश ₹199 (जीएसटी समाविष्ट) आहे. ही राज्यव्यापी स्पर्धा यशस्वीरीत्या पार पाडण्यासाठी किमान 1,000 स्पर्धकांचा सहभाग आवश्यक आहे. जर एकूण नोंदणीकृत स्पर्धकांची संख्या 1,000 पेक्षा कमी राहिली, तर सर्व सहभागी स्पर्धकांचे पैसे त्यांच्या मूळ खात्यात परत (Refund) केले जातील; या परताव्याच्या रकमेतून केवळ 3% रेझरपे (Razorpay) गेटवे व्यवहार शुल्क वजा करण्यात येईल. इतर सर्व सामान्य परिस्थितीत तिकीट जनरेट झाल्यानंतर शुल्क परत केले जात नाही.'
-                      : 'The registration fee is ₹199 per entry (inclusive of GST). A minimum threshold of 1,000 participants is required to conduct the competition. If the total number of participants is less than 1,000, all money will be refunded back to the participants, with a 3% Razorpay transaction fee deducted. Under all other standard circumstances, fees are non-refundable once the ticket is issued.'}
+                      ? 'नोंदणी शुल्क प्रति प्रवेश ₹299 (जीएसटी समाविष्ट) आहे. ही राज्यव्यापी स्पर्धा यशस्वीरीत्या पार पाडण्यासाठी किमान 1,000 स्पर्धकांचा सहभाग आवश्यक आहे. जर एकूण नोंदणीकृत स्पर्धकांची संख्या 1,000 पेक्षा कमी राहिली, तर सर्व सहभागी स्पर्धकांचे पैसे त्यांच्या मूळ खात्यात परत (Refund) केले जातील; या परताव्याच्या रकमेतून केवळ 3% रेझरपे (Razorpay) गेटवे व्यवहार शुल्क वजा करण्यात येईल. इतर सर्व सामान्य परिस्थितीत तिकीट जनरेट झाल्यानंतर शुल्क परत केले जात नाही.'
+                      : 'The registration fee is ₹299 per entry (inclusive of GST). A minimum threshold of 1,000 participants is required to conduct the competition. If the total number of participants is less than 1,000, all money will be refunded back to the participants, with a 3% Razorpay transaction fee deducted. Under all other standard circumstances, fees are non-refundable once the ticket is issued.'}
                   </p>
                   <div className="bg-amber-50 border border-amber-200 rounded-lg p-2.5 text-[11px] sm:text-xs text-amber-900 font-medium flex items-center gap-2">
                     <span className="shrink-0">🛡️</span>

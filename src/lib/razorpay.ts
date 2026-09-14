@@ -13,7 +13,7 @@ export function getRazorpayClient(): Razorpay | null {
   });
 }
 
-export async function createRegistrationOrder(ticketId: string, amountInRupees = 199) {
+export async function createRegistrationOrder(ticketId: string, amountInRupees = 299) {
   const client = getRazorpayClient();
   const amountInPaise = amountInRupees * 100;
 

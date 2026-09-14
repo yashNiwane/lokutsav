@@ -35,9 +35,19 @@ export async function POST(request: NextRequest) {
       fs.mkdirSync(uploadsDir, { recursive: true });
     }
 
-    const buffer = Buffer.from(await file.arrayBuffer());
     const filePath = path.join(uploadsDir, cleanFileName);
-    fs.writeFileSync(filePath, buffer);
+
+    // Fast streaming to disk: avoiding in-memory arrayBuffer bottleneck
+    if (typeof file.stream === 'function') {
+      const { Readable } = await import('stream');
+      const { pipeline } = await import('stream/promises');
+      const nodeReadable = Readable.fromWeb(file.stream() as any);
+      const writeStream = fs.createWriteStream(filePath, { highWaterMark: 1024 * 1024 }); // 1MB chunk buffer
+      await pipeline(nodeReadable, writeStream);
+    } else {
+      const buffer = Buffer.from(await file.arrayBuffer());
+      await fs.promises.writeFile(filePath, buffer);
+    }
 
     const publicUrl = `/uploads/${cleanFileName}`;
 

@@ -105,23 +105,58 @@ export default function RegisterPage() {
   const [uploadingPhoto, setUploadingPhoto] = useState(false);
   const [photoUrlInput, setPhotoUrlInput] = useState('');
   const [uploadingVideo, setUploadingVideo] = useState(false);
+  const [videoProgress, setVideoProgress] = useState<{ percent: number; uploadedMb: string; totalMb: string } | null>(null);
+  const [videoLinkInput, setVideoLinkInput] = useState('');
+
+  const addVideoUrlManually = () => {
+    if (!videoLinkInput.trim()) return;
+    setFormData((prev) => ({
+      ...prev,
+      videoUrl: videoLinkInput.trim(),
+    }));
+    setVideoLinkInput('');
+  };
 
   const handleVideoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
+    // Reset input value so re-selecting same file works
+    e.target.value = '';
+
+    const fileSizeMb = file.size / (1024 * 1024);
+    if (fileSizeMb > 250) {
+      setErrorMessage(
+        lang === 'mr'
+          ? 'व्हिडिओ फाइल खूप मोठी आहे (250MB+). कृपया जलद अपलोडसाठी 720p किंवा कॉम्प्रेस केलेला व्हिडिओ वापरा.'
+          : 'File size exceeds 250MB. Please use a compressed or 720p video for fast upload.'
+      );
+      return;
+    }
+
     setUploadingVideo(true);
+    setVideoProgress({
+      percent: 0,
+      uploadedMb: '0',
+      totalMb: fileSizeMb.toFixed(1),
+    });
     setErrorMessage('');
 
-    // Client-side 5-minute video duration validation
     try {
-      const videoElement = document.createElement('video');
-      videoElement.preload = 'metadata';
-      const objUrl = URL.createObjectURL(file);
-      videoElement.src = objUrl;
-
+      // 1. Quick duration check with timeout safety (never blocks slow metadata)
       await new Promise<void>((resolve, reject) => {
+        const videoElement = document.createElement('video');
+        videoElement.preload = 'metadata';
+        const objUrl = URL.createObjectURL(file);
+        videoElement.src = objUrl;
+
+        const timer = setTimeout(() => {
+          URL.revokeObjectURL(objUrl);
+          resolve(); // Don't hang if slow parsing
+        }, 2000);
+
         videoElement.onloadedmetadata = () => {
+          clearTimeout(timer);
           URL.revokeObjectURL(objUrl);
           if (videoElement.duration > 180) {
             reject(
@@ -135,32 +170,74 @@ export default function RegisterPage() {
             resolve();
           }
         };
+
         videoElement.onerror = () => {
-          resolve(); // Fallback if browser can't read metadata
+          clearTimeout(timer);
+          URL.revokeObjectURL(objUrl);
+          resolve();
         };
       });
 
+      // 2. High-speed upload with real-time XMLHttpRequest progress
       const body = new FormData();
       body.append('file', file);
 
-      const res = await fetch('/api/upload', {
-        method: 'POST',
-        body,
-      });
+      await new Promise<void>((resolve, reject) => {
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', '/api/upload', true);
 
-      const data = await res.json();
-      if (data.success && data.url) {
-        setFormData((prev) => ({
-          ...prev,
-          videoUrl: data.url,
-        }));
-      } else {
-        setErrorMessage(data.error || 'Failed to upload video');
-      }
+        xhr.upload.onprogress = (event) => {
+          if (event.lengthComputable) {
+            const percent = Math.min(99, Math.round((event.loaded / event.total) * 100));
+            const uploadedMb = (event.loaded / (1024 * 1024)).toFixed(1);
+            const totalMb = (event.total / (1024 * 1024)).toFixed(1);
+            setVideoProgress({ percent, uploadedMb, totalMb });
+          }
+        };
+
+        xhr.onload = () => {
+          if (xhr.status >= 200 && xhr.status < 300) {
+            try {
+              const data = JSON.parse(xhr.responseText);
+              if (data.success && data.url) {
+                setVideoProgress({
+                  percent: 100,
+                  uploadedMb: (file.size / (1024 * 1024)).toFixed(1),
+                  totalMb: (file.size / (1024 * 1024)).toFixed(1),
+                });
+                setFormData((prev) => ({
+                  ...prev,
+                  videoUrl: data.url,
+                }));
+                resolve();
+              } else {
+                reject(new Error(data.error || 'Failed to upload video'));
+              }
+            } catch {
+              reject(new Error('Invalid response from upload server'));
+            }
+          } else {
+            reject(new Error(`Server error (${xhr.status})`));
+          }
+        };
+
+        xhr.onerror = () => {
+          reject(
+            new Error(
+              lang === 'mr'
+                ? 'नेटवर्क त्रुटी: व्हिडिओ अपलोड अयशस्वी झाला. कृपया पुन्हा प्रयत्न करा.'
+                : 'Network error during upload. Please retry.'
+            )
+          );
+        };
+
+        xhr.send(body);
+      });
     } catch (err: any) {
       setErrorMessage(err.message || 'Video upload failed');
     } finally {
       setUploadingVideo(false);
+      setTimeout(() => setVideoProgress(null), 1200);
     }
   };
 
@@ -825,30 +902,73 @@ export default function RegisterPage() {
                 </div>
 
                 {!formData.videoUrl ? (
-                  <label className="cursor-pointer border-2 border-dashed border-[#E5D7C0] hover:border-[#9B1B1E] bg-white rounded-xl p-6 flex flex-col items-center justify-center text-center transition-colors group">
-                    <div className="w-12 h-12 rounded-full bg-amber-50 text-[#9B1B1E] flex items-center justify-center mb-2 group-hover:scale-105 transition-transform">
-                      {uploadingVideo ? (
-                        <div className="w-6 h-6 border-2 border-[#9B1B1E] border-t-transparent rounded-full animate-spin" />
+                  <div className="space-y-3">
+                    <label className="cursor-pointer border-2 border-dashed border-[#E5D7C0] hover:border-[#9B1B1E] bg-white rounded-xl p-5 sm:p-6 flex flex-col items-center justify-center text-center transition-colors group">
+                      {!uploadingVideo ? (
+                        <>
+                          <div className="w-12 h-12 rounded-full bg-amber-50 text-[#9B1B1E] flex items-center justify-center mb-2 group-hover:scale-105 transition-transform">
+                            <Video className="w-6 h-6" />
+                          </div>
+                          <span className="font-bold text-sm text-stone-800">
+                            {lang === 'mr' ? 'व्हिडिओ निवडा व जलद अपलोड करा (Choose Video)' : 'Select Video File (Direct High-Speed Upload)'}
+                          </span>
+                          <span className="text-xs text-stone-400 mt-1">
+                            MP4, MOV, WebM (कमाल 3 मिनिटे • हाय-स्पीड स्ट्रीमिंग)
+                          </span>
+                        </>
                       ) : (
-                        <Video className="w-6 h-6" />
+                        <div className="w-full max-w-sm space-y-2.5 py-2">
+                          <div className="flex items-center justify-between text-xs font-semibold text-stone-800">
+                            <span className="flex items-center gap-1.5 text-[#9B1B1E]">
+                              <span className="w-2 h-2 rounded-full bg-[#9B1B1E] animate-ping" />
+                              <span>{lang === 'mr' ? 'व्हिडिओ वेगाने अपलोड होत आहे...' : 'Uploading video fast...'}</span>
+                            </span>
+                            <span className="font-mono font-bold text-sm text-[#9B1B1E]">{videoProgress?.percent || 0}%</span>
+                          </div>
+                          <div className="w-full bg-stone-200 rounded-full h-3 overflow-hidden">
+                            <div
+                              className="bg-gradient-to-r from-amber-500 via-[#9B1B1E] to-red-600 h-full transition-all duration-150 rounded-full"
+                              style={{ width: `${videoProgress?.percent || 0}%` }}
+                            />
+                          </div>
+                          <div className="flex items-center justify-between text-[11px] text-stone-500 font-mono">
+                            <span>{videoProgress?.uploadedMb || 0} MB / {videoProgress?.totalMb || 0} MB</span>
+                            <span>{videoProgress?.percent === 100 ? (lang === 'mr' ? 'पडताळणी पूर्ण होत आहे...' : 'Finalizing...') : (lang === 'mr' ? 'कृपया प्रतीक्षा करा' : 'Please wait')}</span>
+                          </div>
+                        </div>
                       )}
+                      <input
+                        type="file"
+                        accept="video/mp4,video/quicktime,video/webm,video/m4v"
+                        onChange={handleVideoUpload}
+                        disabled={uploadingVideo}
+                        className="hidden"
+                      />
+                    </label>
+
+                    {/* Instant Alternative: Video Link */}
+                    <div className="pt-1 flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
+                      <span className="text-xs text-stone-500 font-medium whitespace-nowrap">
+                        {lang === 'mr' ? 'किंवा थेट व्हिडिओ लिंक जोडा:' : 'Or paste direct video link:'}
+                      </span>
+                      <div className="flex-1 flex gap-2">
+                        <input
+                          type="url"
+                          placeholder={lang === 'mr' ? 'YouTube / Drive / Reel लिंक...' : 'YouTube / Drive / Reel URL...'}
+                          value={videoLinkInput}
+                          onChange={(e) => setVideoLinkInput(e.target.value)}
+                          className="flex-1 text-xs px-3 py-2 rounded-lg border border-stone-300 bg-white"
+                        />
+                        <button
+                          type="button"
+                          onClick={addVideoUrlManually}
+                          className="text-xs font-bold px-3.5 py-2 bg-stone-200 hover:bg-stone-300 rounded-lg text-stone-800 transition-colors cursor-pointer"
+                        >
+                          {lang === 'mr' ? 'जोडा' : 'Add'}
+                        </button>
+                      </div>
                     </div>
-                    <span className="font-bold text-sm text-stone-800">
-                      {uploadingVideo
-                        ? (lang === 'mr' ? 'व्हिडिओ अपलोड होत आहे...' : 'Uploading video file...')
-                        : (lang === 'mr' ? 'व्हिडिओ निवडा व थेट अपलोड करा (Choose Video)' : 'Select Video File (Direct Upload)')}
-                    </span>
-                    <span className="text-xs text-stone-400 mt-1">
-                      MP4, MOV, WebM (YouTube लिंकची आवश्यकता नाही • कमाल 3 मिनिटे)
-                    </span>
-                    <input
-                      type="file"
-                      accept="video/mp4,video/quicktime,video/webm,video/m4v"
-                      onChange={handleVideoUpload}
-                      disabled={uploadingVideo}
-                      className="hidden"
-                    />
-                  </label>
+                  </div>
                 ) : (
                   <div className="space-y-3 bg-white p-4 rounded-xl border border-stone-200">
                     <div className="flex items-center justify-between">

@@ -20,7 +20,7 @@ export async function POST(request: NextRequest) {
     const allowedExts = [
       // Images
       '.jpg', '.jpeg', '.png', '.webp', '.heic',
-      // Videos (max 5 minutes)
+      // Videos (max 3 minutes)
       '.mp4', '.mov', '.webm', '.m4v', '.mkv'
     ];
 

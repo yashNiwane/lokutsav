@@ -108,8 +108,8 @@ export const translations = {
         materialsPlaceholder: 'उदा. बांबू, खादी कापड, ज्यूट, तांदूळ, फुले इत्यादी',
         photosLabel: 'सजावटीचे 3 ते 5 उच्च दर्जाचे फोटो जोडा',
         photosHint: 'स्पष्ट, वेगवेगळ्या कोनांतून काढलेले छायाचित्रे जोडा (प्रत्येकी कमाल 5 MB)',
-        videoLabel: 'सजावटीचा व्हिडिओ थेट अपलोड करा (कमाल 5 मिनिटे)',
-        videoHint: 'मोबाईल किंवा संगणकावरून थेट व्हिडिओ निवडून अपलोड करा (कमाल कालावधी 5 मिनिटे)',
+        videoLabel: 'सजावटीचा व्हिडिओ थेट अपलोड करा (कमाल 3 मिनिटे)',
+        videoHint: 'मोबाईल किंवा संगणकावरून थेट व्हिडिओ निवडून अपलोड करा (कमाल कालावधी 3 मिनिटे)',
         videoLinkPlaceholder: 'व्हिडिओ थेट अपलोड केला जाईल',
       },
       payment: {
@@ -289,8 +289,8 @@ export const translations = {
         materialsPlaceholder: 'e.g. Bamboo, jute, cotton fabric, earthen lamps, natural marigold',
         photosLabel: 'Upload 3 to 5 High-Resolution Photos',
         photosHint: 'Include full view, close-up details, and lighting angles (Max 5 MB each)',
-        videoLabel: 'Upload Decoration Video Tour (Max 5 minutes)',
-        videoHint: 'Upload video file directly from your mobile or computer (max duration 5 minutes)',
+        videoLabel: 'Upload Decoration Video Tour (Max 3 minutes)',
+        videoHint: 'Upload video file directly from your mobile or computer (max duration 3 minutes)',
         videoLinkPlaceholder: 'Direct video file upload',
       },
       payment: {

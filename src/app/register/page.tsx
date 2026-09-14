@@ -123,12 +123,12 @@ export default function RegisterPage() {
       await new Promise<void>((resolve, reject) => {
         videoElement.onloadedmetadata = () => {
           URL.revokeObjectURL(objUrl);
-          if (videoElement.duration > 300) {
+          if (videoElement.duration > 180) {
             reject(
               new Error(
                 lang === 'mr'
-                  ? 'व्हिडिओचा कालावधी 5 मिनिटांपेक्षा जास्त आहे. कृपया 5 मिनिटांखालील व्हिडिओ निवडा.'
-                  : 'Video length exceeds the 5-minute maximum limit. Please select or trim a video under 5 minutes.'
+                  ? 'व्हिडिओचा कालावधी 3 मिनिटांपेक्षा जास्त आहे. कृपया 3 मिनिटांखालील व्हिडिओ निवडा.'
+                  : 'Video length exceeds the 3-minute maximum limit. Please select or trim a video under 3 minutes.'
               )
             );
           } else {
@@ -808,7 +808,7 @@ export default function RegisterPage() {
                 )}
               </div>
 
-              {/* Direct Video File Upload (Max 5 minutes) */}
+              {/* Direct Video File Upload (Max 3 minutes) */}
               <div className="p-4 rounded-xl bg-stone-50 border border-stone-200 space-y-3">
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
                   <div>
@@ -820,7 +820,7 @@ export default function RegisterPage() {
                     </p>
                   </div>
                   <span className="self-start text-[11px] font-bold text-amber-900 bg-amber-100 border border-amber-300 px-2.5 py-0.5 rounded-full">
-                    {lang === 'mr' ? 'कमाल कालावधी: 5 मिनिटे' : 'Max Length: 5 Minutes'}
+                    {lang === 'mr' ? 'कमाल कालावधी: 3 मिनिटे' : 'Max Length: 3 Minutes'}
                   </span>
                 </div>
 
@@ -839,7 +839,7 @@ export default function RegisterPage() {
                         : (lang === 'mr' ? 'व्हिडिओ निवडा व थेट अपलोड करा (Choose Video)' : 'Select Video File (Direct Upload)')}
                     </span>
                     <span className="text-xs text-stone-400 mt-1">
-                      MP4, MOV, WebM (YouTube लिंकची आवश्यकता नाही • कमाल 5 मिनिटे)
+                      MP4, MOV, WebM (YouTube लिंकची आवश्यकता नाही • कमाल 3 मिनिटे)
                     </span>
                     <input
                       type="file"
@@ -854,7 +854,7 @@ export default function RegisterPage() {
                     <div className="flex items-center justify-between">
                       <span className="text-xs font-bold text-emerald-800 flex items-center gap-1.5">
                         <CheckCircle2 className="w-4 h-4 text-emerald-600" />
-                        <span>{lang === 'mr' ? 'व्हिडिओ थेट अपलोड झाला (5 मिनिटांच्या आत)' : 'Video uploaded directly (within 5-min limit)'}</span>
+                        <span>{lang === 'mr' ? 'व्हिडिओ थेट अपलोड झाला (3 मिनिटांच्या आत)' : 'Video uploaded directly (within 3-min limit)'}</span>
                       </span>
                       <button
                         type="button"

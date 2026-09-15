@@ -74,23 +74,73 @@ export default function RegisterPage() {
     });
   }, []);
 
+  // Real-time helper to capture all filled fields into DB (even for incomplete forms)
+  const syncFormSnapshot = (
+    dataToSync = formData,
+    activeField = lastActiveField,
+    currentStep = step,
+    eventType: 'FIELD_INTERACT' | 'DROP_OFF' | 'STEP_ENTER' | 'PAYMENT_INITIATED' = 'FIELD_INTERACT'
+  ) => {
+    const stageName =
+      currentStep === 1
+        ? 'STEP_1_PERSONAL'
+        : currentStep === 2
+        ? 'STEP_2_DECORATION'
+        : currentStep === 3
+        ? 'STEP_3_PAYMENT'
+        : 'STEP_4_COMPLETED';
+
+    trackJourney({
+      step: currentStep as any,
+      stageName: stageName as any,
+      eventType,
+      field: activeField,
+      fullName: dataToSync.fullName,
+      phone: dataToSync.phone,
+      email: dataToSync.email,
+      district: dataToSync.district,
+      city: dataToSync.city,
+      address: dataToSync.address,
+      category: dataToSync.category,
+      idolType: dataToSync.idolType,
+      themeTitle: dataToSync.themeTitle,
+      themeDescription: dataToSync.themeDescription,
+      materialsUsed: dataToSync.materialsUsed,
+      photoUrls: dataToSync.photoUrls,
+      photosCount: dataToSync.photoUrls.length,
+      videoUrl: dataToSync.videoUrl,
+      hasVideo: !!dataToSync.videoUrl,
+      referredBy: dataToSync.referredBy,
+      formDataJson: JSON.stringify(dataToSync),
+    });
+  };
+
+  // Debounced auto-save: captures any partially filled form automatically into DB
+  useEffect(() => {
+    const hasAnyData = !!(
+      formData.fullName.trim() ||
+      formData.phone.trim() ||
+      formData.email.trim() ||
+      formData.city.trim() ||
+      formData.address.trim() ||
+      formData.themeTitle.trim() ||
+      formData.photoUrls.length > 0
+    );
+
+    if (!hasAnyData) return;
+
+    const timer = setTimeout(() => {
+      syncFormSnapshot(formData, lastActiveField, step, 'FIELD_INTERACT');
+    }, 1000);
+
+    return () => clearTimeout(timer);
+  }, [formData, lastActiveField, step]);
+
   // Drop-off heartbeat tracking on page exit/unload
   useEffect(() => {
     const handleBeforeUnload = () => {
       if (step < 4) {
-        const stageName = step === 1 ? 'STEP_1_PERSONAL' : step === 2 ? 'STEP_2_DECORATION' : 'STEP_3_PAYMENT';
-        trackJourney({
-          step,
-          stageName,
-          eventType: 'DROP_OFF',
-          field: lastActiveField,
-          fullName: formData.fullName,
-          phone: formData.phone,
-          district: formData.district,
-          category: formData.category,
-          photosCount: formData.photoUrls.length,
-          hasVideo: !!formData.videoUrl,
-        });
+        syncFormSnapshot(formData, lastActiveField, step, 'DROP_OFF');
       }
     };
     window.addEventListener('beforeunload', handleBeforeUnload);
@@ -358,16 +408,7 @@ export default function RegisterPage() {
     setErrorMessage('');
     setStep(2);
     setLastActiveField('photos');
-    trackJourney({
-      step: 2,
-      stageName: 'STEP_2_DECORATION',
-      eventType: 'STEP_ENTER',
-      fullName: formData.fullName,
-      phone: formData.phone,
-      email: formData.email,
-      district: formData.district,
-      category: formData.category,
-    });
+    syncFormSnapshot(formData, 'step_1_completed', 2, 'STEP_ENTER');
     if (typeof window !== 'undefined') {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
@@ -429,19 +470,12 @@ export default function RegisterPage() {
         }
         setStep(3);
         setLastActiveField('payment_screen');
-        trackJourney({
-          step: 3,
-          stageName: 'STEP_3_PAYMENT',
-          eventType: 'STEP_ENTER',
-          ticketId: data.ticketId,
-          fullName: formData.fullName,
-          phone: formData.phone,
-          district: formData.district,
-          category: formData.category,
-          photosCount: formData.photoUrls.length,
-          hasVideo: !!formData.videoUrl,
-          paymentStatus: 'ORDER_CREATED',
-        });
+        syncFormSnapshot(
+          { ...formData, themeTitle: effectiveTitle, themeDescription: formData.themeDescription.trim() || effectiveTitle },
+          'payment_screen',
+          3,
+          'STEP_ENTER'
+        );
       } else {
         setErrorMessage(data.error || 'नोंदणी अयशस्वी झाली');
       }
@@ -459,16 +493,7 @@ export default function RegisterPage() {
     }
 
     setLastActiveField('razorpay_modal');
-    trackJourney({
-      step: 3,
-      stageName: 'PAYMENT_INITIATED',
-      eventType: 'PAYMENT_INITIATED',
-      field: 'razorpay_modal',
-      ticketId,
-      fullName: formData.fullName,
-      phone: formData.phone,
-      district: formData.district,
-    });
+    syncFormSnapshot(formData, 'razorpay_modal', 3, 'PAYMENT_INITIATED');
 
     const keyId =
       razorpayOrder?.keyId ||
@@ -803,6 +828,7 @@ export default function RegisterPage() {
                   required
                   value={formData.fullName}
                   onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
+                  onBlur={() => syncFormSnapshot(formData, 'fullName')}
                   placeholder={t.form.personal.fullNamePlaceholder}
                   className="w-full px-4 py-3 rounded-lg border border-stone-300 focus:outline-none focus:ring-2 focus:ring-[#9B1B1E]/40"
                 />
@@ -819,6 +845,7 @@ export default function RegisterPage() {
                     maxLength={10}
                     value={formData.phone}
                     onChange={(e) => setFormData({ ...formData, phone: e.target.value.replace(/\D/g, '') })}
+                    onBlur={() => syncFormSnapshot(formData, 'phone')}
                     placeholder={t.form.personal.phonePlaceholder}
                     className="w-full px-4 py-3 rounded-lg border border-stone-300 focus:outline-none focus:ring-2 focus:ring-[#9B1B1E]/40"
                   />
@@ -832,6 +859,7 @@ export default function RegisterPage() {
                     type="email"
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                    onBlur={() => syncFormSnapshot(formData, 'email')}
                     placeholder={t.form.personal.emailPlaceholder}
                     className="w-full px-4 py-3 rounded-lg border border-stone-300 focus:outline-none focus:ring-2 focus:ring-[#9B1B1E]/40"
                   />
@@ -845,7 +873,11 @@ export default function RegisterPage() {
                   </label>
                   <select
                     value={formData.district}
-                    onChange={(e) => setFormData({ ...formData, district: e.target.value })}
+                    onChange={(e) => {
+                      const updated = { ...formData, district: e.target.value };
+                      setFormData(updated);
+                      syncFormSnapshot(updated, 'district');
+                    }}
                     className="w-full px-4 py-3 rounded-lg border border-stone-300 bg-white focus:outline-none focus:ring-2 focus:ring-[#9B1B1E]/40"
                   >
                     {MAHARASHTRA_DISTRICTS.map((d) => (
@@ -865,6 +897,7 @@ export default function RegisterPage() {
                     required
                     value={formData.city}
                     onChange={(e) => setFormData({ ...formData, city: e.target.value })}
+                    onBlur={() => syncFormSnapshot(formData, 'city')}
                     placeholder={t.form.personal.cityPlaceholder}
                     className="w-full px-4 py-3 rounded-lg border border-stone-300 focus:outline-none focus:ring-2 focus:ring-[#9B1B1E]/40"
                   />
@@ -879,6 +912,7 @@ export default function RegisterPage() {
                   rows={2}
                   value={formData.address}
                   onChange={(e) => setFormData({ ...formData, address: e.target.value })}
+                  onBlur={() => syncFormSnapshot(formData, 'address')}
                   placeholder={t.form.personal.addressPlaceholder}
                   className="w-full px-4 py-3 rounded-lg border border-stone-300 focus:outline-none focus:ring-2 focus:ring-[#9B1B1E]/40"
                 />

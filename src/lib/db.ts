@@ -390,16 +390,25 @@ export const dataStore = {
     field?: string;
     category?: string;
     district?: string;
+    city?: string;
+    address?: string;
     fullName?: string;
     phone?: string;
     email?: string;
+    idolType?: string;
     themeTitle?: string;
+    themeDescription?: string;
+    materialsUsed?: string;
+    photoUrls?: string[];
     photosCount?: number;
+    videoUrl?: string;
     hasVideo?: boolean;
+    referredBy?: string;
     ticketId?: string;
     paymentStatus?: string;
     deviceType?: string;
     referrer?: string;
+    formDataJson?: string;
     metadata?: any;
   }): Promise<boolean> {
     const stepNum = Number(payload.step) || 1;
@@ -414,6 +423,8 @@ export const dataStore = {
         const maxStep = Math.max(existing?.maxStepReached || 1, stepNum);
         const droppedAt = isSuccess ? null : payload.stageName;
         const dropField = isSuccess ? null : (payload.field || existing?.dropOffField || null);
+        const photosJson = payload.photoUrls ? JSON.stringify(payload.photoUrls) : undefined;
+        const photoCount = payload.photosCount !== undefined ? payload.photosCount : (payload.photoUrls?.length || 0);
 
         await prisma.userJourneySession.upsert({
           where: { sessionId: payload.sessionId },
@@ -427,16 +438,25 @@ export const dataStore = {
             dropOffField: dropField,
             category: payload.category || undefined,
             district: payload.district || undefined,
+            city: payload.city || undefined,
+            address: payload.address || undefined,
             fullName: payload.fullName || undefined,
             phone: payload.phone || undefined,
             email: payload.email || undefined,
+            idolType: payload.idolType || undefined,
             themeTitle: payload.themeTitle || undefined,
-            photosCount: payload.photosCount !== undefined ? payload.photosCount : 0,
-            hasVideo: payload.hasVideo || false,
+            themeDescription: payload.themeDescription || undefined,
+            materialsUsed: payload.materialsUsed || undefined,
+            photoUrls: photosJson,
+            photosCount: photoCount,
+            videoUrl: payload.videoUrl || undefined,
+            hasVideo: payload.hasVideo || Boolean(payload.videoUrl),
+            referredBy: payload.referredBy || undefined,
             ticketId: payload.ticketId || undefined,
             paymentStatus: payload.paymentStatus || (isSuccess ? 'COMPLETED' : 'NOT_INITIATED'),
             deviceType: payload.deviceType || 'mobile',
             referrer: payload.referrer || undefined,
+            formDataJson: payload.formDataJson || undefined,
           },
           update: {
             currentStep: stepNum,
@@ -447,15 +467,24 @@ export const dataStore = {
             dropOffField: dropField,
             category: payload.category || existing?.category || undefined,
             district: payload.district || existing?.district || undefined,
+            city: payload.city || existing?.city || undefined,
+            address: payload.address || existing?.address || undefined,
             fullName: payload.fullName || existing?.fullName || undefined,
             phone: payload.phone || existing?.phone || undefined,
             email: payload.email || existing?.email || undefined,
+            idolType: payload.idolType || existing?.idolType || undefined,
             themeTitle: payload.themeTitle || existing?.themeTitle || undefined,
-            photosCount: payload.photosCount !== undefined ? payload.photosCount : (existing?.photosCount ?? 0),
-            hasVideo: payload.hasVideo !== undefined ? payload.hasVideo : (existing?.hasVideo ?? false),
+            themeDescription: payload.themeDescription || existing?.themeDescription || undefined,
+            materialsUsed: payload.materialsUsed || existing?.materialsUsed || undefined,
+            photoUrls: photosJson || existing?.photoUrls || undefined,
+            photosCount: payload.photosCount !== undefined ? payload.photosCount : (photoCount || existing?.photosCount || 0),
+            videoUrl: payload.videoUrl || existing?.videoUrl || undefined,
+            hasVideo: payload.hasVideo !== undefined ? payload.hasVideo : (Boolean(payload.videoUrl) || existing?.hasVideo || false),
+            referredBy: payload.referredBy || existing?.referredBy || undefined,
             ticketId: payload.ticketId || existing?.ticketId || undefined,
             paymentStatus: payload.paymentStatus || existing?.paymentStatus || (isSuccess ? 'COMPLETED' : 'NOT_INITIATED'),
             deviceType: payload.deviceType || existing?.deviceType || 'mobile',
+            formDataJson: payload.formDataJson || existing?.formDataJson || undefined,
           },
         });
 
@@ -484,6 +513,7 @@ export const dataStore = {
     const maxStep = Math.max(existing?.maxStepReached || 1, stepNum);
     const droppedAt = isSuccess ? null : payload.stageName;
     const dropField = isSuccess ? null : (payload.field || existing?.dropOffField || null);
+    const photosJson = payload.photoUrls ? JSON.stringify(payload.photoUrls) : existing?.photoUrls;
 
     const sessionObj = {
       sessionId: payload.sessionId,
@@ -495,16 +525,25 @@ export const dataStore = {
       dropOffField: dropField,
       category: payload.category || existing?.category || 'HOUSEHOLD',
       district: payload.district || existing?.district || 'Pune',
+      city: payload.city || existing?.city || '',
+      address: payload.address || existing?.address || '',
       fullName: payload.fullName || existing?.fullName || '',
       phone: payload.phone || existing?.phone || '',
       email: payload.email || existing?.email || '',
+      idolType: payload.idolType || existing?.idolType || 'SHADU_MATI_CLAY',
       themeTitle: payload.themeTitle || existing?.themeTitle || '',
+      themeDescription: payload.themeDescription || existing?.themeDescription || '',
+      materialsUsed: payload.materialsUsed || existing?.materialsUsed || '',
+      photoUrls: photosJson,
       photosCount: payload.photosCount !== undefined ? payload.photosCount : (existing?.photosCount ?? 0),
+      videoUrl: payload.videoUrl || existing?.videoUrl || '',
       hasVideo: payload.hasVideo !== undefined ? payload.hasVideo : (existing?.hasVideo ?? false),
+      referredBy: payload.referredBy || existing?.referredBy || '',
       ticketId: payload.ticketId || existing?.ticketId || '',
       paymentStatus: payload.paymentStatus || existing?.paymentStatus || (isSuccess ? 'COMPLETED' : 'NOT_INITIATED'),
       deviceType: payload.deviceType || existing?.deviceType || 'mobile',
       referrer: payload.referrer || existing?.referrer || 'direct',
+      formDataJson: payload.formDataJson || existing?.formDataJson || undefined,
       createdAt: existing?.createdAt || now,
       updatedAt: now,
     };
@@ -565,16 +604,8 @@ export const dataStore = {
       completed: number;
       dropOffRate: number;
     }>;
-    incompleteLeads: Array<{
-      sessionId: string;
-      fullName: string;
-      phone: string;
-      district: string;
-      maxStepReached: number;
-      droppedOffAt: string;
-      dropOffField: string;
-      lastActive: string;
-    }>;
+    allLeads: Array<any>;
+    incompleteLeads: Array<any>;
     recentEvents: Array<{
       id: string;
       sessionId: string;
@@ -770,22 +801,70 @@ export const dataStore = {
       .sort((a, b) => b.sessions - a.sessions)
       .slice(0, 8);
 
-    // Incomplete leads (users who gave phone or name but dropped off)
-    const incompleteLeads = uncompleted
-      .filter((s) => s.fullName || s.phone)
-      .slice(0, 20)
-      .map((s) => ({
-        sessionId: s.sessionId,
-        fullName: s.fullName || 'अनामिक स्पर्धक (Anonymous)',
-        phone: s.phone || 'उपलब्ध नाही',
-        district: s.district || 'नोंदवलेला नाही',
-        maxStepReached: s.maxStepReached || 1,
-        droppedOffAt: s.droppedOffAt || 'STEP_1_PERSONAL',
-        dropOffField: s.dropOffField || 'photos',
-        lastActive: s.updatedAt ? new Date(s.updatedAt).toISOString() : new Date().toISOString(),
-      }));
+    // Helper to format lead object with all filled fields
+    const formatLead = (s: any) => {
+      let parsedPhotos: string[] = [];
+      if (s.photoUrls) {
+        try {
+          parsedPhotos = JSON.parse(s.photoUrls);
+        } catch {
+          parsedPhotos = typeof s.photoUrls === 'string' ? [s.photoUrls] : [];
+        }
+      }
 
-    const recentEvents = events.slice(0, 30).map((e) => ({
+      let parsedFormSnapshot: any = null;
+      if (s.formDataJson) {
+        try {
+          parsedFormSnapshot = JSON.parse(s.formDataJson);
+        } catch {
+          parsedFormSnapshot = null;
+        }
+      }
+
+      const isDone = s.isCompleted === true || s.paymentStatus === 'COMPLETED';
+
+      return {
+        sessionId: s.sessionId,
+        fullName: s.fullName || parsedFormSnapshot?.fullName || '',
+        phone: s.phone || parsedFormSnapshot?.phone || '',
+        email: s.email || parsedFormSnapshot?.email || '',
+        district: s.district || parsedFormSnapshot?.district || '',
+        city: s.city || parsedFormSnapshot?.city || '',
+        address: s.address || parsedFormSnapshot?.address || '',
+        category: s.category || parsedFormSnapshot?.category || 'HOUSEHOLD',
+        idolType: s.idolType || parsedFormSnapshot?.idolType || 'SHADU_MATI_CLAY',
+        themeTitle: s.themeTitle || parsedFormSnapshot?.themeTitle || '',
+        themeDescription: s.themeDescription || parsedFormSnapshot?.themeDescription || '',
+        materialsUsed: s.materialsUsed || parsedFormSnapshot?.materialsUsed || '',
+        photoUrls: parsedPhotos.length > 0 ? parsedPhotos : (parsedFormSnapshot?.photoUrls || []),
+        photosCount: s.photosCount || parsedPhotos.length || (parsedFormSnapshot?.photoUrls?.length || 0),
+        videoUrl: s.videoUrl || parsedFormSnapshot?.videoUrl || '',
+        hasVideo: s.hasVideo || Boolean(s.videoUrl || parsedFormSnapshot?.videoUrl),
+        referredBy: s.referredBy || parsedFormSnapshot?.referredBy || '',
+        ticketId: s.ticketId || parsedFormSnapshot?.ticketId || '',
+        paymentStatus: s.paymentStatus || (isDone ? 'COMPLETED' : 'NOT_INITIATED'),
+        isCompleted: isDone,
+        currentStep: s.currentStep || 1,
+        maxStepReached: s.maxStepReached || 1,
+        droppedOffAt: isDone ? null : (s.droppedOffAt || 'STEP_1_PERSONAL'),
+        dropOffField: isDone ? null : (s.dropOffField || 'photos'),
+        deviceType: s.deviceType || 'mobile',
+        referrer: s.referrer || 'direct',
+        formData: parsedFormSnapshot,
+        lastActive: s.updatedAt ? new Date(s.updatedAt).toISOString() : (s.createdAt ? new Date(s.createdAt).toISOString() : new Date().toISOString()),
+        createdAt: s.createdAt ? new Date(s.createdAt).toISOString() : new Date().toISOString(),
+      };
+    };
+
+    // All person sessions with every single field filled
+    const allLeads = sessions.map(formatLead);
+
+    // Incomplete leads (users who haven't finished payment)
+    const incompleteLeads = allLeads
+      .filter((s) => !s.isCompleted)
+      .sort((a, b) => new Date(b.lastActive).getTime() - new Date(a.lastActive).getTime());
+
+    const recentEvents = events.slice(0, 50).map((e) => ({
       id: e.id,
       sessionId: e.sessionId,
       eventType: e.eventType,
@@ -807,6 +886,7 @@ export const dataStore = {
       stuckPoints,
       deviceBreakdown,
       districtStats,
+      allLeads,
       incompleteLeads,
       recentEvents,
     };

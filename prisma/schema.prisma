@@ -184,19 +184,28 @@ model UserJourneySession {
   isCompleted      Boolean            @default(false)
   droppedOffAt     String?            // e.g. "STEP_1_PERSONAL", "STEP_2_DECORATION", "STEP_3_PAYMENT"
   dropOffField     String?            // e.g. "photos", "phone", "razorpay_modal"
-  category         String?
-  district         String?
-  fullName         String?
-  phone            String?
-  email            String?
-  themeTitle       String?
+  category         String?            // e.g. "HOUSEHOLD", "MANDAL"
+  district         String?            // e.g. "Pune"
+  city             String?            // e.g. "Haveli"
+  address          String?            // e.g. "Flat 101, Shivneri..."
+  fullName         String?            // e.g. "Rahul Patil"
+  phone            String?            // e.g. "9876543210"
+  email            String?            // e.g. "rahul@gmail.com"
+  idolType         String?            // e.g. "SHADU_MATI_CLAY", "TRADITIONAL_POP"
+  themeTitle       String?            // e.g. "Eco-friendly Fort"
+  themeDescription String?            // Description of theme
+  materialsUsed    String?            // Bamboo, paper, etc.
+  photoUrls        String?            // JSON string array of photo URLs
   photosCount      Int                @default(0)
+  videoUrl         String?            // Video link or uploaded path
   hasVideo         Boolean            @default(false)
-  ticketId         String?
+  referredBy       String?            // Referral code
+  ticketId         String?            // Ticket ID if generated
   paymentStatus    String             @default("NOT_INITIATED")
   deviceType       String?            @default("mobile")
   referrer         String?
   source           String?
+  formDataJson     String?            // Complete JSON snapshot of all fields
   createdAt        DateTime           @default(now())
   updatedAt        DateTime           @updatedAt
   events           UserJourneyEvent[]
@@ -205,6 +214,7 @@ model UserJourneySession {
   @@index([isCompleted])
   @@index([droppedOffAt])
   @@index([createdAt])
+  @@index([phone])
 }
 
 model UserJourneyEvent {

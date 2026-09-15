@@ -21,14 +21,23 @@ export interface TrackerPayload {
   field?: string;
   category?: string;
   district?: string;
+  city?: string;
+  address?: string;
   fullName?: string;
   phone?: string;
   email?: string;
+  idolType?: string;
   themeTitle?: string;
+  themeDescription?: string;
+  materialsUsed?: string;
+  photoUrls?: string[];
   photosCount?: number;
+  videoUrl?: string;
   hasVideo?: boolean;
+  referredBy?: string;
   ticketId?: string;
   paymentStatus?: string;
+  formDataJson?: string;
   metadata?: Record<string, any>;
 }
 

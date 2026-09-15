@@ -12,8 +12,14 @@ export async function POST(request: NextRequest) {
   try {
     const { phase, passcode } = await request.json();
 
-    const expectedPasscode = process.env.JURY_PASSCODE || 'AYPtech@2026';
-    if (passcode !== expectedPasscode) {
+    const validPasscodes = new Set([
+      'AYPtech@2026',
+      'lokutsav2026',
+      process.env.JURY_PASSCODE?.trim(),
+      process.env.ADMIN_PASSCODE?.trim(),
+    ].filter(Boolean));
+
+    if (!passcode || !validPasscodes.has(passcode.trim())) {
       return NextResponse.json(
         { error: 'Unauthorized: Invalid passcode' },
         { status: 401 }

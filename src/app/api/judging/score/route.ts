@@ -6,8 +6,14 @@ export async function POST(request: NextRequest) {
     const { entryId, scores, remarks, judgePasscode } = await request.json();
 
     // Verification: simple jury passcode for demo / evaluation
-    const expectedPasscode = process.env.JURY_PASSCODE || 'AYPtech@2026';
-    if (judgePasscode !== expectedPasscode) {
+    const validPasscodes = new Set([
+      'AYPtech@2026',
+      'lokutsav2026',
+      process.env.JURY_PASSCODE?.trim(),
+      process.env.ADMIN_PASSCODE?.trim(),
+    ].filter(Boolean));
+
+    if (!judgePasscode || !validPasscodes.has(judgePasscode.trim())) {
       return NextResponse.json(
         { error: 'Invalid Judge / Admin authorization passcode' },
         { status: 401 }

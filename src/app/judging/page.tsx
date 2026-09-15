@@ -116,7 +116,8 @@ export default function JudgingPage() {
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    if (passcode === 'AYPtech@2026') {
+    const clean = passcode.trim();
+    if (clean === 'AYPtech@2026' || clean === 'lokutsav2026') {
       setIsAuthenticated(true);
       setAuthError('');
       fetchEntries();

@@ -1586,7 +1586,9 @@ export default function RegisterPage() {
               {/* WhatsApp Share Button */}
               <a
                 href={`https://wa.me/?text=${encodeURIComponent(
-                  `🚩 *लोकोत्सव २०२६ | महाराष्ट्र राज्य ऑनलाइन गणेश सजावट स्पर्धा*\n\nमी माझ्या बाप्पाच्या देखाव्याची अधिकृत नोंदणी केली आहे! (प्रवेशिका: ${ticketId})\n\nतुम्हीही तुमच्या घरगुती गणपती किंवा मंडळाच्या सजावटीची केवळ ₹९९ मध्ये नोंदणी करा आणि रोख पारितोषिके जिंका.\n\n👉 माझ्या रेफरल लिंकवरून लगेच नोंदणी करा:\n${typeof window !== 'undefined' ? window.location.origin : 'https://lokutsav.com'}/register?ref=${ticketId}`
+                  lang === 'mr'
+                    ? `🚩 *लोकोत्सव २०२६ | महाराष्ट्र राज्य ऑनलाइन गणेश सजावट स्पर्धा* 🏆\n\nमी माझ्या बाप्पाच्या देखाव्याची अधिकृत नोंदणी केली आहे! (प्रवेशिका क्र.: ${ticketId})\n\n🎁 *भव्य पारितोषिके व सन्मान:*\n🥇 *प्रथम क्रमांक:* ₹५१,००० रोख + मानाची सुवर्ण ट्रॉफी\n🥈 *द्वितीय क्रमांक:* ₹३१,००० रोख + रौप्य ट्रॉफी\n🥉 *तृतीय क्रमांक:* ₹२१,००० रोख + कांस्य ट्रॉफी\n✨ *एकूण रोख पारितोषिके:* ₹२,००,०००+\n📜 *सर्व स्पर्धकांना:* अधिकृत राज्यस्तरीय डिजिटल सहभाग प्रमाणपत्र\n\nकेवळ *₹९९* नोंदणी शुल्कात तुमच्या घरगुती गणपती किंवा मंडळाच्या सजावटीची नोंदणी करा आणि राज्यभरात आपल्या देखाव्याचा गौरव मिळवा! 🌟\n\n👉 *माझ्या लिंकवरून लगेच नोंदणी करा:*\n${typeof window !== 'undefined' ? window.location.origin : 'https://lokutsav.com'}/register?ref=${ticketId}`
+                    : `🚩 *Lokutsav 2026 | Maharashtra State Online Ganesh Decoration Competition* 🏆\n\nI have registered my Bappa's decoration! (Entry No.: ${ticketId})\n\n🎁 *Grand Prizes & Honors:*\n🥇 *1st Prize:* ₹51,000 Cash + Gold Trophy\n🥈 *2nd Prize:* ₹31,000 Cash + Silver Trophy\n🥉 *3rd Prize:* ₹21,000 Cash + Bronze Trophy\n✨ *Total Cash Prizes:* ₹2,00,000+\n📜 *For Every Participant:* Official State-level Certificate\n\nEntry fee is only *₹99*! Register your Household or Mandal Ganpati decoration now and gain state-wide recognition! 🌟\n\n👉 *Register using my link here:*\n${typeof window !== 'undefined' ? window.location.origin : 'https://lokutsav.com'}/register?ref=${ticketId}`
                 )}`}
                 target="_blank"
                 rel="noopener noreferrer"

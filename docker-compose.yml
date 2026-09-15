@@ -35,6 +35,8 @@ services:
       - DATABASE_URL=postgresql://${POSTGRES_USER:-lokutsav_user}:${POSTGRES_PASSWORD:-lokutsav_secure_password_2026}@postgres:5432/${POSTGRES_DB:-lokutsav_db}?schema=public
       - RAZORPAY_KEY_ID=${RAZORPAY_KEY_ID:-rzp_test_simulation}
       - RAZORPAY_KEY_SECRET=${RAZORPAY_KEY_SECRET:-rzp_test_secret}
+      - NEXT_PUBLIC_RAZORPAY_KEY_ID=${NEXT_PUBLIC_RAZORPAY_KEY_ID:-rzp_test_simulation}
+      - RAZORPAY_WEBHOOK_SECRET=${RAZORPAY_WEBHOOK_SECRET:-lokutsav_webhook_secret_2026}
       - JURY_PASSCODE=${JURY_PASSCODE:-AYPtech@2026}
       - NEXT_PUBLIC_APP_URL=${NEXT_PUBLIC_APP_URL:-http://localhost:3000}
     volumes:

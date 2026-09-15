@@ -185,6 +185,7 @@ export default function RegisterPage() {
   const [uploadingPhoto, setUploadingPhoto] = useState(false);
   const [photoUrlInput, setPhotoUrlInput] = useState('');
   const [uploadingVideo, setUploadingVideo] = useState(false);
+  const [videoPreviewUrl, setVideoPreviewUrl] = useState('');
   const [videoProgress, setVideoProgress] = useState<{ percent: number; uploadedMb: string; totalMb: string } | null>(null);
   const [videoLinkInput, setVideoLinkInput] = useState('');
 
@@ -215,6 +216,8 @@ export default function RegisterPage() {
     }
 
     setUploadingVideo(true);
+    const localPreview = URL.createObjectURL(file);
+    setVideoPreviewUrl(localPreview);
     setVideoProgress({
       percent: 0,
       uploadedMb: '0',
@@ -1057,19 +1060,41 @@ export default function RegisterPage() {
                 </div>
 
                 {formData.photoUrls.length > 0 && (
-                  <div className="flex flex-wrap gap-2 pt-2">
-                    {formData.photoUrls.map((url, i) => (
-                      <div key={i} className="relative w-20 h-20 rounded-lg overflow-hidden border border-stone-300 group">
-                        <img src={url} alt="upload preview" className="w-full h-full object-cover" />
-                        <button
-                          type="button"
-                          onClick={() => removePhoto(i)}
-                          className="absolute top-1 right-1 bg-red-600 text-white w-5 h-5 rounded-full text-xs flex items-center justify-center opacity-90 hover:opacity-100"
+                  <div className="space-y-2 pt-2">
+                    <div className="flex items-center justify-between text-xs text-stone-600">
+                      <span className="font-semibold">
+                        {lang === 'mr' ? `अपलोड केलेले फोटो (${formData.photoUrls.length}/१०):` : `Uploaded Photos (${formData.photoUrls.length}/10):`}
+                      </span>
+                      <span className="text-[11px] text-emerald-700 font-bold">
+                        ✓ {lang === 'mr' ? 'फोटो साठवले आहेत' : 'Saved'}
+                      </span>
+                    </div>
+                    <div className="grid grid-cols-3 sm:grid-cols-5 gap-3">
+                      {formData.photoUrls.map((url, i) => (
+                        <div
+                          key={i}
+                          className="relative aspect-square rounded-xl overflow-hidden border-2 border-stone-200 bg-stone-100 group shadow-2xs hover:border-[#9B1B1E] transition-all"
                         >
-                          ✕
-                        </button>
-                      </div>
-                    ))}
+                          <img
+                            src={url}
+                            alt={`Photo ${i + 1}`}
+                            className="w-full h-full object-cover group-hover:scale-105 transition-transform"
+                            loading="lazy"
+                          />
+                          <span className="absolute bottom-1.5 left-1.5 bg-black/70 text-white font-mono text-[10px] font-bold px-1.5 py-0.5 rounded backdrop-blur-xs">
+                            #{i + 1}
+                          </span>
+                          <button
+                            type="button"
+                            onClick={() => removePhoto(i)}
+                            title={lang === 'mr' ? 'हा फोटो काढा' : 'Remove photo'}
+                            className="absolute top-1.5 right-1.5 bg-red-600/90 hover:bg-red-700 text-white w-6 h-6 rounded-full text-xs flex items-center justify-center shadow-md transition-transform active:scale-90 cursor-pointer"
+                          >
+                            ✕
+                          </button>
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 )}
               </div>
@@ -1178,17 +1203,22 @@ export default function RegisterPage() {
                       </span>
                       <button
                         type="button"
-                        onClick={() => setFormData({ ...formData, videoUrl: '' })}
-                        className="text-xs font-bold text-red-600 hover:text-red-800 underline"
+                        onClick={() => {
+                          setFormData({ ...formData, videoUrl: '' });
+                          setVideoPreviewUrl('');
+                        }}
+                        className="text-xs font-bold text-red-600 hover:text-red-800 underline cursor-pointer"
                       >
                         {lang === 'mr' ? 'व्हिडिओ बदला / काढा' : 'Remove / Change Video'}
                       </button>
                     </div>
 
-                    <div className="rounded-lg overflow-hidden bg-black aspect-16/9 max-h-64 flex items-center justify-center">
+                    <div className="rounded-xl overflow-hidden bg-stone-950 aspect-video max-h-72 flex items-center justify-center relative shadow-inner">
                       <video
-                        src={formData.videoUrl}
+                        src={videoPreviewUrl || formData.videoUrl}
                         controls
+                        playsInline
+                        preload="metadata"
                         className="w-full h-full object-contain"
                       />
                     </div>

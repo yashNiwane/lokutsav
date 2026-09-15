@@ -1,18 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/db';
 
-const VALID_PASSCODES = new Set([
-  'AYPtech@2026',
-  'lokutsav2026',
-  process.env.ADMIN_PASSCODE?.trim(),
-  process.env.JURY_PASSCODE?.trim(),
-].filter(Boolean));
+const ADMIN_EXCLUSIVE_PASSCODE = 'AYPtech@2026';
 
 function isAuthorized(req: NextRequest): boolean {
   const authHeader = req.headers.get('authorization') || '';
   const token = authHeader.replace('Bearer ', '').trim();
   const queryPass = req.nextUrl.searchParams.get('passcode')?.trim();
-  return (token && VALID_PASSCODES.has(token)) || (queryPass && VALID_PASSCODES.has(queryPass)) || false;
+  return token === ADMIN_EXCLUSIVE_PASSCODE || queryPass === ADMIN_EXCLUSIVE_PASSCODE;
 }
 
 // GET: Fetch records from any database table with search, filter, sort & pagination

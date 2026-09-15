@@ -230,7 +230,7 @@ export default function JudgingPage() {
               type="password"
               value={passcode}
               onChange={(e) => setPasscode(e.target.value)}
-              placeholder="पासकोड प्रविष्ट करा / Enter Passcode"
+              placeholder="password@123"
               className="w-full px-4 py-3 rounded-lg border border-stone-300 text-center font-mono focus:outline-none focus:ring-2 focus:ring-[#9B1B1E]"
             />
 

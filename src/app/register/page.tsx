@@ -650,12 +650,13 @@ export default function RegisterPage() {
         rzp.open();
         return;
       } catch (e) {
-        console.warn('Direct checkout error, using fallback verification', e);
+        console.warn('Direct checkout error opening Razorpay', e);
+        setErrorMessage('पेमेंट गेटवे सुरू करताना त्रुटी आली. कृपया इंटरनेट तपासा किंवा पुन्हा प्रयत्न करा.');
+        return;
       }
     }
 
-    // Fallback if Razorpay checkout script is completely unreachable
-    handleCompletePaymentSimulated();
+    setErrorMessage('Razorpay पेमेंट सेवा लोड होत आहे, कृपया २ सेकंद थांबा आणि पुन्हा प्रयत्न करा.');
   };
 
   const handleCompletePaymentSimulated = async () => {

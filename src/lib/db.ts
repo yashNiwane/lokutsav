@@ -46,6 +46,9 @@ export const dataStore = {
     try {
       if (await canUsePrisma()) {
         const rows = await prisma.participant.findMany({
+          where: {
+            paymentStatus: 'COMPLETED',
+          },
           orderBy: [{ finalRank: 'asc' }, { createdAt: 'desc' }],
         });
         if (rows.length > 0) {
@@ -77,9 +80,9 @@ export const dataStore = {
         }
       }
     } catch {
-      // Fallback to in-memory store
+      // Fallback to in-memory store (only paid entries)
     }
-    return inMemoryEntries;
+    return inMemoryEntries.filter((e) => e.paymentStatus === 'COMPLETED');
   },
 
   async getEntryById(id: string): Promise<ParticipantEntry | null> {

@@ -884,37 +884,7 @@ export default function RegisterPage() {
                 />
               </div>
 
-              {/* Referral Code Field */}
-              <div className="bg-amber-50/60 p-4 rounded-xl border border-amber-200/80 space-y-1.5">
-                <div className="flex items-center justify-between">
-                  <label className="block font-semibold text-xs text-stone-800 uppercase tracking-wider flex items-center gap-1.5">
-                    <span>🎁</span>
-                    <span>{lang === 'mr' ? 'रेफरल कोड (Referral Code)' : 'Referral Code'}</span>
-                  </label>
-                  <span className="text-[11px] text-stone-500">
-                    {lang === 'mr' ? 'ऐच्छिक (Optional)' : 'Optional'}
-                  </span>
-                </div>
-                <div className="relative">
-                  <input
-                    type="text"
-                    value={formData.referredBy}
-                    onChange={(e) => setFormData({ ...formData, referredBy: e.target.value.toUpperCase() })}
-                    placeholder={lang === 'mr' ? 'उदा. LOK-2026-8941' : 'e.g. LOK-2026-8941'}
-                    className="w-full px-3.5 py-2.5 rounded-lg border border-stone-300 bg-white font-mono tracking-wider focus:outline-none focus:ring-2 focus:ring-[#9B1B1E]/40 uppercase text-xs sm:text-sm text-stone-900 placeholder:text-stone-400 placeholder:normal-case placeholder:tracking-normal"
-                  />
-                  {formData.referredBy && (
-                    <span className="absolute right-2.5 top-2.5 text-[11px] text-emerald-800 bg-emerald-100 px-2 py-0.5 rounded font-bold">
-                      ✓ {lang === 'mr' ? 'लागू' : 'Applied'}
-                    </span>
-                  )}
-                </div>
-                <p className="text-[11px] text-stone-500">
-                  {lang === 'mr'
-                    ? 'जर तुम्हाला एखाद्या स्पर्धकाने आमंत्रित केले असेल, तर त्यांचा तिकीट कोड येथे प्रविष्ट करा (त्यांना १०% कमिशन प्राप्त होईल).'
-                    : 'If another participant invited you, enter their Ticket ID code here (they will earn 10% commission).'}
-                </p>
-              </div>
+
             </div>
 
             <div className="pt-4 border-t border-stone-100 flex justify-end">

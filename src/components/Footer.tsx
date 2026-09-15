@@ -74,6 +74,16 @@ export default function Footer() {
                   🎁 {lang === 'mr' ? 'रेफरल रिवॉर्ड्स (Refer & Earn)' : 'Refer & Earn'}
                 </Link>
               </li>
+              <li className="pt-2 border-t border-stone-800">
+                <Link href="/admin" className="text-stone-400 hover:text-amber-400 transition-colors text-xs flex items-center gap-1">
+                  <span>🛡️ प्रशासक कक्ष (Admin Panel)</span>
+                </Link>
+              </li>
+              <li>
+                <Link href="/judging" className="text-stone-400 hover:text-amber-400 transition-colors text-xs flex items-center gap-1">
+                  <span>⚖️ ज्युरी कक्ष (Jury Portal)</span>
+                </Link>
+              </li>
             </ul>
           </div>
 

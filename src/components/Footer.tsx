@@ -220,7 +220,7 @@ export default function Footer() {
             </a>
             <span className="text-stone-700">•</span>
             <a
-              href="https://www.facebook.com/profile.php?id=61594526752691"
+              href="https://www.facebook.com/profile.php?id=61594462049628"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-1.5 text-stone-400 hover:text-blue-400 transition-colors"

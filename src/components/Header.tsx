@@ -40,7 +40,7 @@ export default function Header() {
 
             {/* Facebook link */}
             <a
-              href="https://www.facebook.com/profile.php?id=61594526752691"
+              href="https://www.facebook.com/profile.php?id=61594462049628"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-1.5 text-amber-200 hover:text-white transition-colors text-xs font-semibold group"

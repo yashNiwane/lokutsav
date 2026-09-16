@@ -151,7 +151,7 @@ export default function Footer() {
               </li>
               <li className="pt-1.5">
                 <a
-                  href="https://www.facebook.com/profile.php?id=61594526752691"
+                  href="https://www.facebook.com/profile.php?id=61594462049628"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2.5 text-stone-300 hover:text-white transition-colors group"

@@ -64,6 +64,21 @@ export default function RootLayout({
           />
         </noscript>
         {/* End Meta Pixel Code */}
+
+        {/* Google tag (gtag.js) */}
+        <script async src="https://www.googletagmanager.com/gtag/js?id=AW-18454989471"></script>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+
+              gtag('config', 'AW-18454989471');
+            `,
+          }}
+        />
+        {/* End Google tag */}
       </head>
       <body className="min-h-full flex flex-col font-sans bg-[#FAF7F2] text-[#1C1917] antialiased selection:bg-amber-200 selection:text-[#9B1B1E]">
         <LanguageProvider>

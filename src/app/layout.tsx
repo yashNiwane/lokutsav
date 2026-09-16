@@ -36,22 +36,24 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="h-full scroll-smooth" data-scroll-behavior="smooth">
-      <body className="min-h-full flex flex-col font-sans bg-[#FAF7F2] text-[#1C1917] antialiased selection:bg-amber-200 selection:text-[#9B1B1E]">
-        <Script id="meta-pixel" strategy="afterInteractive">
-          {`
-            !function(f,b,e,v,n,t,s)
-            {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-            n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-            if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-            n.queue=[];t=b.createElement(e);t.async=!0;
-            t.src=v;s=b.getElementsByTagName(e)[0];
-            s.parentNode.insertBefore(t,s)}(window, document,'script',
-            'https://connect.facebook.net/en_US/fbevents.js');
-
-            fbq('init', '1769192297538282');
-            fbq('track', 'PageView');
-          `}
-        </Script>
+      <head>
+        {/* Meta Pixel Code */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              !function(f,b,e,v,n,t,s)
+              {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+              n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+              if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+              n.queue=[];t=b.createElement(e);t.async=!0;
+              t.src=v;s=b.getElementsByTagName(e)[0];
+              s.parentNode.insertBefore(t,s)}(window, document,'script',
+              'https://connect.facebook.net/en_US/fbevents.js');
+              fbq('init', '1769192297538282');
+              fbq('track', 'PageView');
+            `,
+          }}
+        />
         <noscript>
           <img
             height="1"
@@ -61,6 +63,9 @@ export default function RootLayout({
             alt=""
           />
         </noscript>
+        {/* End Meta Pixel Code */}
+      </head>
+      <body className="min-h-full flex flex-col font-sans bg-[#FAF7F2] text-[#1C1917] antialiased selection:bg-amber-200 selection:text-[#9B1B1E]">
         <LanguageProvider>
           <Header />
           <main className="flex-1">{children}</main>

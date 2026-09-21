@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useLanguage } from '@/lib/language-context';
-import { Clock, Flame, ArrowRight, AlertTriangle } from 'lucide-react';
+import { Flame, Clock, AlertTriangle, ArrowRight } from 'lucide-react';
 
 // Registration deadline: 24th September 2026, 23:59:59 IST (+05:30)
 const DEADLINE_ISO = '2026-09-24T23:59:59+05:30';
@@ -32,11 +32,8 @@ function calculateTimeLeft(targetTime: number): TimeLeft {
   return { days, hours, minutes, seconds, isExpired: false };
 }
 
-export default function CountdownTimer({ compact = false }: { compact?: boolean }) {
+export default function CountdownTimer() {
   const { lang } = useLanguage();
-  const [targetTimestamp, setTargetTimestamp] = useState<number>(() =>
-    new Date(DEADLINE_ISO).getTime()
-  );
   const [timeLeft, setTimeLeft] = useState<TimeLeft>({
     days: 0,
     hours: 0,
@@ -49,7 +46,6 @@ export default function CountdownTimer({ compact = false }: { compact?: boolean 
   useEffect(() => {
     setMounted(true);
     const target = new Date(DEADLINE_ISO).getTime();
-    setTargetTimestamp(target);
     setTimeLeft(calculateTimeLeft(target));
 
     const interval = setInterval(() => {
@@ -61,130 +57,105 @@ export default function CountdownTimer({ compact = false }: { compact?: boolean 
 
   const pad = (n: number) => n.toString().padStart(2, '0');
 
-  // SSR or before mount fallback
-  if (!mounted) {
-    return (
-      <div className="w-full max-w-3xl mx-auto my-4 bg-gradient-to-r from-[#7B1113] via-[#9B1B1E] to-[#7B1113] rounded-2xl p-4 sm:p-5 border-2 border-amber-400/50 shadow-xl text-white">
-        <div className="flex flex-col items-center justify-center gap-2">
-          <div className="flex items-center gap-2 text-amber-300 text-xs sm:text-sm font-bold uppercase tracking-wider">
-            <Clock className="w-4 h-4 animate-spin" />
-            <span>
-              {lang === 'mr'
-                ? '⏳ नोंदणीची अंतिम मुदत: २४ सप्टेंबर २०२६'
-                : '⏳ Registration Deadline: 24th September 2026'}
-            </span>
-          </div>
-          <div className="grid grid-cols-4 gap-2 sm:gap-4 mt-2 w-full max-w-md">
-            {['--', '--', '--', '--'].map((item, i) => (
-              <div
-                key={i}
-                className="bg-black/40 border border-amber-400/30 rounded-xl p-2.5 sm:p-3 text-center"
-              >
-                <div className="text-xl sm:text-3xl font-black font-mono text-amber-300">
-                  {item}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-    );
-  }
+  // Instructions text items for the marquee
+  const instructionsMr = [
+    '⏳ अंतिम नोंदणी तारीख: २४ सप्टेंबर २०२६ रात्री ११:५९ पर्यंतच!',
+    '🏆 केवळ ₹९९ मध्ये सहभाग नोंदवा व जिंका ₹२,००,०००+ रोख पारितोषिके आणि मानाची सुवर्ण ट्रॉफी!',
+    '📸 घरगुती व सार्वजनिक मंडळांच्या सजावटीचे फोटो किंवा ३ मिनिटांचा व्हिडिओ थेट अपलोड करा.',
+    '🚩 महाराष्ट्रातील सर्व ३६ जिल्ह्यांमधील गणेशोत्सवांसाठी खुली राज्यस्तरीय महास्पर्धा.',
+    '⚖️ १००% पारदर्शक व निष्पक्ष ज्युरी परीक्षण + अधिकृत डिजिटल सन्मानपत्र.',
+    '⚡ वेळ संपत आहे — आजच आपला सहभाग नोंदवा!'
+  ];
 
-  if (timeLeft.isExpired) {
-    return (
-      <div className="w-full max-w-3xl mx-auto my-4 bg-stone-900 border-2 border-stone-700 rounded-2xl p-4 sm:p-5 text-center text-white shadow-xl">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-900/60 text-red-300 text-xs font-bold mb-2">
-          <AlertTriangle className="w-3.5 h-3.5" />
-          <span>{lang === 'mr' ? 'नोंदणी समाप्त' : 'Registration Closed'}</span>
-        </div>
-        <h4 className="text-lg sm:text-xl font-bold font-serif">
-          {lang === 'mr'
-            ? 'स्पर्धेची नोंदणी २४ सप्टेंबर २०२६ रोजी समाप्त झाली आहे.'
-            : 'Competition registrations closed on 24th September 2026.'}
-        </h4>
-        <p className="text-xs sm:text-sm text-stone-400 mt-1">
-          {lang === 'mr'
-            ? 'परीक्षकांद्वारे मूल्यांकन सुरू आहे. निकाल लवकरच जाहीर केला जाईल.'
-            : 'Jury evaluations are underway. Results will be announced shortly.'}
-        </p>
-      </div>
-    );
-  }
+  const instructionsEn = [
+    '⏳ Registration Deadline: 24th September 2026, 11:59 PM IST!',
+    '🏆 Register for just ₹99 & compete for ₹2,00,000+ in Cash Prizes and Prestigious Trophies!',
+    '📸 Upload high-resolution photos or up to a 3-minute video of your decoration.',
+    '🚩 Open across all 36 districts of Maharashtra for household and mandal setups.',
+    '⚖️ 100% impartial jury evaluation with official participation certificate.',
+    '⚡ Hurry, registrations closing soon — Enter today!'
+  ];
+
+  const instructions = lang === 'mr' ? instructionsMr : instructionsEn;
 
   return (
-    <div className="w-full max-w-3xl mx-auto my-5 relative overflow-hidden bg-gradient-to-br from-[#6A0C0E] via-[#9B1B1E] to-[#5C0A0C] rounded-2xl p-4 sm:p-6 border-2 border-amber-400/70 shadow-2xl text-white">
-      {/* Subtle gold glow & decorative accent */}
-      <div className="absolute -top-16 -right-16 w-36 h-36 bg-amber-400/15 rounded-full blur-2xl pointer-events-none" />
-      <div className="absolute -bottom-16 -left-16 w-36 h-36 bg-amber-500/15 rounded-full blur-2xl pointer-events-none" />
+    <div className="w-full max-w-5xl mx-auto my-3 sm:my-4">
+      {/* Sleek, compact marquee bar with fixed timer head and scrolling instructions */}
+      <div className="relative flex items-center overflow-hidden rounded-xl bg-gradient-to-r from-[#630B0D] via-[#8C1417] to-[#630B0D] border border-amber-400/60 shadow-md text-white h-11 sm:h-12">
+        {/* ================= FIXED TIMER HEAD PART (DOES NOT MOVE) ================= */}
+        <div className="shrink-0 z-20 flex items-center gap-1.5 sm:gap-2.5 px-3 sm:px-4 h-full bg-stone-950/90 border-r border-amber-400/50 shadow-md">
+          <Flame className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-amber-400 animate-pulse shrink-0" />
+          
+          <div className="flex items-center gap-1 sm:gap-2">
+            <span className="text-[11px] sm:text-xs font-bold text-amber-300 uppercase tracking-wide whitespace-nowrap">
+              {lang === 'mr' ? '२४ सप्टें.' : '24 Sept'}
+            </span>
 
-      <div className="relative z-10 flex flex-col items-center text-center">
-        {/* Top Header Badge */}
-        <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-black/40 border border-amber-400/40 text-amber-300 text-xs sm:text-sm font-bold shadow-xs mb-2">
-          <Flame className="w-4 h-4 text-amber-400 animate-pulse" />
-          <span>
-            {lang === 'mr'
-              ? '⏳ नोंदणीची अंतिम मुदत: २४ सप्टेंबर २०२६'
-              : '⏳ Final Registration Deadline: 24th September 2026'}
-          </span>
-        </div>
+            <span className="text-stone-500 text-xs hidden xs:inline">•</span>
 
-        {/* Subtitle / Urgency Label */}
-        <h3 className="font-serif font-black text-base sm:text-xl text-amber-100 tracking-tight mt-1 mb-3">
-          {lang === 'mr'
-            ? 'नोंदणी समाप्त होण्यास उर्वरित वेळ'
-            : 'Registration Closes In'}
-        </h3>
-
-        {/* 4-Box Countdown Timer Grid */}
-        <div className="grid grid-cols-4 gap-2 sm:gap-4 w-full max-w-md sm:max-w-lg mb-3">
-          {/* Days */}
-          <div className="bg-gradient-to-b from-stone-950/80 to-stone-900/90 border border-amber-400/40 rounded-xl sm:rounded-2xl p-2 sm:p-3.5 shadow-inner flex flex-col items-center justify-center">
-            <span className="text-2xl sm:text-4xl font-black font-mono text-amber-300 tracking-tight drop-shadow-sm">
-              {pad(timeLeft.days)}
-            </span>
-            <span className="text-[10px] sm:text-xs font-semibold text-stone-300 uppercase tracking-wider mt-1">
-              {lang === 'mr' ? 'दिवस' : 'Days'}
-            </span>
-          </div>
-
-          {/* Hours */}
-          <div className="bg-gradient-to-b from-stone-950/80 to-stone-900/90 border border-amber-400/40 rounded-xl sm:rounded-2xl p-2 sm:p-3.5 shadow-inner flex flex-col items-center justify-center">
-            <span className="text-2xl sm:text-4xl font-black font-mono text-amber-300 tracking-tight drop-shadow-sm">
-              {pad(timeLeft.hours)}
-            </span>
-            <span className="text-[10px] sm:text-xs font-semibold text-stone-300 uppercase tracking-wider mt-1">
-              {lang === 'mr' ? 'तास' : 'Hours'}
-            </span>
-          </div>
-
-          {/* Minutes */}
-          <div className="bg-gradient-to-b from-stone-950/80 to-stone-900/90 border border-amber-400/40 rounded-xl sm:rounded-2xl p-2 sm:p-3.5 shadow-inner flex flex-col items-center justify-center">
-            <span className="text-2xl sm:text-4xl font-black font-mono text-amber-300 tracking-tight drop-shadow-sm">
-              {pad(timeLeft.minutes)}
-            </span>
-            <span className="text-[10px] sm:text-xs font-semibold text-stone-300 uppercase tracking-wider mt-1">
-              {lang === 'mr' ? 'मिंट' : 'Mins'}
-            </span>
-          </div>
-
-          {/* Seconds */}
-          <div className="bg-gradient-to-b from-stone-950/80 to-stone-900/90 border border-amber-400/40 rounded-xl sm:rounded-2xl p-2 sm:p-3.5 shadow-inner flex flex-col items-center justify-center">
-            <span className="text-2xl sm:text-4xl font-black font-mono text-amber-400 tracking-tight drop-shadow-sm animate-pulse">
-              {pad(timeLeft.seconds)}
-            </span>
-            <span className="text-[10px] sm:text-xs font-semibold text-stone-300 uppercase tracking-wider mt-1">
-              {lang === 'mr' ? 'सेकंद' : 'Secs'}
-            </span>
+            {/* Static timer countdown digits */}
+            {!mounted ? (
+              <span className="font-mono font-bold text-amber-300 text-xs sm:text-sm tracking-tight whitespace-nowrap">
+                --d : --h : --m : --s
+              </span>
+            ) : timeLeft.isExpired ? (
+              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-red-900/80 text-red-200 text-[10px] sm:text-xs font-bold whitespace-nowrap">
+                <AlertTriangle className="w-3 h-3" />
+                {lang === 'mr' ? 'नोंदणी समाप्त' : 'Closed'}
+              </span>
+            ) : (
+              <span className="font-mono font-black text-amber-300 text-xs sm:text-sm tracking-tight drop-shadow-sm whitespace-nowrap">
+                <span>{pad(timeLeft.days)}</span>
+                <span className="text-amber-400/80 text-[10px] sm:text-xs font-sans font-semibold ml-0.5 mr-1">d</span>
+                <span>{pad(timeLeft.hours)}</span>
+                <span className="text-amber-400/80 text-[10px] sm:text-xs font-sans font-semibold ml-0.5 mr-1">h</span>
+                <span>{pad(timeLeft.minutes)}</span>
+                <span className="text-amber-400/80 text-[10px] sm:text-xs font-sans font-semibold ml-0.5 mr-1">m</span>
+                <span className="text-amber-400">{pad(timeLeft.seconds)}</span>
+                <span className="text-amber-400/80 text-[10px] sm:text-xs font-sans font-semibold ml-0.5">s</span>
+              </span>
+            )}
           </div>
         </div>
 
-        {/* Footer Warning note */}
-        <p className="text-[11px] sm:text-xs text-amber-200/90 font-medium max-w-md">
-          {lang === 'mr'
-            ? '⚠️ २४ सप्टेंबर रात्री ११:५९ नंतर कोणतीही नवीन नोंदणी स्वीकारली जाणार नाही.'
-            : '⚠️ No entries will be accepted after 11:59 PM on 24th September 2026.'}
-        </p>
+        {/* ================= MARQUEE BODY: SCROLLING INSTRUCTION TEXT ================= */}
+        <div className="relative flex-1 overflow-hidden h-full flex items-center">
+          {/* Subtle gradient edge fades so text seamlessly glides in and out */}
+          <div className="pointer-events-none absolute left-0 top-0 bottom-0 w-5 bg-gradient-to-r from-[#630B0D] to-transparent z-10" />
+          <div className="pointer-events-none absolute right-0 top-0 bottom-0 w-5 bg-gradient-to-l from-[#630B0D] to-transparent z-10" />
+
+          {/* Continuous scrolling marquee track (duplicated twice for seamless loop) */}
+          <div className="animate-marquee-scroll flex items-center gap-8 text-xs sm:text-sm font-medium text-amber-100 whitespace-nowrap">
+            {/* First sequence */}
+            <div className="flex items-center gap-8">
+              {instructions.map((text, idx) => (
+                <span key={`seq1-${idx}`} className="inline-flex items-center gap-2">
+                  <span>{text}</span>
+                  <span className="text-amber-400/60 font-bold">•</span>
+                </span>
+              ))}
+            </div>
+
+            {/* Second identical sequence for seamless loop */}
+            <div className="flex items-center gap-8">
+              {instructions.map((text, idx) => (
+                <span key={`seq2-${idx}`} className="inline-flex items-center gap-2">
+                  <span>{text}</span>
+                  <span className="text-amber-400/60 font-bold">•</span>
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* ================= RIGHT QUICK LINK (DESKTOP) ================= */}
+        <Link
+          href="/register"
+          className="hidden md:inline-flex shrink-0 items-center gap-1.5 px-3.5 py-1 mr-1.5 rounded-lg bg-amber-400 hover:bg-amber-300 text-stone-950 text-xs font-black transition-all hover:scale-102 active:scale-98 shadow-xs whitespace-nowrap z-20"
+        >
+          <span>{lang === 'mr' ? 'नोंदणी करा' : 'Register'}</span>
+          <ArrowRight className="w-3.5 h-3.5" />
+        </Link>
       </div>
     </div>
   );

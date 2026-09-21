@@ -5,6 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useLanguage } from '@/lib/language-context';
 import { Trophy, Calendar, MapPin, Sparkles, ArrowRight, ShieldCheck, Award, Flame } from 'lucide-react';
+import CountdownTimer from '@/components/CountdownTimer';
 
 export default function Hero() {
   const { lang, t } = useLanguage();
@@ -35,6 +36,9 @@ export default function Hero() {
           <p className="text-base sm:text-xl text-stone-700 max-w-3xl mx-auto font-normal leading-relaxed">
             {t.hero.subheadline}
           </p>
+
+          {/* Registration Deadline Countdown Timer */}
+          <CountdownTimer />
 
           {/* Action CTAs */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">

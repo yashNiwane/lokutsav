@@ -25,6 +25,7 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 import { trackJourney } from '@/lib/tracker';
+import { compressImage } from '@/lib/image-compressor';
 
 declare global {
   interface Window {
@@ -183,6 +184,7 @@ export default function RegisterPage() {
 
   // Photo & Video upload state
   const [uploadingPhoto, setUploadingPhoto] = useState(false);
+  const [photoProgress, setPhotoProgress] = useState<{ current: number; total: number; stage?: string } | null>(null);
   const [photoUrlInput, setPhotoUrlInput] = useState('');
   const [uploadingVideo, setUploadingVideo] = useState(false);
   const [videoPreviewUrl, setVideoPreviewUrl] = useState('');
@@ -329,15 +331,29 @@ export default function RegisterPage() {
   const [razorpayOrder, setRazorpayOrder] = useState<any>(null);
 
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = e.target.files;
-    if (!files || files.length === 0) return;
+    const rawFiles = e.target.files;
+    if (!rawFiles || rawFiles.length === 0) return;
+
+    // Convert FileList to array
+    const fileArray = Array.from(rawFiles);
+    // Reset file input so re-selecting same photo triggers onChange
+    e.target.value = '';
 
     setUploadingPhoto(true);
     setErrorMessage('');
+    setPhotoProgress({ current: 0, total: fileArray.length, stage: 'compressing' });
 
     try {
-      for (let i = 0; i < files.length; i++) {
-        const file = files[i];
+      // 1. Parallel Client-Side Compression (reduces 10MB phone camera shots to ~300KB-500KB in milliseconds)
+      const compressedFiles = await Promise.all(
+        fileArray.map((file) => compressImage(file, { maxWidth: 1920, maxHeight: 1920, quality: 0.82 }))
+      );
+
+      setPhotoProgress({ current: 0, total: compressedFiles.length, stage: 'uploading' });
+
+      // 2. Parallel / Concurrent Uploads
+      let completedCount = 0;
+      const uploadPromises = compressedFiles.map(async (file) => {
         const body = new FormData();
         body.append('file', file);
 
@@ -347,28 +363,35 @@ export default function RegisterPage() {
         });
         const data = await res.json();
         if (data.success && data.url) {
-          setFormData((prev) => {
-            const updated = [...prev.photoUrls, data.url];
-            trackJourney({
-              step: 2,
-              stageName: 'STEP_2_DECORATION',
-              eventType: 'PHOTO_UPLOAD',
-              field: 'photos',
-              photosCount: updated.length,
-            });
-            return {
-              ...prev,
-              photoUrls: updated,
-            };
-          });
+          completedCount++;
+          setPhotoProgress({ current: completedCount, total: compressedFiles.length, stage: 'uploading' });
+          return data.url as string;
         } else {
-          setErrorMessage(data.error || 'Failed to upload photo');
+          throw new Error(data.error || 'Failed to upload photo');
         }
-      }
+      });
+
+      const uploadedUrls = await Promise.all(uploadPromises);
+
+      setFormData((prev) => {
+        const updated = [...prev.photoUrls, ...uploadedUrls];
+        trackJourney({
+          step: 2,
+          stageName: 'STEP_2_DECORATION',
+          eventType: 'PHOTO_UPLOAD',
+          field: 'photos',
+          photosCount: updated.length,
+        });
+        return {
+          ...prev,
+          photoUrls: updated,
+        };
+      });
     } catch (err: any) {
       setErrorMessage(err.message || 'Photo upload failed');
     } finally {
       setUploadingPhoto(false);
+      setTimeout(() => setPhotoProgress(null), 1000);
     }
   };
 
@@ -1030,8 +1053,16 @@ export default function RegisterPage() {
 
                 <div className="flex flex-wrap items-center gap-3">
                   <label className="cursor-pointer inline-flex items-center gap-2 bg-white border-2 border-dashed border-[#E5D7C0] hover:border-[#9B1B1E] px-4 py-2.5 rounded-lg text-xs font-bold text-stone-700 transition-colors">
-                    <Upload className="w-4 h-4 text-[#9B1B1E]" />
-                    <span>{uploadingPhoto ? 'अपलोड सुरू आहे...' : 'फोटो निवडा (File Upload)'}</span>
+                    <Upload className={`w-4 h-4 text-[#9B1B1E] ${uploadingPhoto ? 'animate-bounce' : ''}`} />
+                    <span>
+                      {uploadingPhoto
+                        ? photoProgress?.stage === 'compressing'
+                          ? (lang === 'mr' ? 'फोटो ऑप्टिमाइझ होत आहेत...' : 'Optimizing photos...')
+                          : (lang === 'mr'
+                              ? `जलद अपलोड होत आहे (${photoProgress?.current || 0}/${photoProgress?.total || 0})...`
+                              : `Uploading (${photoProgress?.current || 0}/${photoProgress?.total || 0})...`)
+                        : (lang === 'mr' ? 'फोटो निवडा (Fast Upload)' : 'Select Photos (Fast Upload)')}
+                    </span>
                     <input
                       type="file"
                       accept="image/*"

@@ -23,7 +23,7 @@ let inMemoryJourneySessions: any[] = [];
 let inMemoryJourneyEvents: any[] = [];
 let isPostgresAvailable: boolean | null = null;
 
-async function canUsePrisma(): Promise<boolean> {
+export async function canUsePrisma(): Promise<boolean> {
   if (!process.env.DATABASE_URL) return false;
   if (isPostgresAvailable === false) return false;
   if (isPostgresAvailable === true) return true;
@@ -88,8 +88,20 @@ export const dataStore = {
   async getEntryById(id: string): Promise<ParticipantEntry | null> {
     try {
       if (await canUsePrisma()) {
-        const r = await prisma.participant.findUnique({
-          where: { id },
+        const cleanPhone = id.replace('+91', '').replace(/[\s-]/g, '').trim();
+        const r = await prisma.participant.findFirst({
+          where: {
+            OR: [
+              { id },
+              { ticketId: id },
+              { ticketId: id.toUpperCase() },
+              ...(cleanPhone.length === 10 ? [{ phone: cleanPhone }] : []),
+            ],
+          },
+          orderBy: [
+            { paymentStatus: 'desc' }, // Prioritize COMPLETED
+            { createdAt: 'desc' },
+          ],
         });
         if (r) {
           return {
@@ -122,7 +134,80 @@ export const dataStore = {
     } catch {
       // fallback
     }
-    return inMemoryEntries.find((e) => e.id === id || e.ticketId === id) || null;
+    const cleanPhone = id.replace('+91', '').replace(/[\s-]/g, '').trim();
+    return (
+      inMemoryEntries.find(
+        (e) =>
+          e.id === id ||
+          e.ticketId.toUpperCase() === id.toUpperCase() ||
+          (cleanPhone.length === 10 && e.phone === cleanPhone)
+      ) || null
+    );
+  },
+
+  async findEntryByPhone(phone: string): Promise<ParticipantEntry | null> {
+    const clean = phone.replace('+91', '').replace(/[\s-]/g, '').trim();
+    if (!clean) return null;
+    return this.getEntryById(clean);
+  },
+
+  async getEntryByOrderId(orderId: string): Promise<ParticipantEntry | null> {
+    try {
+      if (await canUsePrisma()) {
+        const r = await prisma.participant.findFirst({
+          where: { razorpayOrderId: orderId },
+        });
+        if (r) {
+          return {
+            id: r.id,
+            ticketId: r.ticketId,
+            fullName: r.fullName,
+            phone: r.phone,
+            email: r.email,
+            district: r.district,
+            city: r.city,
+            address: r.address,
+            category: r.category as any,
+            idolType: r.idolType as any,
+            themeTitle: r.themeTitle,
+            themeDescription: r.themeDescription,
+            materialsUsed: r.materialsUsed || '',
+            photoUrls: JSON.parse(r.photoUrls || '[]'),
+            videoUrl: r.videoUrl || undefined,
+            entryFee: r.entryFee,
+            paymentStatus: r.paymentStatus as any,
+            razorpayOrderId: r.razorpayOrderId || undefined,
+            razorpayPaymentId: r.razorpayPaymentId || undefined,
+            status: r.status as any,
+            finalScore: r.finalScore || undefined,
+            finalRank: r.finalRank || undefined,
+            createdAt: r.createdAt.toISOString(),
+          };
+        }
+      }
+    } catch {
+      // fallback
+    }
+    return inMemoryEntries.find((e) => e.razorpayOrderId === orderId) || null;
+  },
+
+  async updateOrderId(idOrTicket: string, razorpayOrderId: string): Promise<void> {
+    try {
+      if (await canUsePrisma()) {
+        await prisma.participant.updateMany({
+          where: {
+            OR: [{ id: idOrTicket }, { ticketId: idOrTicket }],
+          },
+          data: { razorpayOrderId },
+        });
+      }
+    } catch {
+      // fallback
+    }
+    const idx = inMemoryEntries.findIndex((e) => e.id === idOrTicket || e.ticketId === idOrTicket);
+    if (idx !== -1) {
+      inMemoryEntries[idx].razorpayOrderId = razorpayOrderId;
+    }
   },
 
   async createEntry(data: Omit<ParticipantEntry, 'id' | 'createdAt'>): Promise<ParticipantEntry> {
@@ -182,9 +267,15 @@ export const dataStore = {
         });
 
         newEntry.id = created.id;
+        newEntry.referralCode = newEntry.referralCode || newEntry.ticketId;
+        newEntry.referralCount = 0;
+        inMemoryEntries.unshift(newEntry);
+        return newEntry;
       }
-    } catch {
-      // Prisma insertion fallback
+    } catch (err: any) {
+      console.error('Prisma participant creation failed:', err);
+      // Re-throw database error so caller does not create ghost in-memory ticket
+      throw err;
     }
 
     newEntry.referralCode = newEntry.referralCode || newEntry.ticketId;

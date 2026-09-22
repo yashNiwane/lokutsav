@@ -4,11 +4,13 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useLanguage } from '@/lib/language-context';
-import { Sparkles, Menu, X, Award, Image as ImageIcon, Scale, FileText, CheckCircle2 } from 'lucide-react';
+import { Sparkles, Menu, X, Award, Image as ImageIcon, Scale, FileText, CheckCircle2, Ticket } from 'lucide-react';
+import TicketLookupModal from '@/components/TicketLookupModal';
 
 export default function Header() {
   const { lang, setLang, t } = useLanguage();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [lookupModalOpen, setLookupModalOpen] = useState(false);
 
   return (
     <header className="relative md:sticky md:top-0 z-50 bg-[#FAF7F2]/95 backdrop-blur-md border-b border-[#E5D7C0] transition-colors">
@@ -57,6 +59,14 @@ export default function Header() {
             <span className="hidden lg:inline font-medium text-amber-200">
               {t.brand.entryFee}
             </span>
+            <button
+              onClick={() => setLookupModalOpen(true)}
+              className="inline-flex items-center gap-1.5 bg-amber-400/20 hover:bg-amber-400/30 text-amber-200 hover:text-white px-2.5 py-0.5 rounded text-xs font-bold border border-amber-300/40 transition-colors shadow-2xs cursor-pointer"
+            >
+              <Ticket className="w-3.5 h-3.5 text-amber-300" />
+              <span>{lang === 'mr' ? 'तिकीट शोधा' : 'Find Ticket'}</span>
+            </button>
+
             {/* Language Switcher */}
             <div className="inline-flex items-center bg-black/20 rounded border border-amber-300/30 p-0.5 text-xs">
               <button
@@ -256,6 +266,12 @@ export default function Header() {
           </div>
         </div>
       )}
+
+      {/* Global Ticket Lookup Modal */}
+      <TicketLookupModal
+        isOpen={lookupModalOpen}
+        onClose={() => setLookupModalOpen(false)}
+      />
     </header>
   );
 }

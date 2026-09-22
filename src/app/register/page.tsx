@@ -22,10 +22,12 @@ import {
   X,
   Bell,
   ExternalLink,
+  Ticket,
 } from 'lucide-react';
 import Link from 'next/link';
 import { trackJourney } from '@/lib/tracker';
 import { compressImage } from '@/lib/image-compressor';
+import TicketLookupModal from '@/components/TicketLookupModal';
 
 declare global {
   interface Window {
@@ -41,6 +43,7 @@ export default function RegisterPage() {
   const [errorMessage, setErrorMessage] = useState('');
   const [agreedToTerms, setAgreedToTerms] = useState(false);
   const [showTermsModal, setShowTermsModal] = useState(false);
+  const [lookupModalOpen, setLookupModalOpen] = useState(false);
   const [lastActiveField, setLastActiveField] = useState<string>('personal_details');
 
   // Form State
@@ -488,6 +491,20 @@ export default function RegisterPage() {
 
       const data = await res.json();
       if (data.success) {
+        if (data.alreadyRegistered) {
+          // User already completed registration! Show ticket pass directly without taking money again!
+          setTicketId(data.ticketId);
+          if (typeof window !== 'undefined') {
+            sessionStorage.setItem('lokutsav_my_ticket', data.ticketId);
+            localStorage.setItem('lokutsav_my_ticket', data.ticketId);
+            sessionStorage.setItem('lokutsav_payment_status', 'COMPLETED');
+            localStorage.setItem('lokutsav_payment_status', 'COMPLETED');
+          }
+          setStep(4);
+          setErrorMessage('');
+          return;
+        }
+
         setTicketId(data.ticketId);
         setRazorpayOrder(data.order);
         if (typeof window !== 'undefined') {
@@ -803,6 +820,35 @@ export default function RegisterPage() {
           <div className="mb-6 p-4 rounded-xl bg-red-50 border border-red-200 text-red-800 text-sm flex items-center gap-2">
             <AlertCircle className="w-5 h-5 shrink-0" />
             <span>{errorMessage}</span>
+          </div>
+        )}
+
+        {/* Find My Ticket Quick Lookup Banner */}
+        {step === 1 && (
+          <div className="mb-6 p-4 rounded-2xl bg-gradient-to-r from-amber-100/95 via-orange-50 to-amber-100/95 border-2 border-amber-300 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-sm">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-xl bg-[#9B1B1E]/10 border border-[#9B1B1E]/20 flex items-center justify-center text-xl shrink-0">
+                🔍
+              </div>
+              <div>
+                <p className="font-bold text-stone-900 text-xs sm:text-sm">
+                  {lang === 'mr' ? 'आधीच पेमेंट किंवा नोंदणी केली आहे?' : 'Already paid or completed registration?'}
+                </p>
+                <p className="text-stone-600 text-[11px] sm:text-xs">
+                  {lang === 'mr'
+                    ? 'आपला १०-अंकी मोबाईल नंबर टाकून आपले अधिकृत तिकीट व पास लगेच मिळवा.'
+                    : 'Enter your 10-digit mobile number to immediately retrieve and download your Ticket Pass.'}
+                </p>
+              </div>
+            </div>
+            <button
+              type="button"
+              onClick={() => setLookupModalOpen(true)}
+              className="inline-flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl bg-[#9B1B1E] hover:bg-[#781416] text-white text-xs font-bold shadow-md transition-all active:scale-95 whitespace-nowrap self-start sm:self-auto cursor-pointer"
+            >
+              <Ticket className="w-4 h-4 text-amber-300" />
+              <span>{lang === 'mr' ? 'माझे तिकीट शोधा' : 'Find My Ticket'}</span>
+            </button>
           </div>
         )}
 
@@ -1820,6 +1866,11 @@ export default function RegisterPage() {
             </div>
           </div>
         )}
+        {/* Ticket Lookup Modal */}
+        <TicketLookupModal
+          isOpen={lookupModalOpen}
+          onClose={() => setLookupModalOpen(false)}
+        />
       </div>
     </div>
   );

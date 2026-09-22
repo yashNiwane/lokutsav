@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { dataStore } from '@/lib/db';
 import { createRegistrationOrder } from '@/lib/razorpay';
+import { generateUniqueTicketId } from '@/lib/ticket-generator';
 
 export async function POST(request: NextRequest) {
   try {
@@ -31,6 +32,21 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    const cleanPhone = phone.toString().replace('+91', '').replace(/[\s-]/g, '').trim();
+
+    // 1. Check if user has ALREADY completed registration with this phone number
+    const existingEntry = await dataStore.findEntryByPhone(cleanPhone);
+    if (existingEntry && existingEntry.paymentStatus === 'COMPLETED') {
+      return NextResponse.json({
+        success: true,
+        alreadyRegistered: true,
+        ticketId: existingEntry.ticketId,
+        entryId: existingEntry.id,
+        entry: existingEntry,
+        message: 'या मोबाईल नंबरवर आधीच नोंदणी झालेली आहे / Already registered with this mobile number',
+      });
+    }
+
     const hasPhotos = Array.isArray(photoUrls) && photoUrls.length > 0;
     const hasVideo = !!(videoUrl && typeof videoUrl === 'string' && videoUrl.trim().length > 0);
 
@@ -47,16 +63,15 @@ export async function POST(request: NextRequest) {
         ? themeTitle.trim()
         : `${fullName} - गणेश सजावट 2026`;
 
-    // Generate unique Ticket ID: LOK-2026-XXXX
-    const randomCode = Math.floor(1000 + Math.random() * 9000);
-    const ticketId = `LOK-2026-${randomCode}`;
+    // 2. Generate guaranteed unique 6-digit Ticket ID (verified against database)
+    const ticketId = await generateUniqueTicketId();
 
-    // Create participant entry in database
+    // 3. Create participant entry in database
     const newEntry = await dataStore.createEntry({
       ticketId,
-      fullName,
-      phone,
-      email: email || `${phone}@lokutsav.org`,
+      fullName: fullName.trim(),
+      phone: cleanPhone,
+      email: email ? email.trim() : `${cleanPhone}@lokutsav.org`,
       district,
       city: city || district,
       address: address || `${city}, ${district}`,
@@ -74,8 +89,13 @@ export async function POST(request: NextRequest) {
       status: 'PENDING_VERIFICATION',
     });
 
-    // Generate Razorpay Order
+    // 4. Generate Razorpay Order
     const order = await createRegistrationOrder(ticketId, 99);
+
+    // 5. Store razorpayOrderId immediately in the database row
+    if (order?.orderId) {
+      await dataStore.updateOrderId(newEntry.id, order.orderId);
+    }
 
     return NextResponse.json({
       success: true,
@@ -86,7 +106,7 @@ export async function POST(request: NextRequest) {
   } catch (error: any) {
     console.error('Registration error:', error);
     return NextResponse.json(
-      { error: error.message || 'Registration failed' },
+      { error: error.message || 'Registration failed. Please try again.' },
       { status: 500 }
     );
   }

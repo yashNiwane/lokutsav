@@ -15,10 +15,13 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    const cleanQuery = query.replace('+91', '').replace(/[\s-]/g, '').trim();
+    const rawQuery = query.trim();
+    const isTicket = rawQuery.toUpperCase().startsWith('LOK');
+    const cleanPhone = rawQuery.replace('+91', '').replace(/[\s-]/g, '').trim();
+    const lookupTarget = isTicket ? rawQuery.toUpperCase() : (cleanPhone.length === 10 ? cleanPhone : rawQuery);
 
     // Look up entry in dataStore (searches by id, ticketId, and phone)
-    const entry = await dataStore.getEntryById(cleanQuery);
+    const entry = await dataStore.getEntryById(lookupTarget);
 
     if (!entry) {
       return NextResponse.json({

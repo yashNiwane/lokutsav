@@ -70,7 +70,9 @@ export default function AnalyticsPage() {
     setAuthError('');
 
     try {
-      const res = await fetch(`/api/analytics/stats?passcode=${encodeURIComponent(passToUse)}&timeRange=${range}`);
+      const res = await fetch(`/api/analytics/stats?passcode=${encodeURIComponent(passToUse)}&timeRange=${range}`, {
+        signal: AbortSignal.timeout(20000),
+      });
       const json = await res.json();
 
       if (res.ok && json.success) {
@@ -83,8 +85,12 @@ export default function AnalyticsPage() {
         setAuthError(json.error || 'अवैध पासवर्ड / Invalid Passcode');
         setIsAuthenticated(false);
       }
-    } catch {
-      setAuthError('माहिती लोड करताना त्रुटी आली / Network Error');
+    } catch (err: any) {
+      if (err?.name === 'TimeoutError' || err?.name === 'AbortError') {
+        setAuthError('विनंती वेळ संपली (Timeout). कृपया पुन्हा प्रयत्न करा.');
+      } else {
+        setAuthError('माहिती लोड करताना त्रुटी आली / Network Error');
+      }
     } finally {
       setLoading(false);
     }

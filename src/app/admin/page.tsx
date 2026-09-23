@@ -118,7 +118,9 @@ export default function AdminPage() {
         params.set('paymentStatus', payFilter);
       }
 
-      const res = await fetch(`/api/admin?${params.toString()}`);
+      const res = await fetch(`/api/admin?${params.toString()}`, {
+        signal: AbortSignal.timeout(20000),
+      });
       const json = await res.json();
 
       if (res.ok && json.success) {
@@ -134,8 +136,12 @@ export default function AdminPage() {
         setAuthError(json.error || 'अवैध पासवर्ड / Invalid credentials');
         setIsAuthenticated(false);
       }
-    } catch {
-      setAuthError('डेटा लोड करताना त्रुटी आली / Server communication error');
+    } catch (err: any) {
+      if (err?.name === 'TimeoutError' || err?.name === 'AbortError') {
+        setAuthError('विनंती वेळ संपली (Timeout). कृपया पुन्हा प्रयत्न करा.');
+      } else {
+        setAuthError('डेटा लोड करताना त्रुटी आली / Server communication error');
+      }
     } finally {
       setLoading(false);
     }

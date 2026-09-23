@@ -731,6 +731,37 @@ export const dataStore = {
         const whereClause = dateFilter ? { createdAt: { gte: dateFilter } } : {};
         sessions = await prisma.userJourneySession.findMany({
           where: whereClause,
+          select: {
+            sessionId: true,
+            currentStep: true,
+            maxStepReached: true,
+            stageName: true,
+            isCompleted: true,
+            droppedOffAt: true,
+            dropOffField: true,
+            category: true,
+            district: true,
+            city: true,
+            address: true,
+            fullName: true,
+            phone: true,
+            email: true,
+            idolType: true,
+            themeTitle: true,
+            themeDescription: true,
+            materialsUsed: true,
+            photoUrls: true,
+            photosCount: true,
+            videoUrl: true,
+            hasVideo: true,
+            referredBy: true,
+            ticketId: true,
+            paymentStatus: true,
+            deviceType: true,
+            referrer: true,
+            createdAt: true,
+            updatedAt: true,
+          },
           orderBy: { updatedAt: 'desc' },
         });
         events = await prisma.userJourneyEvent.findMany({
@@ -900,18 +931,10 @@ export const dataStore = {
       let parsedPhotos: string[] = [];
       if (s.photoUrls) {
         try {
-          parsedPhotos = JSON.parse(s.photoUrls);
+          const arr = JSON.parse(s.photoUrls);
+          parsedPhotos = Array.isArray(arr) ? arr.filter((u: any) => typeof u === 'string' && !u.startsWith('data:')) : [];
         } catch {
-          parsedPhotos = typeof s.photoUrls === 'string' ? [s.photoUrls] : [];
-        }
-      }
-
-      let parsedFormSnapshot: any = null;
-      if (s.formDataJson) {
-        try {
-          parsedFormSnapshot = JSON.parse(s.formDataJson);
-        } catch {
-          parsedFormSnapshot = null;
+          parsedPhotos = typeof s.photoUrls === 'string' && !s.photoUrls.startsWith('data:') ? [s.photoUrls] : [];
         }
       }
 
@@ -919,23 +942,23 @@ export const dataStore = {
 
       return {
         sessionId: s.sessionId,
-        fullName: s.fullName || parsedFormSnapshot?.fullName || '',
-        phone: s.phone || parsedFormSnapshot?.phone || '',
-        email: s.email || parsedFormSnapshot?.email || '',
-        district: s.district || parsedFormSnapshot?.district || '',
-        city: s.city || parsedFormSnapshot?.city || '',
-        address: s.address || parsedFormSnapshot?.address || '',
-        category: s.category || parsedFormSnapshot?.category || 'HOUSEHOLD',
-        idolType: s.idolType || parsedFormSnapshot?.idolType || 'SHADU_MATI_CLAY',
-        themeTitle: s.themeTitle || parsedFormSnapshot?.themeTitle || '',
-        themeDescription: s.themeDescription || parsedFormSnapshot?.themeDescription || '',
-        materialsUsed: s.materialsUsed || parsedFormSnapshot?.materialsUsed || '',
-        photoUrls: parsedPhotos.length > 0 ? parsedPhotos : (parsedFormSnapshot?.photoUrls || []),
-        photosCount: s.photosCount || parsedPhotos.length || (parsedFormSnapshot?.photoUrls?.length || 0),
-        videoUrl: s.videoUrl || parsedFormSnapshot?.videoUrl || '',
-        hasVideo: s.hasVideo || Boolean(s.videoUrl || parsedFormSnapshot?.videoUrl),
-        referredBy: s.referredBy || parsedFormSnapshot?.referredBy || '',
-        ticketId: s.ticketId || parsedFormSnapshot?.ticketId || '',
+        fullName: s.fullName || '',
+        phone: s.phone || '',
+        email: s.email || '',
+        district: s.district || '',
+        city: s.city || '',
+        address: s.address || '',
+        category: s.category || 'HOUSEHOLD',
+        idolType: s.idolType || 'SHADU_MATI_CLAY',
+        themeTitle: s.themeTitle || '',
+        themeDescription: s.themeDescription || '',
+        materialsUsed: s.materialsUsed || '',
+        photoUrls: parsedPhotos,
+        photosCount: s.photosCount || parsedPhotos.length,
+        videoUrl: s.videoUrl || '',
+        hasVideo: s.hasVideo || Boolean(s.videoUrl),
+        referredBy: s.referredBy || '',
+        ticketId: s.ticketId || '',
         paymentStatus: s.paymentStatus || (isDone ? 'COMPLETED' : 'NOT_INITIATED'),
         isCompleted: isDone,
         currentStep: s.currentStep || 1,
@@ -944,7 +967,6 @@ export const dataStore = {
         dropOffField: isDone ? null : (s.dropOffField || 'photos'),
         deviceType: s.deviceType || 'mobile',
         referrer: s.referrer || 'direct',
-        formData: parsedFormSnapshot,
         lastActive: s.updatedAt ? new Date(s.updatedAt).toISOString() : (s.createdAt ? new Date(s.createdAt).toISOString() : new Date().toISOString()),
         createdAt: s.createdAt ? new Date(s.createdAt).toISOString() : new Date().toISOString(),
       };
@@ -952,11 +974,7 @@ export const dataStore = {
 
     // All person sessions with every single field filled
     const allLeads = sessions.map(formatLead);
-
-    // Incomplete leads (users who haven't finished payment)
-    const incompleteLeads = allLeads
-      .filter((s) => !s.isCompleted)
-      .sort((a, b) => new Date(b.lastActive).getTime() - new Date(a.lastActive).getTime());
+    const incompleteLeads: any[] = [];
 
     const recentEvents = events.slice(0, 50).map((e) => ({
       id: e.id,

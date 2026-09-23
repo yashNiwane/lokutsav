@@ -222,7 +222,7 @@ export default function AnalyticsPage() {
                 required
                 value={passcode}
                 onChange={(e) => setPasscode(e.target.value)}
-                placeholder="password@123"
+                placeholder="Enter Passcode"
                 className="w-full px-4 py-3 rounded-xl border border-stone-300 focus:outline-none focus:ring-2 focus:ring-[#9B1B1E]/40 font-mono text-sm"
               />
             </div>

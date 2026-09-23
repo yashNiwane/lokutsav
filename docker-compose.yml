@@ -38,6 +38,7 @@ services:
       - NEXT_PUBLIC_RAZORPAY_KEY_ID=${NEXT_PUBLIC_RAZORPAY_KEY_ID:-rzp_test_simulation}
       - RAZORPAY_WEBHOOK_SECRET=${RAZORPAY_WEBHOOK_SECRET:-lokutsav_webhook_secret_2026}
       - JURY_PASSCODE=${JURY_PASSCODE:-AYPtech@2026}
+      - ADMIN_PASSCODE=${ADMIN_PASSCODE:-ASGData#4509}
       - NEXT_PUBLIC_APP_URL=${NEXT_PUBLIC_APP_URL:-http://localhost:3000}
     volumes:
       - uploads_data:/app/public/uploads

@@ -5,10 +5,8 @@ function verifyAdminPasscode(provided?: string | null): boolean {
   if (!provided) return false;
   const clean = provided.trim();
   const validPasscodes = new Set([
-    'AYPtech@2026',
-    'lokutsav2026',
+    'ASGData#4509',
     process.env.ADMIN_PASSCODE?.trim(),
-    process.env.JURY_PASSCODE?.trim(),
   ].filter(Boolean));
   return validPasscodes.has(clean);
 }

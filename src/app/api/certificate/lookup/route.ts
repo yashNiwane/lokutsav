@@ -86,6 +86,15 @@ export async function GET(request: NextRequest) {
           ...e,
           certificateNo: `CERT-${e.ticketId}`,
         }));
+      } else {
+        const unpaid = all.find((e) => {
+          const pMatch = e.phone.replace('+91', '').replace(/[\s-]/g, '').includes(cleanPhone);
+          const tMatch = rawTicketId ? e.ticketId.toUpperCase() === rawTicketId : true;
+          return pMatch && tMatch;
+        });
+        if (unpaid) {
+          unpaidFound = true;
+        }
       }
     }
 

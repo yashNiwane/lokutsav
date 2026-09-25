@@ -1,12 +1,14 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import { useLanguage } from '@/lib/language-context';
-import { UserCheck, Camera, CreditCard, ArrowRight, ShieldCheck, CheckCircle2 } from 'lucide-react';
+import { UserCheck, Camera, CreditCard, ArrowRight, ShieldCheck, CheckCircle2, Clock, Ticket } from 'lucide-react';
 import Link from 'next/link';
+import TicketLookupModal from '@/components/TicketLookupModal';
 
 export default function HowToParticipate() {
   const { lang } = useLanguage();
+  const [lookupModalOpen, setLookupModalOpen] = useState(false);
 
   const steps = [
     {
@@ -86,22 +88,39 @@ export default function HowToParticipate() {
           ))}
         </div>
 
-        {/* CTA Strip */}
-        <div className="bg-white p-6 rounded-2xl border border-[#E5D7C0] shadow-xs text-center max-w-2xl mx-auto space-y-4">
-          <p className="text-xs text-stone-600">
-            🔒 <strong>गोपनीयता व ज्युरी परीक्षण:</strong> स्पर्धा कालावधीत सर्व देखावे परीक्षकांकडे सुरक्षित मूल्यमापनासाठी राहतील. स्पर्धा संपल्यानंतर भव्य राज्य दालन व महाविजेत्यांची घोषणा केली जाईल.
+        {/* Status Strip */}
+        <div className="bg-white p-6 rounded-2xl border border-amber-300 shadow-xs text-center max-w-2xl mx-auto space-y-4">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-50 border border-red-200 text-red-800 text-xs font-bold">
+            <span className="w-2 h-2 rounded-full bg-red-600 animate-pulse" />
+            <span>{lang === 'mr' ? 'नोंदणी प्रक्रिया आता बंद झाली आहे' : 'Registrations Are Now Closed'}</span>
+          </div>
+
+          <h3 className="font-serif font-black text-xl text-stone-900">
+            {lang === 'mr' ? 'निकाल उद्या (२६ सप्टेंबर) सायंकाळी ६:०० वाजता जाहीर होईल' : 'Results Will Be Announced Tomorrow at 6:00 PM IST'}
+          </h3>
+
+          <p className="text-xs text-stone-600 leading-relaxed">
+            {lang === 'mr'
+              ? '🔒 सर्व ३६ जिल्ह्यांतील प्राप्त उत्कृष्ट देखाव्यांचे तज्ज्ञ ज्युरी मंडळाकडून अंतिम परीक्षण युद्धपातळीवर सुरू आहे. उद्या सायंकाळी ६:०० वाजता १० महाविजेत्यांची अधिकृत घोषणा केली जाईल.'
+              : '🔒 Expert jury evaluation is actively in progress across all 36 districts. Top 10 Champions will be unveiled tomorrow by 6:00 PM.'}
           </p>
-          <div>
-            <Link
-              href="/register"
-              className="inline-flex items-center gap-2 bg-[#9B1B1E] hover:bg-[#781416] text-white px-8 py-3.5 rounded-xl font-bold text-sm shadow-sm transition-all"
+
+          <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-3">
+            <button
+              onClick={() => setLookupModalOpen(true)}
+              className="inline-flex items-center gap-2 bg-[#9B1B1E] hover:bg-[#781416] text-white px-6 py-3 rounded-xl font-bold text-sm shadow-sm transition-all cursor-pointer"
             >
-              <span>आताच नोंदणी करा (₹99)</span>
-              <ArrowRight className="w-4 h-4 text-amber-300" />
-            </Link>
+              <Ticket className="w-4 h-4 text-amber-300" />
+              <span>{lang === 'mr' ? 'आपले तिकीट शोधा / डाउनलोड करा' : 'Find / Download Your Ticket'}</span>
+            </button>
           </div>
         </div>
       </div>
+
+      <TicketLookupModal
+        isOpen={lookupModalOpen}
+        onClose={() => setLookupModalOpen(false)}
+      />
     </section>
   );
 }

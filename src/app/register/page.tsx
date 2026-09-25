@@ -23,11 +23,14 @@ import {
   Bell,
   ExternalLink,
   Ticket,
+  Clock,
+  Trophy,
 } from 'lucide-react';
 import Link from 'next/link';
 import { trackJourney } from '@/lib/tracker';
 import { compressImage } from '@/lib/image-compressor';
 import TicketLookupModal from '@/components/TicketLookupModal';
+import { isRegistrationOpen } from '@/lib/competition-config';
 
 declare global {
   interface Window {
@@ -756,6 +759,89 @@ export default function RegisterPage() {
       setIsSubmitting(false);
     }
   };
+
+  // Registrations Closed Screen (preserves Step 4 for viewing existing completed tickets)
+  if (!isRegistrationOpen() && step !== 4) {
+    return (
+      <div className="py-16 bg-[#FAF7F2] min-h-[85vh] flex items-center justify-center px-4">
+        <div className="max-w-xl w-full bg-white rounded-3xl p-8 sm:p-10 border border-amber-300/80 shadow-md text-center space-y-6">
+          <div className="w-16 h-16 rounded-2xl bg-red-100 text-[#9B1B1E] flex items-center justify-center mx-auto shadow-xs">
+            <Clock className="w-8 h-8" />
+          </div>
+
+          <div className="space-y-3">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-red-100 text-red-900 border border-red-200 text-xs font-bold uppercase tracking-wider">
+              <span className="w-2 h-2 rounded-full bg-red-600 animate-pulse" />
+              {lang === 'mr' ? 'नोंदणी प्रक्रिया बंद' : 'Registrations Closed'}
+            </span>
+
+            <h1 className="font-serif font-black text-2xl sm:text-3xl text-stone-900 tracking-tight">
+              {lang === 'mr' ? 'नोंदणी अधिकृतपणे बंद झाली आहे' : 'Registrations Are Now Closed'}
+            </h1>
+
+            <p className="text-stone-600 text-sm leading-relaxed max-w-md mx-auto">
+              {lang === 'mr'
+                ? 'लोकोत्सव २०२६ राज्यस्तरीय ऑनलाइन गणेश सजावट स्पर्धेची नोंदणी मुदत आता समाप्त झाली आहे. महाराष्ट्रातील सर्व ३६ जिल्ह्यांतून मिळालेल्या उदंड प्रतिसादाबद्दल मनापासून धन्यवाद!'
+                : 'The official registration window for Lokutsav 2026 has concluded. Thank you to thousands of participants from all 36 districts of Maharashtra!'}
+            </p>
+          </div>
+
+          {/* Result Announcement Highlight Card */}
+          <div className="bg-gradient-to-r from-amber-500/10 via-amber-500/20 to-amber-500/10 rounded-2xl p-5 border border-amber-300 text-center space-y-2">
+            <div className="flex items-center justify-center gap-2 text-amber-800 font-bold text-xs uppercase tracking-wider">
+              <Trophy className="w-4 h-4 text-amber-600" />
+              <span>{lang === 'mr' ? 'अंतिम निकाल घोषणा' : 'Final Results Announcement'}</span>
+            </div>
+            <p className="font-serif font-black text-xl sm:text-2xl text-stone-900">
+              {lang === 'mr' ? 'उद्या (२६ सप्टेंबर) सायंकाळी ६:०० वाजता' : 'Tomorrow (26th Sept) at 6:00 PM IST'}
+            </p>
+            <p className="text-xs text-stone-600">
+              {lang === 'mr'
+                ? 'सर्व १० महाविजेत्यांची यादी व निकाल याच मुख्य संकेतस्थळावर प्रसिद्ध केला जाईल.'
+                : 'Top 10 State Champions will be declared right here on the official website.'}
+            </p>
+          </div>
+
+          {/* Action: Ticket Lookup for registered users */}
+          <div className="pt-2 border-t border-stone-100 space-y-3">
+            <p className="text-xs text-stone-500 font-medium">
+              {lang === 'mr'
+                ? 'तुम्ही आधीच नोंदणी केली असल्यास आपले तिकीट व पावती तपासण्यासाठी खालील बटण दाबा:'
+                : 'If you have already registered, look up your official entry ticket below:'}
+            </p>
+
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+              <button
+                onClick={() => setLookupModalOpen(true)}
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-[#9B1B1E] hover:bg-[#781416] text-white px-6 py-3 rounded-xl font-bold text-sm shadow-sm transition-all cursor-pointer"
+              >
+                <Ticket className="w-4 h-4 text-amber-300" />
+                <span>{lang === 'mr' ? 'आपले तिकीट शोधा / डाउनलोड करा' : 'Find / Download Ticket'}</span>
+              </button>
+
+              <Link
+                href="/"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 bg-stone-100 hover:bg-stone-200 text-stone-800 px-5 py-3 rounded-xl font-bold text-sm transition-colors"
+              >
+                <span>{lang === 'mr' ? 'मुख्यपृष्ठावर जा' : 'Back to Home'}</span>
+              </Link>
+            </div>
+          </div>
+
+          {/* Official WhatsApp support */}
+          <div className="pt-2 text-xs text-stone-500 flex items-center justify-center gap-2">
+            <ShieldCheck className="w-4 h-4 text-emerald-600" />
+            <span>{lang === 'mr' ? '१००% पारदर्शक ज्युरी परीक्षण सुरू आहे' : '100% Impartial Jury Evaluation In Progress'}</span>
+          </div>
+        </div>
+
+        <TicketLookupModal
+          isOpen={lookupModalOpen}
+          onClose={() => setLookupModalOpen(false)}
+        />
+      </div>
+    );
+  }
 
   return (
     <div className="py-12 bg-[#FAF7F2] min-h-screen">

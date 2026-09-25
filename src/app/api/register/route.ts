@@ -2,9 +2,20 @@ import { NextRequest, NextResponse } from 'next/server';
 import { dataStore } from '@/lib/db';
 import { createRegistrationOrder } from '@/lib/razorpay';
 import { generateUniqueTicketId } from '@/lib/ticket-generator';
+import { isRegistrationOpen } from '@/lib/competition-config';
 
 export async function POST(request: NextRequest) {
   try {
+    if (!isRegistrationOpen()) {
+      return NextResponse.json(
+        {
+          error: 'नोंदणी प्रक्रिया आता बंद झाली आहे. अंतिम निकाल उद्या सायंकाळी ६:०० वाजता जाहीर केला जाईल. (Registrations are closed. Results will be announced tomorrow by 6:00 PM.)',
+          registrationsClosed: true,
+        },
+        { status: 403 }
+      );
+    }
+
     const body = await request.json();
 
     const {

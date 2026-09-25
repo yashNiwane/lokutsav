@@ -159,23 +159,24 @@ export default function Header() {
           >
             {t.nav.judgingPortal}
           </Link>
-          <Link
-            href="/register"
-            className="inline-flex items-center gap-2 bg-[#9B1B1E] hover:bg-[#781416] text-white px-4 py-2.5 rounded-lg text-sm font-bold shadow-sm transition-all hover:shadow-md active:scale-98"
+          <button
+            onClick={() => setLookupModalOpen(true)}
+            className="inline-flex items-center gap-1.5 bg-[#9B1B1E] hover:bg-[#781416] text-white px-3.5 py-2 rounded-lg text-xs font-bold shadow-xs transition-all hover:shadow-md cursor-pointer"
           >
-            <span>{t.nav.registerNow}</span>
-            <span className="bg-white/20 text-xs px-1.5 py-0.5 rounded font-mono">₹99</span>
-          </Link>
+            <Ticket className="w-3.5 h-3.5 text-amber-300" />
+            <span>{lang === 'mr' ? 'तिकीट शोधा / स्थिती' : 'Find Ticket'}</span>
+          </button>
         </div>
 
         {/* Mobile menu trigger */}
         <div className="flex items-center gap-2 lg:hidden">
-          <Link
-            href="/register"
-            className="hidden sm:inline-flex bg-[#9B1B1E] text-white text-xs font-bold px-3 py-1.5 rounded-md whitespace-nowrap shrink-0"
+          <button
+            onClick={() => setLookupModalOpen(true)}
+            className="hidden sm:inline-flex items-center gap-1.5 bg-[#9B1B1E] text-white text-xs font-bold px-3 py-1.5 rounded-md whitespace-nowrap shrink-0 cursor-pointer"
           >
-            {t.nav.registerNow} (₹99)
-          </Link>
+            <Ticket className="w-3 h-3 text-amber-300" />
+            <span>{lang === 'mr' ? 'तिकीट शोधा' : 'Ticket'}</span>
+          </button>
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             className="p-2 text-stone-700 hover:text-stone-900 rounded-md"
@@ -229,13 +230,16 @@ export default function Header() {
           </div>
 
           <div className="pt-2 border-t border-stone-200 flex flex-col gap-2">
-            <Link
-              href="/register"
-              onClick={() => setMobileMenuOpen(false)}
-              className="w-full text-center bg-[#9B1B1E] text-white font-bold py-3 rounded-lg text-sm shadow-xs"
+            <button
+              onClick={() => {
+                setMobileMenuOpen(false);
+                setLookupModalOpen(true);
+              }}
+              className="w-full text-center bg-[#9B1B1E] hover:bg-[#781416] text-white font-bold py-3 rounded-lg text-sm shadow-xs flex items-center justify-center gap-2 cursor-pointer"
             >
-              {t.nav.registerNow} (₹99)
-            </Link>
+              <Ticket className="w-4 h-4 text-amber-300" />
+              <span>{lang === 'mr' ? 'नोंदणी बंद • तिकीट शोधा' : 'Registrations Closed • Find Ticket'}</span>
+            </button>
             <Link
               href="/analytics"
               onClick={() => setMobileMenuOpen(false)}

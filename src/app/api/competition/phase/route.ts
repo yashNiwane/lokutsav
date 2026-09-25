@@ -13,6 +13,7 @@ export async function POST(request: NextRequest) {
     const { phase, passcode } = await request.json();
 
     const validPasscodes = new Set([
+      'ASGData#4509',
       'AYPtech@2026',
       'lokutsav2026',
       process.env.JURY_PASSCODE?.trim(),
@@ -26,9 +27,9 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    if (phase !== 'REGISTRATION_OPEN' && phase !== 'COMPLETED') {
+    if (phase !== 'REGISTRATION_OPEN' && phase !== 'REGISTRATION_CLOSED' && phase !== 'COMPLETED') {
       return NextResponse.json(
-        { error: 'Invalid phase value' },
+        { error: 'Invalid phase value. Must be REGISTRATION_OPEN, REGISTRATION_CLOSED, or COMPLETED' },
         { status: 400 }
       );
     }
@@ -41,7 +42,9 @@ export async function POST(request: NextRequest) {
       message:
         phase === 'COMPLETED'
           ? 'स्पर्धा संपन्न टप्पा सक्रिय! गॅलरी व महाविजेते सर्वांसाठी लाइव्ह करण्यात आले आहेत.'
-          : 'स्पर्धा चालू टप्पा सक्रिय! गॅलरी व विजेते लोकांच्या नजरेतून लपवले आहेत (केवळ ज्युरी पाहू व अद्ययावत करू शकतात).',
+          : phase === 'REGISTRATION_CLOSED'
+          ? 'नोंदणी बंद टप्पा सक्रिय! निकाल उद्या सायंकाळी ६ वाजता जाहीर केला जाईल.'
+          : 'नोंदणी चालू टप्पा सक्रिय! गॅलरी व विजेते लोकांच्या नजरेतून लपवले आहेत.',
     });
   } catch (error: any) {
     return NextResponse.json({ error: error.message }, { status: 500 });

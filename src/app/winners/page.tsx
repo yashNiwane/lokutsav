@@ -27,17 +27,17 @@ export default async function WinnersPage() {
           </div>
 
           <div className="space-y-3">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-amber-50 border border-amber-200 text-amber-900 text-xs font-bold">
-              <Sparkles className="w-3.5 h-3.5 text-amber-700" />
-              <span>स्पर्धा कालावधी सक्रिय</span>
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-red-50 border border-red-200 text-red-900 text-xs font-bold">
+              <span className="w-2 h-2 rounded-full bg-red-600 animate-pulse" />
+              <span>नोंदणी बंद • ज्युरी परीक्षण सुरू</span>
             </div>
 
             <h1 className="font-serif font-black text-3xl sm:text-5xl text-stone-900 tracking-tight">
-              निकाल लवकरच जाहीर केले जातील!
+              निकाल उद्या सायंकाळी ६:०० वाजता जाहीर होईल!
             </h1>
 
             <p className="text-stone-600 text-base max-w-xl mx-auto leading-relaxed">
-              सध्या स्पर्धा सुरू असून तज्ज्ञ ज्युरी मंडळाकडून सर्व ३६ जिल्ह्यांतील देखाव्यांचे ५ निकषांवर अत्यंत काटेकोर व निष्पक्ष मूल्यमापन सुरू आहे.
+              नोंदणी प्रक्रिया आता बंद झाली असून तज्ज्ञ ज्युरी मंडळाकडून सर्व ३६ जिल्ह्यांतील सर्व देखाव्यांचे ५ निकषांवर अत्यंत काटेकोर व निष्पक्ष मूल्यमापन सुरू आहे. उद्या सायंकाळी ६:०० वाजता सर्व १० महाविजेत्यांची अधिकृत घोषणा केली जाईल.
             </p>
           </div>
 
@@ -83,18 +83,18 @@ export default async function WinnersPage() {
           {/* Action CTAs */}
           <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link
-              href="/register"
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-[#9B1B1E] hover:bg-[#781416] text-white px-8 py-4 rounded-xl font-bold text-sm shadow-sm transition-all"
+              href="/"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-[#9B1B1E] hover:bg-[#781416] text-white px-8 py-3.5 rounded-xl font-bold text-sm shadow-sm transition-all"
             >
-              <span>अजूनही वेळ आहे - आताच नोंदणी करा (₹99)</span>
+              <span>मुख्यपृष्ठावर निकाल पहा (उद्या ६ वा.)</span>
               <ArrowRight className="w-4 h-4 text-amber-300" />
             </Link>
 
             <Link
-              href="/"
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 text-stone-600 hover:text-stone-900 text-sm font-semibold px-4 py-3"
+              href="/register"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 text-stone-700 bg-stone-100 hover:bg-stone-200 text-sm font-semibold px-6 py-3.5 rounded-xl border border-stone-200 transition-colors"
             >
-              <span>मुख्यपृष्ठावर जा</span>
+              <span>आपले तिकीट तपासा</span>
             </Link>
           </div>
         </div>

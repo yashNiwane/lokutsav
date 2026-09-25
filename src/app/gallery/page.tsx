@@ -39,7 +39,7 @@ export default async function GalleryPage() {
           </h1>
 
           <p className="text-stone-600 text-sm sm:text-base leading-relaxed max-w-lg mx-auto">
-            सध्या स्पर्धा कालावधी सुरू असून संपूर्ण महाराष्ट्रातील 36 जिल्ह्यांतून नोंदी स्वीकारल्या जात आहेत. आमचे ज्युरी मंडळ सर्व देखाव्यांचे सातत्याने संकलन व मूल्यमापन करत आहे.
+            नोंदणी प्रक्रिया आता बंद झाली असून सर्व ३६ जिल्ह्यांतील प्राप्त उत्कृष्ट देखाव्यांचे तज्ज्ञ ज्युरी मंडळाकडून सखोल मूल्यमापन सुरू आहे. अंतिम निकाल व संपूर्ण दालन उद्या (२६ सप्टेंबर) सायंकाळी ६:०० वाजता सर्वांसाठी खुले केले जाईल.
           </p>
         </div>
 
@@ -50,7 +50,7 @@ export default async function GalleryPage() {
               <Clock className="w-4 h-4 text-amber-700" />
               <span>सध्याची स्थिती:</span>
             </span>
-            <span className="text-[#9B1B1E] uppercase tracking-wider">नोंदणी व संकलन सुरू</span>
+            <span className="text-[#9B1B1E] uppercase tracking-wider font-bold">नोंदणी बंद • ज्युरी परीक्षण सुरू</span>
           </div>
 
           <div className="grid grid-cols-2 gap-3 text-xs">
@@ -59,8 +59,8 @@ export default async function GalleryPage() {
               <span className="font-bold text-stone-900 text-base">{entries.length}+ देखावे</span>
             </div>
             <div>
-              <span className="text-stone-500 block">दालन प्रदर्शन:</span>
-              <span className="font-bold text-emerald-800 text-sm">स्पर्धा संपल्यानंतर तात्काळ</span>
+              <span className="text-stone-500 block">दालन व निकाल घोषणा:</span>
+              <span className="font-bold text-emerald-800 text-sm">उद्या सायंकाळी ६:०० वा.</span>
             </div>
           </div>
         </div>
@@ -68,18 +68,18 @@ export default async function GalleryPage() {
         {/* Action CTAs */}
         <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-4">
           <Link
-            href="/register"
+            href="/"
             className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-[#9B1B1E] hover:bg-[#781416] text-white px-8 py-3.5 rounded-xl font-bold text-sm shadow-sm transition-all"
           >
-            <span>आपला देखावा नोंदवा (₹99)</span>
+            <span>मुख्यपृष्ठावर जा</span>
             <ArrowRight className="w-4 h-4 text-amber-300" />
           </Link>
 
           <Link
-            href="/#how-to-enter"
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 text-stone-700 hover:text-stone-950 font-semibold text-sm px-4 py-3"
+            href="/register"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 text-stone-700 bg-stone-100 hover:bg-stone-200 font-semibold text-sm px-6 py-3.5 rounded-xl border border-stone-200 transition-colors"
           >
-            <span>सहभाग पद्धत पहा</span>
+            <span>आपले तिकीट शोधा</span>
           </Link>
         </div>
 

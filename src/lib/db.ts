@@ -17,8 +17,64 @@ if (process.env.NODE_ENV !== 'production') {
   globalThis.prismaGlobal = prisma;
 }
 
+import fs from 'fs';
+import path from 'path';
+
+function loadLocalManifestEntries(): ParticipantEntry[] {
+  try {
+    const manifestPath = path.join(process.cwd(), 'participants_manifest.json');
+    if (fs.existsSync(manifestPath)) {
+      const raw = fs.readFileSync(manifestPath, 'utf-8');
+      const list = JSON.parse(raw);
+      if (Array.isArray(list)) {
+        return list.map((item: any, idx: number) => {
+          let photos: string[] = [];
+          if (item.photoUrls) {
+            try {
+              photos = typeof item.photoUrls === 'string' ? JSON.parse(item.photoUrls) : item.photoUrls;
+            } catch {
+              photos = [item.photoUrls];
+            }
+          }
+          return {
+            id: item.id || `entry-manifest-${idx}`,
+            ticketId: item.ticketId || `LOK-2026-${1000 + idx}`,
+            fullName: item.fullName || 'Participant',
+            phone: item.phone || '',
+            email: item.email || `${item.phone || 'participant'}@lokutsav.com`,
+            district: item.district || 'Maharashtra',
+            city: item.city || item.district || 'Maharashtra',
+            address: item.address || item.city || item.district || '',
+            category: (item.category === 'SARVAJANIK_MANDAL' ? 'SARVAJANIK_MANDAL' : 'HOUSEHOLD') as any,
+            idolType: (item.idolType || 'SHADU_MATI_CLAY') as any,
+            themeTitle: item.themeTitle || 'पारंपारिक गणेश सजावट',
+            themeDescription: item.themeDescription || 'श्री गणेशाची सुंदर व मंगलमय सजावट.',
+            materialsUsed: item.materialsUsed || '',
+            photoUrls: photos,
+            videoUrl: item.videoUrl || undefined,
+            entryFee: 99,
+            paymentStatus: (item.paymentStatus === 'COMPLETED' ? 'COMPLETED' : 'PENDING') as any,
+            status: 'APPROVED',
+            createdAt: item.createdAt || new Date().toISOString(),
+          };
+        });
+      }
+    }
+  } catch {
+    // Non-fatal
+  }
+  return [];
+}
+
+const manifestEntries = loadLocalManifestEntries();
+const existingTickets = new Set(INITIAL_ENTRIES.map((e) => e.ticketId.toUpperCase()));
+const mergedEntries = [
+  ...INITIAL_ENTRIES,
+  ...manifestEntries.filter((m) => !existingTickets.has(m.ticketId.toUpperCase())),
+];
+
 // In-memory persistent cache for zero-setup local dev / demo mode when database is not yet seeded
-let inMemoryEntries: ParticipantEntry[] = [...INITIAL_ENTRIES];
+let inMemoryEntries: ParticipantEntry[] = mergedEntries;
 let inMemoryJourneySessions: any[] = [];
 let inMemoryJourneyEvents: any[] = [];
 let isPostgresAvailable: boolean | null = null;

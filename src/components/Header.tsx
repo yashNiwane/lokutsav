@@ -143,10 +143,21 @@ export default function Header() {
             <span>🎁</span>
             <span>{lang === 'mr' ? 'रेफरल' : 'Referral'}</span>
           </Link>
+          <Link href="/certificate" className="hover:text-[#9B1B1E] transition-colors flex items-center gap-1 text-[#9B1B1E] font-bold">
+            <span>📜</span>
+            <span>{lang === 'mr' ? 'प्रमाणपत्र' : 'Certificate'}</span>
+          </Link>
         </nav>
 
         {/* Action button */}
         <div className="hidden sm:flex items-center gap-3">
+          <Link
+            href="/certificate"
+            className="inline-flex items-center gap-1.5 bg-amber-100 hover:bg-amber-200 text-amber-950 font-bold px-3 py-2 rounded-lg text-xs border border-amber-300 transition-colors shadow-2xs"
+          >
+            <Award className="w-3.5 h-3.5 text-[#9B1B1E]" />
+            <span>{lang === 'mr' ? 'सहभाग प्रमाणपत्र' : 'Certificate'}</span>
+          </Link>
           <Link
             href="/analytics"
             className="text-xs font-semibold px-2.5 py-2 rounded-md text-stone-600 hover:text-stone-900 hover:bg-stone-200/60 transition-colors border border-[#E5D7C0]"
@@ -226,6 +237,17 @@ export default function Header() {
             >
               <span>{lang === 'mr' ? '🎁 रेफरल रिवॉर्ड्स (Refer & Win)' : '🎁 Refer & Win Rewards'}</span>
               <span className="text-[10px] bg-amber-300 text-stone-900 px-2 py-0.5 rounded font-bold">New</span>
+            </Link>
+            <Link
+              href="/certificate"
+              onClick={() => setMobileMenuOpen(false)}
+              className="p-2.5 rounded-md bg-amber-100/70 hover:bg-amber-100 text-[#9B1B1E] font-bold flex items-center justify-between"
+            >
+              <span className="flex items-center gap-2">
+                <Award className="w-4 h-4 text-[#9B1B1E]" />
+                <span>{lang === 'mr' ? '📜 सहभाग प्रमाणपत्र डाउनलोड करा' : '📜 Download Participation Certificate'}</span>
+              </span>
+              <span className="text-[10px] bg-[#9B1B1E] text-white px-2 py-0.5 rounded font-bold">New</span>
             </Link>
           </div>
 

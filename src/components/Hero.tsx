@@ -43,18 +43,26 @@ export default function Hero() {
           <CountdownTimer />
 
           {/* Action CTAs */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
-            <div className="w-full sm:w-auto inline-flex items-center justify-center gap-3 bg-[#9B1B1E] text-white px-7 py-4 rounded-xl text-base font-bold shadow-md cursor-default border border-amber-400/50">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3.5 pt-2">
+            <Link
+              href="/certificate"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-stone-950 px-6 py-4 rounded-xl text-base font-black shadow-md transition-all hover:scale-105 border border-amber-300 cursor-pointer"
+            >
+              <Award className="w-5 h-5 text-stone-950" />
+              <span>{lang === 'mr' ? 'सहभाग प्रमाणपत्र डाउनलोड करा' : 'Download Certificate'}</span>
+            </Link>
+
+            <div className="w-full sm:w-auto inline-flex items-center justify-center gap-3 bg-[#9B1B1E] text-white px-6 py-4 rounded-xl text-base font-bold shadow-md cursor-default border border-amber-400/50">
               <Clock className="w-5 h-5 text-amber-300 animate-pulse" />
-              <span>{lang === 'mr' ? 'नोंदणी बंद • निकाल उद्या सायंकाळी ६ वा.' : 'Registrations Closed • Results Tomorrow 6 PM'}</span>
+              <span>{lang === 'mr' ? 'निकाल उद्या सायंकाळी ६ वा.' : 'Results Tomorrow 6 PM'}</span>
             </div>
 
             <button
               onClick={() => setLookupModalOpen(true)}
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-white hover:bg-stone-50 text-stone-800 border-2 border-amber-400/80 px-6 py-4 rounded-xl text-base font-bold shadow-2xs transition-all hover:border-[#9B1B1E] cursor-pointer"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-white hover:bg-stone-50 text-stone-800 border-2 border-stone-300 px-5 py-4 rounded-xl text-base font-bold shadow-2xs transition-all hover:border-[#9B1B1E] cursor-pointer"
             >
               <Ticket className="w-5 h-5 text-[#9B1B1E]" />
-              <span>{lang === 'mr' ? 'आपले तिकीट शोधा / स्थिती तपासा' : 'Find Ticket / Check Status'}</span>
+              <span>{lang === 'mr' ? 'तिकीट शोधा' : 'Find Ticket'}</span>
             </button>
           </div>
 

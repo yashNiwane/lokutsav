@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { useLanguage } from '@/lib/language-context';
-import { Search, X, CheckCircle2, AlertCircle, Download, Share2, Ticket, Loader2 } from 'lucide-react';
+import { Search, X, CheckCircle2, AlertCircle, Download, Share2, Ticket, Loader2, Award } from 'lucide-react';
 
 interface LookupEntry {
   ticketId: string;
@@ -185,22 +185,32 @@ export default function TicketLookupModal({
               </div>
 
               {/* Action Buttons */}
-              <div className="flex gap-2 pt-1">
-                <button
-                  type="button"
-                  onClick={() => shareOnWhatsApp(result.ticketId)}
-                  className="flex-1 inline-flex items-center justify-center gap-2 bg-[#25D366] hover:bg-[#20ba59] text-white py-2.5 px-4 rounded-xl font-bold text-xs shadow-xs transition-colors"
+              <div className="space-y-2 pt-1">
+                <a
+                  href={`/certificate?phone=${encodeURIComponent(result.phone)}&ticket=${encodeURIComponent(result.ticketId)}`}
+                  className="w-full inline-flex items-center justify-center gap-2 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-stone-950 py-2.5 px-4 rounded-xl font-black text-xs shadow-sm transition-all"
                 >
-                  <Share2 className="w-3.5 h-3.5" />
-                  <span>WhatsApp</span>
-                </button>
-                <button
-                  type="button"
-                  onClick={onClose}
-                  className="inline-flex items-center justify-center bg-stone-200 hover:bg-stone-300 text-stone-800 py-2.5 px-5 rounded-xl font-bold text-xs transition-colors"
-                >
-                  <span>{lang === 'mr' ? 'बंद करा' : 'Close'}</span>
-                </button>
+                  <Award className="w-4 h-4 text-stone-950" />
+                  <span>{lang === 'mr' ? '📜 सहभाग प्रमाणपत्र डाउनलोड करा' : '📜 Download Participation Certificate'}</span>
+                </a>
+
+                <div className="flex gap-2">
+                  <button
+                    type="button"
+                    onClick={() => shareOnWhatsApp(result.ticketId)}
+                    className="flex-1 inline-flex items-center justify-center gap-2 bg-[#25D366] hover:bg-[#20ba59] text-white py-2.5 px-4 rounded-xl font-bold text-xs shadow-xs transition-colors cursor-pointer"
+                  >
+                    <Share2 className="w-3.5 h-3.5" />
+                    <span>WhatsApp</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={onClose}
+                    className="inline-flex items-center justify-center bg-stone-200 hover:bg-stone-300 text-stone-800 py-2.5 px-5 rounded-xl font-bold text-xs transition-colors cursor-pointer"
+                  >
+                    <span>{lang === 'mr' ? 'बंद करा' : 'Close'}</span>
+                  </button>
+                </div>
               </div>
             </div>
           )}

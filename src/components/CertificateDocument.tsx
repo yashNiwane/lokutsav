@@ -224,23 +224,32 @@ export default function CertificateDocument({ data, id = 'certificate-render-tar
               </div>
             </div>
 
-            {/* Center Official Gold Seal */}
+            {/* Center Royal Honor Medallion */}
             <div className="flex flex-col items-center justify-center shrink-0 mx-2">
-              <div className="relative w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-gradient-to-tr from-[#B45309] via-[#F59E0B] to-[#FEF08A] p-0.5 shadow-xs flex items-center justify-center border border-amber-200">
-                <div className="w-full h-full rounded-full border border-dashed border-[#78350F] flex flex-col items-center justify-center text-center p-0.5 bg-gradient-to-b from-[#FFFBEB] to-[#FDE68A]">
-                  <span className="text-[6.5px] sm:text-[8px] font-black text-[#7B1113] leading-none uppercase tracking-tighter">
-                    LOKUTSAV
+              <div className="relative w-13 h-13 sm:w-16 sm:h-16 rounded-full bg-gradient-to-tr from-[#B45309] via-[#F59E0B] to-[#FEF08A] p-[2px] shadow-xs flex items-center justify-center border border-amber-300/80">
+                {/* Inner Elegant Gold Ring */}
+                <div className="w-full h-full rounded-full border border-amber-400/80 flex flex-col items-center justify-center text-center p-1 bg-gradient-to-b from-[#FFFDF7] via-[#FEF9E7] to-[#FDEAA7]">
+                  {/* Decorative Top Sparkle */}
+                  <span className="text-[7px] sm:text-[8.5px] text-[#B45309] leading-none mb-0.5">
+                    ✦
                   </span>
-                  <span className="text-[8px] sm:text-xs text-[#B45309] leading-tight font-serif my-0.5">
-                    ★ 2026 ★
+                  
+                  {/* Brand & Year */}
+                  <span className="text-[8px] sm:text-[10.5px] font-serif font-black text-[#7B1113] leading-none tracking-wide">
+                    लोकोत्सव
                   </span>
-                  <span className="text-[5.5px] sm:text-[6.5px] font-bold text-[#78350F] uppercase tracking-tight leading-none">
-                    OFFICIAL SEAL
+                  <span className="text-[7px] sm:text-[9px] font-serif font-bold text-[#B45309] leading-tight mt-0.5">
+                    २०२६
+                  </span>
+
+                  {/* Decorative Bottom Star */}
+                  <span className="text-[5.5px] sm:text-[7px] text-[#D97706] leading-none mt-0.5">
+                    ★
                   </span>
                 </div>
               </div>
-              <span className="text-[6.5px] sm:text-[7.5px] text-[#7B1113] font-bold tracking-wider uppercase mt-0.5">
-                अधिकृत सहभाग मोहर
+              <span className="text-[7px] sm:text-[8.5px] text-[#7B1113] font-serif font-bold tracking-wider mt-0.5">
+                सहभाग सन्मान
               </span>
             </div>
 

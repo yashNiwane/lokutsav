@@ -119,22 +119,15 @@ export default function CertificateDocument({ data, id = 'certificate-render-tar
               <span className="h-[1px] w-6 sm:w-12 bg-gradient-to-l from-transparent to-[#D4AF37]" />
             </div>
 
-            {/* Sacred Royal Ganesha Crest */}
-            <div className="inline-flex items-center justify-center w-8 h-8 sm:w-11 sm:h-11 rounded-full bg-gradient-to-br from-[#FFFBEB] via-[#FEF3C7] to-[#FDE68A] border border-[#D4AF37] shadow-xs my-0.5">
-              <svg viewBox="0 0 100 100" className="w-5 h-5 sm:w-7 sm:h-7" fill="none">
-                {/* Crown / Mukut */}
-                <path d="M50 14 L55 27 L65 27 L58 34 L61 43 L50 38 L39 43 L42 34 L35 27 L45 27 Z" fill="#9B1B1E" />
-                <circle cx="50" cy="23" r="2.5" fill="#D4AF37" />
-                {/* Forehead Tilak */}
-                <path d="M47 38 Q50 42 53 38 Q51 47 50 50 Q49 47 47 38 Z" fill="#9B1B1E" />
-                <circle cx="50" cy="43" r="1.5" fill="#D4AF37" />
-                {/* Ears */}
-                <path d="M36 44 C26 46 24 58 32 64 C36 67 40 66 43 62" stroke="#9B1B1E" strokeWidth="3" strokeLinecap="round" />
-                <path d="M64 44 C74 46 76 58 68 64 C64 67 60 66 57 62" stroke="#9B1B1E" strokeWidth="3" strokeLinecap="round" />
-                {/* Trunk turning with sweet modak */}
-                <path d="M50 50 C49 58 46 70 54 75 C60 79 69 76 69 68 C69 62 62 61 58 64" stroke="#9B1B1E" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round" />
-                <circle cx="68" cy="65" r="2.5" fill="#D4AF37" />
-              </svg>
+            {/* Official Lokutsav Logo Emblem */}
+            <div className="inline-flex items-center justify-center w-10 h-10 sm:w-13 sm:h-13 rounded-full bg-white border-2 border-[#D4AF37] shadow-sm my-0.5 overflow-hidden p-0.5">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/logo.png"
+                alt="Lokutsav Official Logo"
+                className="w-full h-full object-contain rounded-full"
+                crossOrigin="anonymous"
+              />
             </div>
 
             {/* Organization & Competition Title */}

@@ -132,10 +132,10 @@ export default function CertificateDocument({ data, id = 'certificate-render-tar
 
             {/* Organization & Competition Title */}
             <h2 className="text-[#7B1113] font-serif font-black text-xs sm:text-lg lg:text-xl tracking-tight leading-tight">
-              महाराष्ट्र राज्य ऑनलाइन गणेश सजावट स्पर्धा २०२६
+              लोकोत्सव ऑनलाइन गणेश सजावट स्पर्धा २०२६
             </h2>
             <p className="text-stone-600 font-sans text-[8px] sm:text-[10px] tracking-wider uppercase font-semibold">
-              Maharashtra State Online Ganesh Decoration Competition 2026
+              Lokutsav Online Ganesh Decoration Competition 2026
             </p>
 
             {/* Certificate Title Badge */}
@@ -184,7 +184,7 @@ export default function CertificateDocument({ data, id = 'certificate-render-tar
 
             {/* Official Citation Statement */}
             <p className="max-w-2xl mx-auto text-stone-700 text-[9.5px] sm:text-[11px] leading-relaxed font-sans font-normal px-4">
-              यांनी <strong className="text-stone-900 font-semibold">&lsquo;लोकोत्सव २०२६&rsquo;</strong> या राज्यस्तरीय ऑनलाइन गणेश सजावट स्पर्धेत कलात्मकतेने व आपली सांस्कृतिक परंपरा जपणारी उत्कृष्ट गणेश सजावट सादर करून सक्रिय सहभाग नोंदविला. त्यांच्या या कलात्मक योगदानाची व श्रद्धेची प्रशंसा करून हे <strong className="text-[#7B1113] font-semibold">सहभाग सन्मानपत्र</strong> सस्नेह प्रदान करण्यात येत आहे.
+              यांनी <strong className="text-stone-900 font-semibold">&lsquo;लोकोत्सव २०२६&rsquo;</strong> या ऑनलाइन गणेश सजावट स्पर्धेत कलात्मकतेने व आपली सांस्कृतिक परंपरा जपणारी उत्कृष्ट गणेश सजावट सादर करून सक्रिय सहभाग नोंदविला. त्यांच्या या कलात्मक योगदानाची व श्रद्धेची प्रशंसा करून हे <strong className="text-[#7B1113] font-semibold">सहभाग सन्मानपत्र</strong> सस्नेह प्रदान करण्यात येत आहे.
             </p>
           </div>
 

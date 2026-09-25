@@ -147,8 +147,8 @@ function CertificatePageContent() {
     if (!selectedEntry) return;
     const text =
       lang === 'mr'
-        ? `🚩 *लोकोत्सव २०२६ | अधिकृत सहभाग प्रमाणपत्र*\n\nमी 'महाराष्ट्र राज्य ऑनलाइन गणेश सजावट स्पर्धा २०२६' मध्ये सहभाग घेतला असून माझे अधिकृत सहभाग प्रमाणपत्र प्राप्त झाले आहे!\n\nनाव: *${selectedEntry.fullName}*\nतिकीट क्र.: *${selectedEntry.ticketId}*\n\n👉 आपले प्रमाणपत्र डाउनलोड करा: https://lokutsav.com/certificate`
-        : `🚩 *Lokutsav 2026 | Official Participation Certificate*\n\nI participated in Maharashtra State Online Ganesh Decoration Competition 2026 and received my official Certificate of Participation!\n\nName: *${selectedEntry.fullName}*\nTicket ID: *${selectedEntry.ticketId}*\n\n👉 Download your certificate: https://lokutsav.com/certificate`;
+        ? `🚩 *लोकोत्सव २०२६ | अधिकृत सहभाग प्रमाणपत्र*\n\nमी 'लोकोत्सव ऑनलाइन गणेश सजावट स्पर्धा २०२६' मध्ये सहभाग घेतला असून माझे अधिकृत सहभाग प्रमाणपत्र प्राप्त झाले आहे!\n\nनाव: *${selectedEntry.fullName}*\nतिकीट क्र.: *${selectedEntry.ticketId}*\n\n👉 आपले प्रमाणपत्र डाउनलोड करा: https://lokutsav.com/certificate`
+        : `🚩 *Lokutsav 2026 | Official Participation Certificate*\n\nI participated in Lokutsav Online Ganesh Decoration Competition 2026 and received my official Certificate of Participation!\n\nName: *${selectedEntry.fullName}*\nTicket ID: *${selectedEntry.ticketId}*\n\n👉 Download your certificate: https://lokutsav.com/certificate`;
 
     window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`, '_blank');
   };

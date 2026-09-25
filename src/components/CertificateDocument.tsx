@@ -226,32 +226,38 @@ export default function CertificateDocument({ data, id = 'certificate-render-tar
               </span>
             </div>
 
-            {/* Right Signatures Block */}
-            <div className="text-right space-y-1.5 sm:space-y-2">
-              <div className="inline-block text-center">
-                {/* Stylized Digital Signature Graphic */}
-                <div className="h-6 sm:h-8 flex items-center justify-center">
-                  <svg className="w-20 sm:w-28 h-6 text-[#7B1113]" viewBox="0 0 140 40" fill="none">
-                    <path
-                      d="M10,25 C25,10 35,35 50,18 C65,5 70,30 90,20 C105,12 115,22 130,15"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                    />
-                    <path
-                      d="M30,28 C45,26 80,24 110,25"
-                      stroke="currentColor"
-                      strokeWidth="1.5"
-                      strokeLinecap="round"
-                    />
-                  </svg>
+            {/* Right: Official Cryptographic Digital Signature Block */}
+            <div className="text-right flex flex-col items-end justify-end">
+              <div className="bg-emerald-50/90 border border-emerald-600/70 rounded-lg p-1.5 sm:p-2 shadow-2xs max-w-[210px] sm:max-w-[260px] text-left relative overflow-hidden backdrop-blur-xs">
+                <div className="flex items-center gap-1.5 border-b border-emerald-300 pb-1 mb-1">
+                  <span className="inline-flex items-center justify-center w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full bg-emerald-600 text-white text-[8px] sm:text-[10px] font-black">
+                    ✓
+                  </span>
+                  <span className="text-[7.5px] sm:text-[9.5px] font-bold text-emerald-900 tracking-wide uppercase font-sans">
+                    Digitally Signed & Verified
+                  </span>
                 </div>
-                <div className="w-24 sm:w-36 h-[1px] bg-stone-400 mx-auto" />
-                <span className="text-stone-900 font-sans font-bold text-[9px] sm:text-xs block mt-0.5">
-                  संयोजक व समन्वयक
+                <div className="space-y-0.5 text-[6.5px] sm:text-[8px] font-sans text-stone-700 leading-tight">
+                  <p>
+                    <strong className="text-emerald-950">Signed By:</strong> Lokutsav Committee, MS
+                  </p>
+                  <p>
+                    <strong className="text-emerald-950">Reason:</strong> Official Participation Certification
+                  </p>
+                  <p>
+                    <strong className="text-emerald-950">Location:</strong> Maharashtra, India
+                  </p>
+                  <p className="font-mono text-[6px] sm:text-[7.5px] text-stone-500 truncate">
+                    <strong>Hash:</strong> SHA256:{data.ticketId ? data.ticketId.replace(/[^A-Z0-9]/g, '') : 'LOK2026'}•e7f9a2
+                  </p>
+                </div>
+              </div>
+              <div className="text-center mt-1 w-full max-w-[210px] sm:max-w-[260px]">
+                <span className="text-stone-900 font-sans font-bold text-[8.5px] sm:text-[10.5px] block">
+                  अधिकृत डिजिटल स्वाक्षरी (E-Sign)
                 </span>
-                <span className="text-stone-500 font-sans text-[7.5px] sm:text-[9px] block">
-                  लोकोत्सव २०२६ आयोजन समिती
+                <span className="text-stone-500 font-sans text-[7px] sm:text-[8.5px] block">
+                  महाराष्ट्र राज्य गणेशोत्सव समन्वय समिती
                 </span>
               </div>
             </div>

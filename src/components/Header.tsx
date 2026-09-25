@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useLanguage } from '@/lib/language-context';
-import { Sparkles, Menu, X, Award, Image as ImageIcon, Scale, FileText, CheckCircle2, Ticket } from 'lucide-react';
+import { Sparkles, Menu, X, Award, Image as ImageIcon, Scale, FileText, CheckCircle2, Ticket, Trophy } from 'lucide-react';
 import TicketLookupModal from '@/components/TicketLookupModal';
 
 export default function Header() {
@@ -127,6 +127,10 @@ export default function Header() {
 
         {/* Desktop Nav Items */}
         <nav className="hidden lg:flex items-center gap-7 text-sm font-semibold text-stone-700">
+          <Link href="/winners" className="text-[#9B1B1E] font-bold hover:text-[#781416] transition-colors flex items-center gap-1.5">
+            <Trophy className="w-4 h-4 text-amber-600" />
+            <span>{t.nav.winners}</span>
+          </Link>
           <Link href="/#prizes" className="hover:text-[#9B1B1E] transition-colors">
             {t.nav.prizes}
           </Link>
@@ -175,6 +179,17 @@ export default function Header() {
       {mobileMenuOpen && (
         <div className="lg:hidden border-t border-[#E5D7C0] bg-[#FAF7F2] px-4 pt-3 pb-6 space-y-3">
           <div className="grid grid-cols-2 gap-2 text-sm font-semibold">
+            <Link
+              href="/winners"
+              onClick={() => setMobileMenuOpen(false)}
+              className="col-span-2 p-2.5 rounded-md bg-[#9B1B1E] text-white font-bold flex items-center justify-between shadow-xs"
+            >
+              <span className="flex items-center gap-2">
+                <Trophy className="w-4 h-4 text-amber-300" />
+                <span>{lang === 'mr' ? '🏆 १० महाविजेते पहा' : '🏆 View Top 10 Winners'}</span>
+              </span>
+              <span className="text-[10px] bg-amber-400 text-stone-900 px-2 py-0.5 rounded font-black">Live</span>
+            </Link>
             <Link
               href="/#prizes"
               onClick={() => setMobileMenuOpen(false)}
@@ -233,7 +248,7 @@ export default function Header() {
               className="w-full text-center bg-[#9B1B1E] hover:bg-[#781416] text-white font-bold py-3 rounded-lg text-sm shadow-xs flex items-center justify-center gap-2 cursor-pointer"
             >
               <Ticket className="w-4 h-4 text-amber-300" />
-              <span>{lang === 'mr' ? 'नोंदणी बंद • तिकीट शोधा' : 'Registrations Closed • Find Ticket'}</span>
+              <span>{lang === 'mr' ? 'आपले तिकीट शोधा / स्थिती' : 'Find Ticket'}</span>
             </button>
             <Link
               href="/analytics"

@@ -22,11 +22,7 @@ export default async function HomePage() {
       <StateGrandeurSection />
       <PrizeSection />
       <CriteriaSection />
-      {active ? (
-        <HowToParticipate />
-      ) : (
-        <FeaturedGallery initialEntries={entries} />
-      )}
+      <HowToParticipate />
       <RulesSection />
       <FaqSection />
     </div>

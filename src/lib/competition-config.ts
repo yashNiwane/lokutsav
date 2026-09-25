@@ -11,9 +11,9 @@ export interface CompetitionPhaseConfig {
 
 // Global runtime state
 export const competitionConfig: CompetitionPhaseConfig = {
-  phase: 'REGISTRATION_CLOSED', // Registrations are now closed; jury evaluating
-  announcementDateEn: 'Tomorrow (26th September 2026) by 6:00 PM',
-  announcementDateMr: 'उद्या (२६ सप्टेंबर २०२६) सायंकाळी ६:०० वाजता',
+  phase: 'COMPLETED', // Results launched at 6 PM!
+  announcementDateEn: 'Today at 6:00 PM IST (Results Officially Declared)',
+  announcementDateMr: 'आज सायंकाळी ६:०० वाजता (निकाल अधिकृतपणे जाहीर)',
 };
 
 // Check if new registrations can be accepted

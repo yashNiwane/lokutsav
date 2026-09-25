@@ -790,16 +790,25 @@ export default function RegisterPage() {
           <div className="bg-gradient-to-r from-amber-500/10 via-amber-500/20 to-amber-500/10 rounded-2xl p-5 border border-amber-300 text-center space-y-2">
             <div className="flex items-center justify-center gap-2 text-amber-800 font-bold text-xs uppercase tracking-wider">
               <Trophy className="w-4 h-4 text-amber-600" />
-              <span>{lang === 'mr' ? 'अंतिम निकाल घोषणा' : 'Final Results Announcement'}</span>
+              <span>{lang === 'mr' ? 'अधिकृत निकाल जाहीर' : 'Results Declared'}</span>
             </div>
             <p className="font-serif font-black text-xl sm:text-2xl text-stone-900">
-              {lang === 'mr' ? 'उद्या (२६ सप्टेंबर) सायंकाळी ६:०० वाजता' : 'Tomorrow (26th Sept) at 6:00 PM IST'}
+              {lang === 'mr' ? '१० महाविजेते जाहीर झाले आहेत!' : 'Top 10 Champions Declared!'}
             </p>
             <p className="text-xs text-stone-600">
               {lang === 'mr'
-                ? 'सर्व १० महाविजेत्यांची यादी व निकाल याच मुख्य संकेतस्थळावर प्रसिद्ध केला जाईल.'
-                : 'Top 10 State Champions will be declared right here on the official website.'}
+                ? 'सर्व १० महाविजेत्यांची यादी व त्यांच्या सजावट संकल्पना प्रसिद्ध करण्यात आल्या आहेत.'
+                : 'Top 10 State Champions and their decoration concepts are now published.'}
             </p>
+            <div className="pt-2">
+              <Link
+                href="/winners"
+                className="inline-flex items-center gap-2 bg-[#9B1B1E] hover:bg-[#781416] text-white px-5 py-2.5 rounded-xl font-bold text-xs sm:text-sm shadow-xs transition-all cursor-pointer"
+              >
+                <Trophy className="w-4 h-4 text-amber-300" />
+                <span>{lang === 'mr' ? '१० महाविजेते पहा' : 'View Top 10 Winners'}</span>
+              </Link>
+            </div>
           </div>
 
           {/* Action: Ticket Lookup for registered users */}

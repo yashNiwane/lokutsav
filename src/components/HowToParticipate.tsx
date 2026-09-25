@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { useLanguage } from '@/lib/language-context';
-import { UserCheck, Camera, CreditCard, ArrowRight, ShieldCheck, CheckCircle2, Clock, Ticket } from 'lucide-react';
+import { UserCheck, Camera, CreditCard, ArrowRight, ShieldCheck, CheckCircle2, Clock, Ticket, Trophy } from 'lucide-react';
 import Link from 'next/link';
 import TicketLookupModal from '@/components/TicketLookupModal';
 
@@ -90,28 +90,35 @@ export default function HowToParticipate() {
 
         {/* Status Strip */}
         <div className="bg-white p-6 rounded-2xl border border-amber-300 shadow-xs text-center max-w-2xl mx-auto space-y-4">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-50 border border-red-200 text-red-800 text-xs font-bold">
-            <span className="w-2 h-2 rounded-full bg-red-600 animate-pulse" />
-            <span>{lang === 'mr' ? 'नोंदणी प्रक्रिया आता बंद झाली आहे' : 'Registrations Are Now Closed'}</span>
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-bold">
+            <span className="w-2 h-2 rounded-full bg-emerald-600" />
+            <span>{lang === 'mr' ? 'अंतिम निकाल अधिकृतपणे जाहीर' : 'Final Results Officially Declared'}</span>
           </div>
 
           <h3 className="font-serif font-black text-xl text-stone-900">
-            {lang === 'mr' ? 'निकाल उद्या (२६ सप्टेंबर) सायंकाळी ६:०० वाजता जाहीर होईल' : 'Results Will Be Announced Tomorrow at 6:00 PM IST'}
+            {lang === 'mr' ? 'लोकोत्सव २०२६ चे १० महाविजेते जाहीर झाले आहेत!' : 'Lokutsav 2026 Top 10 Champions Have Been Declared!'}
           </h3>
 
           <p className="text-xs text-stone-600 leading-relaxed">
             {lang === 'mr'
-              ? '🔒 सर्व ३६ जिल्ह्यांतील प्राप्त उत्कृष्ट देखाव्यांचे तज्ज्ञ ज्युरी मंडळाकडून अंतिम परीक्षण युद्धपातळीवर सुरू आहे. उद्या सायंकाळी ६:०० वाजता १० महाविजेत्यांची अधिकृत घोषणा केली जाईल.'
-              : '🔒 Expert jury evaluation is actively in progress across all 36 districts. Top 10 Champions will be unveiled tomorrow by 6:00 PM.'}
+              ? 'सर्व ३६ जिल्ह्यांतील प्राप्त उत्कृष्ट देखाव्यांचे परीक्षण पूर्ण झाले असून तज्ज्ञ ज्युरी मंडळाने निवडलेले १० महाविजेते आणि त्यांच्या नाविन्यपूर्ण सजावट संकल्पना प्रसिद्ध करण्यात आल्या आहेत.'
+              : 'Evaluation across all 36 districts is completed. View the top 10 winners and their inspiring decoration concepts.'}
           </p>
 
           <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-3">
-            <button
-              onClick={() => setLookupModalOpen(true)}
+            <Link
+              href="/winners"
               className="inline-flex items-center gap-2 bg-[#9B1B1E] hover:bg-[#781416] text-white px-6 py-3 rounded-xl font-bold text-sm shadow-sm transition-all cursor-pointer"
             >
-              <Ticket className="w-4 h-4 text-amber-300" />
-              <span>{lang === 'mr' ? 'आपले तिकीट शोधा / डाउनलोड करा' : 'Find / Download Your Ticket'}</span>
+              <Trophy className="w-4 h-4 text-amber-300" />
+              <span>{lang === 'mr' ? '१० महाविजेते पहा' : 'View Top 10 Winners'}</span>
+            </Link>
+            <button
+              onClick={() => setLookupModalOpen(true)}
+              className="inline-flex items-center gap-2 bg-stone-100 hover:bg-stone-200 text-stone-800 px-6 py-3 rounded-xl font-bold text-sm shadow-xs transition-all cursor-pointer"
+            >
+              <Ticket className="w-4 h-4 text-[#9B1B1E]" />
+              <span>{lang === 'mr' ? 'आपले तिकीट शोधा' : 'Find Your Ticket'}</span>
             </button>
           </div>
         </div>

@@ -9,7 +9,7 @@ export async function POST(request: NextRequest) {
     if (!isRegistrationOpen()) {
       return NextResponse.json(
         {
-          error: 'नोंदणी प्रक्रिया आता बंद झाली आहे. अंतिम निकाल उद्या सायंकाळी ६:०० वाजता जाहीर केला जाईल. (Registrations are closed. Results will be announced tomorrow by 6:00 PM.)',
+          error: 'नोंदणी प्रक्रिया आता बंद झाली आहे. अंतिम निकाल अधिकृतपणे जाहीर झाला आहे. (Registrations are closed. Final results have been announced.)',
           registrationsClosed: true,
         },
         { status: 403 }

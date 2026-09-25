@@ -60,20 +60,20 @@ export default function CountdownTimer() {
 
   // Announcement text items for the marquee
   const instructionsMr = [
-    '🔴 लोकोत्सव २०२६: नोंदणी प्रक्रिया आता पूर्णपणे बंद झाली आहे.',
-    '🏆 भव्य राज्यस्तरीय महास्पर्धेचा अंतिम निकाल उद्या, २६ सप्टेंबर रोजी सायंकाळी ६:०० वाजता जाहीर केला जाईल!',
-    '⚖️ सन्माननीय परीक्षकांकडून (Jury) सर्व ३६ जिल्ह्यांतील प्राप्त उत्कृष्ट देखाव्यांचे सखोल परीक्षण सुरू आहे.',
-    '🎖️ सर्व सहभागी स्पर्धकांना अधिकृत डिजिटल सहभाग प्रमाणपत्र प्रदान केले जाईल.',
-    '🌟 १० महाविजेत्यांची अधिकृत घोषणा उद्या सायंकाळी ६:०० वाजता याच संकेतस्थळावर प्रसिद्ध होईल.',
+    '🔴 लोकोत्सव २०२६: अधिकृत निकाल व १० महाविजेते जाहीर करण्यात आले आहेत!',
+    '🏆 भव्य राज्यस्तरीय महास्पर्धेचा निकाल आता प्रसिद्ध झाला आहे. विजेत्यांचे हार्दिक अभिनंदन!',
+    '⚖️ सन्माननीय परीक्षकांकडून सर्व ३६ जिल्ह्यांतील प्राप्त उत्कृष्ट देखाव्यांचे मूल्यमापन पूर्ण झाले आहे.',
+    '🎖️ सर्व सहभागी स्पर्धकांना अधिकृत डिजिटल सहभाग प्रमाणपत्र उपलब्ध आहे.',
+    '🌟 १० महाविजेत्यांची यादी व सजावट संकल्पना संकेतस्थळावर उपलब्ध आहेत.',
     '🎫 नोंदणी केलेल्या स्पर्धकांनी आपले तिकीट पाहण्यासाठी "तिकीट शोधा" बटणाचा वापर करावा.'
   ];
 
   const instructionsEn = [
-    '🔴 Lokutsav 2026: Official registrations are now closed.',
-    '🏆 Grand State-Level Competition Results will be announced tomorrow, 26th September at 6:00 PM IST!',
-    '⚖️ Expert jury evaluation across all 36 districts is currently underway.',
-    '🎖️ All registered participants will receive an official State-Level digital certificate.',
-    '🌟 Top 10 Champions will be announced right here tomorrow at 6:00 PM!',
+    '🔴 Lokutsav 2026: Official results and Top 10 Champions have been declared!',
+    '🏆 Grand State-Level Competition Results are now live. Hearty congratulations to all winners!',
+    '⚖️ Expert jury evaluation across all 36 districts is completed.',
+    '🎖️ Official State-Level digital certificates are now available for all participants.',
+    '🌟 Top 10 Champions and their decoration concepts are published right here.',
     '🎫 Registered participants can check their entry status using the "Find Ticket" feature.'
   ];
 
@@ -91,15 +91,15 @@ export default function CountdownTimer() {
           <Trophy className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-amber-400 shrink-0" />
           
           <div className="flex items-center gap-1 sm:gap-2">
-            <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded bg-red-600/90 text-white text-[10px] sm:text-[11px] font-bold uppercase tracking-wider whitespace-nowrap">
-              <span className="w-1.5 h-1.5 rounded-full bg-white animate-ping" />
-              {lang === 'mr' ? 'नोंदणी बंद' : 'Closed'}
+            <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded bg-emerald-600/90 text-white text-[10px] sm:text-[11px] font-bold uppercase tracking-wider whitespace-nowrap">
+              <span className="w-1.5 h-1.5 rounded-full bg-white" />
+              {lang === 'mr' ? 'निकाल जाहीर' : 'Results Live'}
             </span>
 
             <span className="text-stone-500 text-xs hidden xs:inline">•</span>
 
             <span className="text-[11px] sm:text-xs font-bold text-amber-300 uppercase tracking-wide whitespace-nowrap hidden sm:inline">
-              {lang === 'mr' ? 'निकाल उद्या ६ वा.' : 'Results Tomorrow 6 PM'}
+              {lang === 'mr' ? '१० महाविजेते' : 'Top 10 Winners'}
             </span>
 
             <span className="text-stone-500 text-xs hidden sm:inline">•</span>

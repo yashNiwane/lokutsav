@@ -48,10 +48,13 @@ export default function Hero() {
               <span>{lang === 'mr' ? 'सहभाग प्रमाणपत्र डाउनलोड करा' : 'Download Certificate'}</span>
             </Link>
 
-            <div className="w-full sm:w-auto inline-flex items-center justify-center gap-3 bg-[#9B1B1E] text-white px-6 py-4 rounded-xl text-base font-bold shadow-md cursor-default border border-amber-400/50">
-              <Clock className="w-5 h-5 text-amber-300 animate-pulse" />
-              <span>{lang === 'mr' ? 'निकाल उद्या सायंकाळी ६ वा.' : 'Results Tomorrow 6 PM'}</span>
-            </div>
+            <Link
+              href="/winners"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 bg-[#9B1B1E] hover:bg-[#781416] text-white px-6 py-4 rounded-xl text-base font-bold shadow-md transition-all hover:scale-105 border border-amber-400/50 cursor-pointer"
+            >
+              <Trophy className="w-5 h-5 text-amber-300" />
+              <span>{lang === 'mr' ? '१० महाविजेते पहा' : 'View Top 10 Winners'}</span>
+            </Link>
 
             <button
               onClick={() => setLookupModalOpen(true)}
@@ -128,7 +131,7 @@ export default function Hero() {
                 className="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-stone-950 font-black text-xs sm:text-sm px-5 py-2.5 rounded-xl shadow-lg border border-amber-300 transition-all hover:scale-105 active:scale-95 whitespace-nowrap self-start sm:self-auto cursor-pointer"
               >
                 <Ticket className="w-4 h-4" />
-                <span>{lang === 'mr' ? 'निकाल उद्या ६ वा. • तिकीट शोधा' : 'Results Tomorrow 6 PM • Find Ticket'}</span>
+                <span>{lang === 'mr' ? 'आपले तिकीट शोधा' : 'Find Your Ticket'}</span>
               </button>
             </div>
           </div>

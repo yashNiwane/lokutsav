@@ -1,243 +1,249 @@
 import React from 'react';
 import { dataStore } from '@/lib/db';
-import { isCompetitionActive, competitionConfig } from '@/lib/competition-config';
-import { OFFICIAL_PRIZES } from '@/lib/seed-data';
-import { Trophy, Award, Medal, MapPin, CheckCircle2, Clock, Sparkles, ArrowRight, ShieldCheck } from 'lucide-react';
+import { Trophy, Award, MapPin, Sparkles } from 'lucide-react';
 import Link from 'next/link';
 
 export const revalidate = 0;
 
 export default async function WinnersPage() {
-  const active = isCompetitionActive();
   const allEntries = await dataStore.getAllEntries();
   const winners = allEntries
     .filter((e) => e.finalRank && e.finalRank <= 10)
     .sort((a, b) => (a.finalRank || 99) - (b.finalRank || 99));
 
+  // Top 3 Champions
   const top3 = winners.slice(0, 3);
+  // Ranks 4 to 10
   const others = winners.slice(3, 10);
 
-  // During active competition phase: show results awaiting announcement page
-  if (active) {
-    return (
-      <div className="py-20 bg-[#FAF7F2] min-h-[85vh] flex items-center justify-center px-4">
-        <div className="max-w-3xl w-full bg-white rounded-3xl p-8 sm:p-12 border border-[#E5D7C0] shadow-sm text-center space-y-8">
-          <div className="w-16 h-16 rounded-2xl bg-amber-100 text-amber-800 flex items-center justify-center mx-auto shadow-2xs">
-            <Trophy className="w-8 h-8" />
-          </div>
+  const getRankBadge = (rank: number) => {
+    if (rank === 1) {
+      return {
+        label: 'महाविजेता • प्रथम क्रमांक #१',
+        prize: '₹५१,००० रोख + सुवर्ण ट्रॉफी',
+        border: 'border-amber-400 bg-gradient-to-br from-amber-500/10 via-amber-100/40 to-amber-50',
+        badgeColor: 'bg-gradient-to-r from-amber-500 to-amber-600 text-stone-950 font-black',
+      };
+    }
+    if (rank === 2) {
+      return {
+        label: 'द्वितीय क्रमांक #२',
+        prize: '₹३१,००० रोख + रजत ट्रॉफी',
+        border: 'border-slate-300 bg-gradient-to-br from-slate-100 via-stone-50 to-white',
+        badgeColor: 'bg-gradient-to-r from-slate-600 to-slate-700 text-white font-black',
+      };
+    }
+    if (rank === 3) {
+      return {
+        label: 'तृतीय क्रमांक #३',
+        prize: '₹२१,००० रोख + कांस्य ट्रॉफी',
+        border: 'border-amber-700/30 bg-gradient-to-br from-amber-900/5 via-stone-50 to-white',
+        badgeColor: 'bg-gradient-to-r from-amber-700 to-amber-800 text-white font-black',
+      };
+    }
+    return {
+      label: `मानाचा क्रमांक #${rank}`,
+      prize: '₹५,००० रोख पारितोषिक',
+      border: 'border-stone-200 bg-white',
+      badgeColor: 'bg-stone-800 text-white font-bold',
+    };
+  };
 
-          <div className="space-y-3">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-red-50 border border-red-200 text-red-900 text-xs font-bold">
-              <span className="w-2 h-2 rounded-full bg-red-600 animate-pulse" />
-              <span>नोंदणी बंद • ज्युरी परीक्षण सुरू</span>
-            </div>
-
-            <h1 className="font-serif font-black text-3xl sm:text-5xl text-stone-900 tracking-tight">
-              निकाल उद्या सायंकाळी ६:०० वाजता जाहीर होईल!
-            </h1>
-
-            <p className="text-stone-600 text-base max-w-xl mx-auto leading-relaxed">
-              नोंदणी प्रक्रिया आता बंद झाली असून तज्ज्ञ ज्युरी मंडळाकडून सर्व ३६ जिल्ह्यांतील सर्व देखाव्यांचे ५ निकषांवर अत्यंत काटेकोर व निष्पक्ष मूल्यमापन सुरू आहे. उद्या सायंकाळी ६:०० वाजता सर्व १० महाविजेत्यांची अधिकृत घोषणा केली जाईल.
-            </p>
-          </div>
-
-          {/* Timeline & Announcement Card */}
-          <div className="bg-[#FAF7F2] rounded-2xl p-6 border border-[#E5D7C0] text-left space-y-4 max-w-xl mx-auto">
-            <div className="flex items-center justify-between border-b border-stone-200 pb-3">
-              <span className="text-xs font-bold text-stone-500 uppercase tracking-wider">
-                निकाल घोषणा तारीख:
-              </span>
-              <span className="font-serif font-black text-stone-900 text-base">
-                {competitionConfig.announcementDateMr}
-              </span>
-            </div>
-
-            <div className="space-y-2 text-xs text-stone-600">
-              <div className="flex items-start gap-2">
-                <ShieldCheck className="w-4 h-4 text-emerald-700 shrink-0 mt-0.5" />
-                <span>१० महाविजेत्यांची निवड पूर्णपणे कला, कारागिरी व पर्यावरणपूरकतेवर आधारित असेल.</span>
-              </div>
-              <div className="flex items-start gap-2">
-                <CheckCircle2 className="w-4 h-4 text-emerald-700 shrink-0 mt-0.5" />
-                <span>सर्व सहभागी स्पर्धकांना पडताळणीनंतर अधिकृत डिजिटल सहभाग प्रमाणपत्र ईमेलवर प्राप्त होईल.</span>
-              </div>
-            </div>
-          </div>
-
-          {/* Rewards at Stake */}
-          <div className="grid grid-cols-3 gap-3 max-w-lg mx-auto text-center text-xs font-bold">
-            <div className="bg-amber-50 border border-amber-200 p-3 rounded-xl text-amber-900">
-              <span className="block text-stone-500 text-[10px]">१st Rank</span>
-              <span className="font-serif text-lg text-[#9B1B1E]">₹51,000</span>
-            </div>
-            <div className="bg-stone-50 border border-stone-200 p-3 rounded-xl text-stone-800">
-              <span className="block text-stone-500 text-[10px]">२nd Rank</span>
-              <span className="font-serif text-lg text-[#9B1B1E]">₹31,000</span>
-            </div>
-            <div className="bg-amber-50/50 border border-amber-200 p-3 rounded-xl text-amber-900">
-              <span className="block text-stone-500 text-[10px]">३rd Rank</span>
-              <span className="font-serif text-lg text-[#9B1B1E]">₹21,000</span>
-            </div>
-          </div>
-
-          {/* Action CTAs */}
-          <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Link
-              href="/"
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-[#9B1B1E] hover:bg-[#781416] text-white px-8 py-3.5 rounded-xl font-bold text-sm shadow-sm transition-all"
-            >
-              <span>मुख्यपृष्ठावर निकाल पहा (उद्या ६ वा.)</span>
-              <ArrowRight className="w-4 h-4 text-amber-300" />
-            </Link>
-
-            <Link
-              href="/register"
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 text-stone-700 bg-stone-100 hover:bg-stone-200 text-sm font-semibold px-6 py-3.5 rounded-xl border border-stone-200 transition-colors"
-            >
-              <span>आपले तिकीट तपासा</span>
-            </Link>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  // Once competition is COMPLETED: Render full podium and results
   return (
-    <div className="py-16 bg-[#FAF7F2] min-h-screen">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-3xl mx-auto mb-16 space-y-3">
-          <div className="inline-flex items-center gap-2 bg-amber-100 border border-amber-300 px-4 py-1.5 rounded-full text-amber-900 text-xs font-bold shadow-2xs">
-            <Trophy className="w-4 h-4 text-amber-700" />
-            <span>अधिकृत निकाल व महाविजेते 2026</span>
+    <div className="py-12 sm:py-20 bg-[#FAF7F2] min-h-screen">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+        
+        {/* Header Section */}
+        <div className="text-center max-w-3xl mx-auto space-y-4">
+          <div className="inline-flex items-center gap-2 bg-amber-100/90 border border-amber-300 px-4 py-1.5 rounded-full text-amber-950 text-xs sm:text-sm font-bold shadow-2xs">
+            <Trophy className="w-4 h-4 text-[#9B1B1E]" />
+            <span>लोकोत्सव २०२६ • अधिकृत निकाल व महाविजेते</span>
           </div>
-          <h1 className="font-serif font-black text-3xl sm:text-5xl text-stone-900 tracking-tight">
-            महाराष्ट्र राज्य महाविजेते व गुणवंत देखावे
+
+          <h1 className="font-serif font-black text-3xl sm:text-5xl lg:text-6xl text-[#1C1917] tracking-tight">
+            १० महाविजेते व सजावट संकल्पना
           </h1>
-          <p className="text-stone-600 text-base">
-            तज्ज्ञ ज्युरी मंडळाने निवडलेले महाराष्ट्रातील अव्वल 10 सर्वोत्कृष्ट गणपती देखावे.
+
+          <p className="text-stone-600 text-sm sm:text-base max-w-2xl mx-auto font-normal leading-relaxed">
+            महाराष्ट्र राज्यस्तरीय लोकोत्सव २०२६ ऑनलाइन गणेश सजावट स्पर्धेतील तज्ज्ञ ज्युरी मंडळाने निवडलेले अव्वल १० विजेते स्पर्धक आणि त्यांच्या नाविन्यपूर्ण कलात्मक देखाव्यांची संकल्पना.
           </p>
         </div>
 
-        {/* Podium for Top 3 Winners */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-16 items-stretch">
-          {top3.map((entry) => {
-            const isFirst = entry.finalRank === 1;
-            return (
-              <div
-                key={entry.id}
-                className={`rounded-2xl overflow-hidden border transition-all flex flex-col justify-between ${
-                  isFirst
-                    ? 'bg-white border-2 border-amber-500 shadow-lg lg:-translate-y-3'
-                    : 'bg-white border-[#E5D7C0] shadow-xs'
-                }`}
-              >
-                <div>
-                  <div className="relative aspect-16/10 bg-stone-200 overflow-hidden">
-                    <img
-                      src={entry.photoUrls[0]}
-                      alt={entry.themeTitle}
-                      className="w-full h-full object-cover"
-                    />
-                    <div className="absolute top-3 left-3 bg-stone-950/80 text-white text-xs font-bold px-3 py-1 rounded-md flex items-center gap-1.5">
-                      <MapPin className="w-3.5 h-3.5 text-amber-400" />
-                      <span>{entry.district}</span>
-                    </div>
+        {/* Top 3 Champions Section (Zero Images) */}
+        <div>
+          <div className="flex items-center gap-2 mb-6">
+            <Trophy className="w-5 h-5 text-amber-600" />
+            <h2 className="font-serif font-bold text-xl sm:text-2xl text-stone-900">
+              अव्वल ३ महाविजेते (Top 3 Grand Champions)
+            </h2>
+          </div>
 
-                    <div className="absolute top-3 right-3 bg-amber-500 text-stone-950 font-black text-sm px-3 py-1 rounded-md shadow-sm">
-                      मानाचा क्रमांक #{entry.finalRank}
-                    </div>
-                  </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
+            {top3.map((entry) => {
+              const meta = getRankBadge(entry.finalRank || 1);
+              const isFirst = entry.finalRank === 1;
 
-                  <div className="p-6 space-y-3">
-                    <div className="flex items-center justify-between text-xs text-stone-500 font-semibold">
-                      <span>{entry.ticketId}</span>
-                      <span className="text-emerald-700 font-bold">
-                        ज्युरी गुण: {entry.finalScore}/10
+              return (
+                <div
+                  key={entry.id}
+                  className={`rounded-3xl p-6 sm:p-7 border-2 ${meta.border} shadow-sm hover:shadow-md transition-all flex flex-col justify-between relative overflow-hidden ${
+                    isFirst ? 'md:-translate-y-2 shadow-md border-amber-400' : ''
+                  }`}
+                >
+                  <div className="space-y-4">
+                    {/* Rank Badge & Ticket */}
+                    <div className="flex items-center justify-between gap-2 border-b border-stone-200/80 pb-3">
+                      <span className={`px-3 py-1 rounded-full text-xs uppercase tracking-wider ${meta.badgeColor}`}>
+                        {meta.label}
+                      </span>
+                      <span className="font-mono text-xs font-bold text-stone-500">
+                        {entry.ticketId}
                       </span>
                     </div>
 
-                    <h2 className="font-serif font-black text-xl text-stone-900 leading-snug">
-                      {entry.themeTitle}
-                    </h2>
+                    {/* Participant Name */}
+                    <div>
+                      <h3 className="font-serif font-black text-xl sm:text-2xl text-[#1C1917] tracking-wide">
+                        {entry.fullName}
+                      </h3>
+                      <div className="flex items-center gap-1.5 text-xs text-stone-600 mt-1 font-medium">
+                        <MapPin className="w-3.5 h-3.5 text-[#9B1B1E]" />
+                        <span>{entry.city || entry.district}, महाराष्ट्र</span>
+                      </div>
+                    </div>
 
-                    <p className="text-sm font-bold text-[#9B1B1E]">
-                      {entry.fullName}
-                    </p>
+                    {/* Category pill */}
+                    <div>
+                      <span className="inline-block text-[11px] font-bold px-2.5 py-0.5 rounded-md bg-stone-100 text-stone-800 border border-stone-200">
+                        {entry.category === 'HOUSEHOLD' ? 'घरगुती गणेश सजावट' : 'सार्वजनिक गणेशोत्सव मंडळ'}
+                      </span>
+                    </div>
 
-                    <p className="text-xs text-stone-600 line-clamp-3 leading-relaxed">
-                      {entry.themeDescription}
-                    </p>
+                    {/* Decoration Idea / Concept Box */}
+                    <div className="bg-white/85 backdrop-blur-xs rounded-2xl p-4 border border-amber-200/80 space-y-2">
+                      <div className="flex items-center gap-1.5 text-amber-900 text-xs font-bold uppercase tracking-wider">
+                        <Sparkles className="w-3.5 h-3.5 text-amber-600" />
+                        <span>सजावट संकल्पना (Decoration Idea)</span>
+                      </div>
+                      <h4 className="font-serif font-bold text-base sm:text-lg text-stone-900 leading-snug">
+                        {entry.themeTitle}
+                      </h4>
+                      <p className="text-xs sm:text-sm text-stone-600 leading-relaxed font-normal">
+                        {entry.themeDescription}
+                      </p>
+                      {entry.materialsUsed && (
+                        <p className="text-[11px] text-stone-500 pt-1 border-t border-amber-100">
+                          <strong className="text-stone-700">वापरलेले साहित्य:</strong> {entry.materialsUsed}
+                        </p>
+                      )}
+                    </div>
                   </div>
-                </div>
 
-                <div className="p-6 pt-0">
-                  <div className="p-4 rounded-xl bg-amber-50/80 border border-amber-200">
-                    <span className="text-[10px] uppercase font-bold text-amber-900 block mb-0.5">
+                  {/* Prize Footer */}
+                  <div className="mt-5 pt-4 border-t border-stone-200/80">
+                    <span className="text-[10px] uppercase font-bold text-stone-500 block mb-0.5">
                       प्राप्त पारितोषिक:
                     </span>
-                    <p className="font-serif font-black text-xl text-[#9B1B1E]">
-                      {entry.finalRank === 1
-                        ? '₹51,000 रोख + सुवर्ण ट्रॉफी'
-                        : entry.finalRank === 2
-                        ? '₹31,000 रोख + रजत ट्रॉफी'
-                        : '₹21,000 रोख + कांस्य ट्रॉफी'}
+                    <p className="font-serif font-black text-lg sm:text-xl text-[#9B1B1E]">
+                      {meta.prize}
                     </p>
                   </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })}
+          </div>
         </div>
 
-        {/* 4th to 10th Place Table */}
-        {others.length > 0 && (
-          <div className="bg-white rounded-2xl border border-[#E5D7C0] p-6 sm:p-8 shadow-xs">
-            <h3 className="font-serif font-black text-2xl text-stone-900 mb-6 flex items-center gap-2">
-              <Award className="w-6 h-6 text-amber-600" />
-              <span>४था ते १०वा मानाचा क्रमांक (प्रत्येकी ₹5,000 रोख)</span>
-            </h3>
-
-            <div className="overflow-x-auto">
-              <table className="w-full text-left text-sm">
-                <thead>
-                  <tr className="border-b border-stone-200 text-stone-500 text-xs uppercase font-bold">
-                    <th className="pb-3 px-2">क्रमांक</th>
-                    <th className="pb-3 px-2">स्पर्धक</th>
-                    <th className="pb-3 px-2">जिल्हा</th>
-                    <th className="pb-3 px-2">सजावटीची संकल्पना</th>
-                    <th className="pb-3 px-2 text-right">ज्युरी गुण</th>
-                    <th className="pb-3 px-2 text-right">पारितोषिक</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-stone-100">
-                  {others.map((entry) => (
-                    <tr key={entry.id} className="hover:bg-stone-50/70 transition-colors">
-                      <td className="py-4 px-2 font-bold font-mono text-stone-800">
-                        #{entry.finalRank}
-                      </td>
-                      <td className="py-4 px-2 font-semibold text-stone-900">
-                        {entry.fullName}
-                      </td>
-                      <td className="py-4 px-2 text-stone-600">
-                        {entry.district}
-                      </td>
-                      <td className="py-4 px-2 text-stone-700 max-w-xs truncate">
-                        {entry.themeTitle}
-                      </td>
-                      <td className="py-4 px-2 text-right font-mono font-bold text-emerald-700">
-                        {entry.finalScore}/10
-                      </td>
-                      <td className="py-4 px-2 text-right font-serif font-black text-[#9B1B1E]">
-                        ₹5,000
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+        {/* 4th to 10th Place Winners (Zero Images) */}
+        <div>
+          <div className="flex items-center gap-2 mb-6">
+            <Award className="w-5 h-5 text-amber-600" />
+            <h2 className="font-serif font-bold text-xl sm:text-2xl text-stone-900">
+              गुणवत्ता पुरस्कार (४था ते १०वा क्रमांक)
+            </h2>
           </div>
-        )}
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+            {others.map((entry) => (
+              <div
+                key={entry.id}
+                className="bg-white rounded-2xl p-5 sm:p-6 border border-stone-200 shadow-xs hover:shadow-md transition-shadow space-y-3.5"
+              >
+                <div className="flex items-center justify-between border-b border-stone-100 pb-2.5">
+                  <div className="flex items-center gap-2">
+                    <span className="font-mono font-black text-xs bg-stone-900 text-white px-2.5 py-1 rounded-lg">
+                      #{entry.finalRank}
+                    </span>
+                    <span className="font-bold text-sm sm:text-base text-stone-900">
+                      {entry.fullName}
+                    </span>
+                  </div>
+                  <span className="font-serif font-black text-sm text-[#9B1B1E]">
+                    ₹५,००० रोख
+                  </span>
+                </div>
+
+                <div className="flex items-center gap-3 text-xs text-stone-500">
+                  <span className="flex items-center gap-1 font-medium">
+                    <MapPin className="w-3.5 h-3.5 text-stone-400" />
+                    <span>{entry.city || entry.district}</span>
+                  </span>
+                  <span>•</span>
+                  <span className="font-mono font-medium">{entry.ticketId}</span>
+                  <span>•</span>
+                  <span className="font-medium text-stone-600">
+                    {entry.category === 'HOUSEHOLD' ? 'घरगुती' : 'सार्वजनिक मंडळ'}
+                  </span>
+                </div>
+
+                {/* Decoration Concept */}
+                <div className="bg-[#FAF7F2] rounded-xl p-3.5 border border-amber-200/60 space-y-1.5">
+                  <div className="flex items-center gap-1 text-[11px] font-bold text-amber-900 uppercase">
+                    <Sparkles className="w-3 h-3 text-amber-600" />
+                    <span>सजावट संकल्पना:</span>
+                  </div>
+                  <h4 className="font-serif font-bold text-sm text-stone-900">
+                    {entry.themeTitle}
+                  </h4>
+                  <p className="text-xs text-stone-600 leading-relaxed">
+                    {entry.themeDescription}
+                  </p>
+                  {entry.materialsUsed && (
+                    <p className="text-[10.5px] text-stone-500 pt-1">
+                      <strong className="text-stone-700">साहित्य:</strong> {entry.materialsUsed}
+                    </p>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Bottom CTAs */}
+        <div className="text-center pt-8 border-t border-amber-200/80 space-y-4">
+          <h3 className="font-serif font-bold text-lg sm:text-xl text-stone-800">
+            आपणही स्पर्धेत सहभागी झाला आहात का?
+          </h3>
+          <p className="text-xs sm:text-sm text-stone-600 max-w-lg mx-auto">
+            स्पर्धेत सहभागी झालेल्या सर्व पुष्टीकृत गणेशभक्तांसाठी अधिकृत सहभाग प्रमाणपत्र उपलब्ध आहे.
+          </p>
+          <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
+            <Link
+              href="/certificate"
+              className="inline-flex items-center gap-2 bg-[#9B1B1E] hover:bg-[#781416] text-white px-6 py-3.5 rounded-xl font-bold text-sm shadow-md transition-all hover:scale-105"
+            >
+              <Award className="w-4 h-4 text-amber-300" />
+              <span>सहभाग प्रमाणपत्र डाउनलोड करा</span>
+            </Link>
+            <Link
+              href="/"
+              className="inline-flex items-center gap-2 bg-white hover:bg-stone-50 text-stone-800 border-2 border-stone-300 px-5 py-3.5 rounded-xl font-bold text-sm shadow-xs transition-all"
+            >
+              <span>मुख्यपृष्ठावर परत जा</span>
+            </Link>
+          </div>
+        </div>
+
       </div>
     </div>
   );

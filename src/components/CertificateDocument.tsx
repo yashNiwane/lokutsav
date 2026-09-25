@@ -271,14 +271,6 @@ export default function CertificateDocument({ data, id = 'certificate-render-tar
                   </p>
                 </div>
               </div>
-              <div className="text-center mt-0.5 w-full max-w-[190px] sm:max-w-[230px]">
-                <span className="text-stone-900 font-sans font-bold text-[7.5px] sm:text-[9.5px] block leading-tight">
-                  अधिकृत डिजिटल स्वाक्षरी (E-Sign)
-                </span>
-                <span className="text-stone-500 font-sans text-[6.5px] sm:text-[7.5px] block leading-tight">
-                  महाराष्ट्र राज्य गणेशोत्सव समन्वय समिती
-                </span>
-              </div>
             </div>
 
           </div>

@@ -2,8 +2,9 @@
 
 /**
  * High-Precision Certificate PDF & Image Export Pipeline
- * Converts the rendered certificate component into a high-DPI (300 DPI equivalent)
- * authentic A4 landscape PDF file without using window.print().
+ * Uses html-to-image (SVG foreignObject native browser rendering engine)
+ * to fully support modern Tailwind CSS v4 colors (oklab/oklch), gradients, and Devanagari ligatures
+ * without using window.print() or failing on modern CSS.
  */
 
 export async function generateCertificatePdf(elementId: string, ticketId: string, fullName: string): Promise<boolean> {
@@ -13,22 +14,18 @@ export async function generateCertificatePdf(elementId: string, ticketId: string
   }
 
   // Dynamic imports to prevent SSR bundle overhead
-  const [{ default: html2canvas }, { default: jsPDF }] = await Promise.all([
-    import('html2canvas'),
+  const [{ toJpeg }, { default: jsPDF }] = await Promise.all([
+    import('html-to-image'),
     import('jspdf'),
   ]);
 
-  // Capture at high resolution (scale: 2.5 for crisp 2500px+ vector text)
-  const canvas = await html2canvas(element, {
-    scale: 2.5,
-    useCORS: true,
-    allowTaint: true,
+  // Capture at 2.5x pixel ratio for crisp, 300-DPI print quality
+  const imgData = await toJpeg(element, {
+    quality: 0.98,
+    pixelRatio: 2.5,
     backgroundColor: '#FAF7F2',
-    logging: false,
-    windowWidth: 1200, // Fixed desktop layout consistency regardless of device screen width
+    cacheBust: true,
   });
-
-  const imgData = canvas.toDataURL('image/jpeg', 0.98);
 
   // Create standard A4 Landscape PDF (297mm x 210mm)
   const pdf = new jsPDF({
@@ -56,21 +53,18 @@ export async function generateCertificateImage(elementId: string, ticketId: stri
     throw new Error('Certificate element not found on page');
   }
 
-  const { default: html2canvas } = await import('html2canvas');
+  const { toPng } = await import('html-to-image');
 
-  const canvas = await html2canvas(element, {
-    scale: 2.5,
-    useCORS: true,
-    allowTaint: true,
+  const dataUrl = await toPng(element, {
+    pixelRatio: 2.5,
     backgroundColor: '#FAF7F2',
-    logging: false,
-    windowWidth: 1200,
+    cacheBust: true,
   });
 
   const link = document.createElement('a');
   const cleanName = fullName.replace(/[\s-]/g, '_').slice(0, 30);
   link.download = `Lokutsav_Certificate_${ticketId}_${cleanName}.png`;
-  link.href = canvas.toDataURL('image/png');
+  link.href = dataUrl;
   link.click();
   return true;
 }

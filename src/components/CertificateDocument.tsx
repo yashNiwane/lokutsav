@@ -23,12 +23,25 @@ export default function CertificateDocument({ data, id = 'certificate-render-tar
   const categoryText = isHousehold ? 'घरगुती गणपती सजावट' : 'सार्वजनिक गणेशोत्सव मंडळ';
   const categoryTextEn = isHousehold ? 'Household Ganpati Decoration' : 'Sarvajanik Ganeshotsav Mandal';
   const certId = data.certificateNo || `CERT-${data.ticketId}`;
-  const locationText = data.city && data.city !== data.district ? `${data.city}, ${data.district}` : data.district;
+  
+  // Format location cleanly avoiding duplicate "Pune, Pune" or "Kothrud, Pune, Pune"
+  const city = (data.city || '').trim();
+  const district = (data.district || '').trim();
+  let locationText = district;
+  if (city) {
+    if (district && city.toLowerCase().includes(district.toLowerCase())) {
+      locationText = city;
+    } else if (district) {
+      locationText = `${city}, ${district}`;
+    } else {
+      locationText = city;
+    }
+  }
 
   return (
     <div
       id={id}
-      className="relative w-full aspect-[1.414/1] max-w-[1100px] mx-auto bg-[#FDFBF7] text-[#1C1917] p-4 sm:p-8 select-none overflow-hidden shadow-2xl font-serif"
+      className="relative w-full aspect-[1.414/1] max-w-[1100px] mx-auto bg-[#FDFBF7] text-[#1C1917] p-2.5 sm:p-5 select-none overflow-hidden shadow-2xl font-serif"
       style={{
         boxSizing: 'border-box',
         backgroundImage: `
@@ -39,14 +52,14 @@ export default function CertificateDocument({ data, id = 'certificate-render-tar
       }}
     >
       {/* Outer Royal Border */}
-      <div className="w-full h-full border-[6px] sm:border-[10px] border-[#7B1113] p-1.5 sm:p-2.5 relative flex flex-col justify-between">
+      <div className="w-full h-full border-[5px] sm:border-[8px] border-[#7B1113] p-1 sm:p-1.5 relative flex flex-col justify-between">
         
         {/* Inner Gold Foil Border with Corner Motifs */}
-        <div className="w-full h-full border-2 sm:border-[3px] border-[#D4AF37] p-4 sm:p-7 relative flex flex-col justify-between bg-white/70 backdrop-blur-[2px]">
+        <div className="w-full h-full border-[1.5px] sm:border-[2.5px] border-[#D4AF37] p-2.5 sm:p-4.5 relative flex flex-col justify-between bg-white/75 backdrop-blur-[2px]">
           
           {/* Traditional Ornate Corners (Pure SVG - Zero CORS, 100% Sharp) */}
           {/* Top-Left Corner */}
-          <div className="absolute top-1 left-1 w-10 sm:w-16 h-10 sm:h-16 text-[#B45309] pointer-events-none">
+          <div className="absolute top-0.5 left-0.5 w-8 sm:w-12 h-8 sm:h-12 text-[#B45309] pointer-events-none">
             <svg viewBox="0 0 100 100" fill="currentColor" className="w-full h-full">
               <path d="M0,0 L45,0 C45,15 35,25 25,25 C25,35 15,45 0,45 Z" fill="#9B1B1E" />
               <path d="M5,5 L40,5 C38,18 28,28 18,38 L5,40 Z" fill="#D4AF37" opacity="0.8" />
@@ -56,7 +69,7 @@ export default function CertificateDocument({ data, id = 'certificate-render-tar
           </div>
 
           {/* Top-Right Corner */}
-          <div className="absolute top-1 right-1 w-10 sm:w-16 h-10 sm:h-16 text-[#B45309] pointer-events-none rotate-90">
+          <div className="absolute top-0.5 right-0.5 w-8 sm:w-12 h-8 sm:h-12 text-[#B45309] pointer-events-none rotate-90">
             <svg viewBox="0 0 100 100" fill="currentColor" className="w-full h-full">
               <path d="M0,0 L45,0 C45,15 35,25 25,25 C25,35 15,45 0,45 Z" fill="#9B1B1E" />
               <path d="M5,5 L40,5 C38,18 28,28 18,38 L5,40 Z" fill="#D4AF37" opacity="0.8" />
@@ -66,7 +79,7 @@ export default function CertificateDocument({ data, id = 'certificate-render-tar
           </div>
 
           {/* Bottom-Left Corner */}
-          <div className="absolute bottom-1 left-1 w-10 sm:w-16 h-10 sm:h-16 text-[#B45309] pointer-events-none -rotate-90">
+          <div className="absolute bottom-0.5 left-0.5 w-8 sm:w-12 h-8 sm:h-12 text-[#B45309] pointer-events-none -rotate-90">
             <svg viewBox="0 0 100 100" fill="currentColor" className="w-full h-full">
               <path d="M0,0 L45,0 C45,15 35,25 25,25 C25,35 15,45 0,45 Z" fill="#9B1B1E" />
               <path d="M5,5 L40,5 C38,18 28,28 18,38 L5,40 Z" fill="#D4AF37" opacity="0.8" />
@@ -76,7 +89,7 @@ export default function CertificateDocument({ data, id = 'certificate-render-tar
           </div>
 
           {/* Bottom-Right Corner */}
-          <div className="absolute bottom-1 right-1 w-10 sm:w-16 h-10 sm:h-16 text-[#B45309] pointer-events-none rotate-180">
+          <div className="absolute bottom-0.5 right-0.5 w-8 sm:w-12 h-8 sm:h-12 text-[#B45309] pointer-events-none rotate-180">
             <svg viewBox="0 0 100 100" fill="currentColor" className="w-full h-full">
               <path d="M0,0 L45,0 C45,15 35,25 25,25 C25,35 15,45 0,45 Z" fill="#9B1B1E" />
               <path d="M5,5 L40,5 C38,18 28,28 18,38 L5,40 Z" fill="#D4AF37" opacity="0.8" />
@@ -86,8 +99,8 @@ export default function CertificateDocument({ data, id = 'certificate-render-tar
           </div>
 
           {/* Background Watermark Mandala */}
-          <div className="absolute inset-0 flex items-center justify-center opacity-[0.035] pointer-events-none">
-            <svg viewBox="0 0 200 200" className="w-[50%] h-[50%]" fill="#7B1113">
+          <div className="absolute inset-0 flex items-center justify-center opacity-[0.03] pointer-events-none">
+            <svg viewBox="0 0 200 200" className="w-[45%] h-[45%]" fill="#7B1113">
               <circle cx="100" cy="100" r="90" stroke="currentColor" strokeWidth="2" fill="none" />
               <circle cx="100" cy="100" r="75" stroke="currentColor" strokeWidth="1.5" strokeDasharray="4 4" fill="none" />
               <circle cx="100" cy="100" r="55" stroke="currentColor" strokeWidth="2" fill="none" />
@@ -96,38 +109,51 @@ export default function CertificateDocument({ data, id = 'certificate-render-tar
           </div>
 
           {/* HEADER SECTION */}
-          <div className="text-center relative z-10 space-y-0.5 sm:space-y-1">
+          <div className="text-center relative z-10 space-y-0.5">
             {/* Auspicious Invocation */}
             <div className="flex items-center justify-center gap-2">
-              <span className="h-[1px] w-8 sm:w-16 bg-gradient-to-r from-transparent to-[#D4AF37]" />
-              <p className="text-[#9B1B1E] font-bold text-[11px] sm:text-xs tracking-[0.25em] uppercase">
+              <span className="h-[1px] w-6 sm:w-12 bg-gradient-to-r from-transparent to-[#D4AF37]" />
+              <p className="text-[#9B1B1E] font-bold text-[9px] sm:text-xs tracking-[0.25em] uppercase">
                 ॥ श्री गणेशाय नमः ॥
               </p>
-              <span className="h-[1px] w-8 sm:w-16 bg-gradient-to-l from-transparent to-[#D4AF37]" />
+              <span className="h-[1px] w-6 sm:w-12 bg-gradient-to-l from-transparent to-[#D4AF37]" />
             </div>
 
-            {/* Emblem / Medallion */}
-            <div className="inline-flex items-center justify-center w-9 h-9 sm:w-13 sm:h-13 rounded-full bg-gradient-to-br from-[#FFFBEB] via-[#FEF3C7] to-[#FDE68A] border-2 border-[#D4AF37] shadow-sm my-0.5">
-              <span className="text-lg sm:text-2xl text-[#9B1B1E] leading-none">🚩</span>
+            {/* Sacred Royal Ganesha Crest */}
+            <div className="inline-flex items-center justify-center w-8 h-8 sm:w-11 sm:h-11 rounded-full bg-gradient-to-br from-[#FFFBEB] via-[#FEF3C7] to-[#FDE68A] border border-[#D4AF37] shadow-xs my-0.5">
+              <svg viewBox="0 0 100 100" className="w-5 h-5 sm:w-7 sm:h-7" fill="none">
+                {/* Crown / Mukut */}
+                <path d="M50 14 L55 27 L65 27 L58 34 L61 43 L50 38 L39 43 L42 34 L35 27 L45 27 Z" fill="#9B1B1E" />
+                <circle cx="50" cy="23" r="2.5" fill="#D4AF37" />
+                {/* Forehead Tilak */}
+                <path d="M47 38 Q50 42 53 38 Q51 47 50 50 Q49 47 47 38 Z" fill="#9B1B1E" />
+                <circle cx="50" cy="43" r="1.5" fill="#D4AF37" />
+                {/* Ears */}
+                <path d="M36 44 C26 46 24 58 32 64 C36 67 40 66 43 62" stroke="#9B1B1E" strokeWidth="3" strokeLinecap="round" />
+                <path d="M64 44 C74 46 76 58 68 64 C64 67 60 66 57 62" stroke="#9B1B1E" strokeWidth="3" strokeLinecap="round" />
+                {/* Trunk turning with sweet modak */}
+                <path d="M50 50 C49 58 46 70 54 75 C60 79 69 76 69 68 C69 62 62 61 58 64" stroke="#9B1B1E" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round" />
+                <circle cx="68" cy="65" r="2.5" fill="#D4AF37" />
+              </svg>
             </div>
 
             {/* Organization & Competition Title */}
-            <h2 className="text-[#7B1113] font-serif font-black text-sm sm:text-xl lg:text-2xl tracking-tight leading-tight">
+            <h2 className="text-[#7B1113] font-serif font-black text-xs sm:text-lg lg:text-xl tracking-tight leading-tight">
               महाराष्ट्र राज्य ऑनलाइन गणेश सजावट स्पर्धा २०२६
             </h2>
-            <p className="text-stone-600 font-sans text-[9px] sm:text-xs tracking-wider uppercase font-semibold">
+            <p className="text-stone-600 font-sans text-[8px] sm:text-[10px] tracking-wider uppercase font-semibold">
               Maharashtra State Online Ganesh Decoration Competition 2026
             </p>
 
             {/* Certificate Title Badge */}
-            <div className="pt-1.5 sm:pt-2">
+            <div className="pt-0.5 sm:pt-1">
               <div className="inline-block relative">
-                <div className="bg-gradient-to-r from-[#7B1113] via-[#9B1B1E] to-[#7B1113] text-[#FEF3C7] px-6 sm:px-10 py-1 sm:py-1.5 rounded-full border border-amber-300 shadow-sm">
-                  <h1 className="font-serif font-black text-xs sm:text-base tracking-widest uppercase">
+                <div className="bg-gradient-to-r from-[#7B1113] via-[#9B1B1E] to-[#7B1113] text-[#FEF3C7] px-5 sm:px-8 py-0.5 sm:py-1 rounded-full border border-amber-300 shadow-xs">
+                  <h1 className="font-serif font-black text-[11px] sm:text-sm lg:text-base tracking-widest uppercase">
                     सहभाग प्रमाणपत्र
                   </h1>
                 </div>
-                <div className="text-[8px] sm:text-[10px] text-amber-800 tracking-wider font-semibold uppercase mt-0.5">
+                <div className="text-[7px] sm:text-[9px] text-amber-800 tracking-wider font-semibold uppercase mt-0.5">
                   Certificate of Participation
                 </div>
               </div>
@@ -135,128 +161,124 @@ export default function CertificateDocument({ data, id = 'certificate-render-tar
           </div>
 
           {/* CITATION & PARTICIPANT BODY */}
-          <div className="text-center relative z-10 my-auto py-1 sm:py-2 space-y-1.5 sm:space-y-2">
-            <p className="text-stone-700 italic text-[11px] sm:text-sm font-serif">
+          <div className="text-center relative z-10 my-auto py-0.5 sm:py-1 space-y-1 sm:space-y-1.5">
+            <p className="text-stone-700 italic text-[10px] sm:text-xs font-serif">
               हे प्रमाणपत्र अत्यंत सन्मानपूर्वक व गौरवाने प्रदान करण्यात येते की,
             </p>
 
-            {/* Participant Name (Commanding, Bold Calligraphic Display) */}
-            <div className="py-0.5">
-              <h3 className="font-serif font-black text-xl sm:text-3xl lg:text-4xl text-[#1C1917] tracking-wide inline-block relative px-4">
+            {/* Participant Name */}
+            <div className="py-0">
+              <h3 className="font-serif font-black text-lg sm:text-2xl lg:text-3xl text-[#1C1917] tracking-wide inline-block relative px-4">
                 {data.fullName}
               </h3>
               {/* Decorative underline */}
-              <div className="flex items-center justify-center gap-1.5 mt-1">
-                <div className="h-[1.5px] w-12 sm:w-24 bg-gradient-to-r from-transparent to-[#D4AF37]" />
-                <span className="text-[#D4AF37] text-[10px] sm:text-xs">✦</span>
-                <div className="h-[1.5px] w-12 sm:w-24 bg-gradient-to-l from-transparent to-[#D4AF37]" />
+              <div className="flex items-center justify-center gap-1.5 mt-0.5">
+                <div className="h-[1px] w-10 sm:w-20 bg-gradient-to-r from-transparent to-[#D4AF37]" />
+                <span className="text-[#D4AF37] text-[9px] sm:text-xs">✦</span>
+                <div className="h-[1px] w-10 sm:w-20 bg-gradient-to-l from-transparent to-[#D4AF37]" />
               </div>
             </div>
 
             {/* Participation Metadata */}
-            <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-4 text-[10px] sm:text-xs text-stone-800 font-sans font-medium">
-              <span className="bg-amber-100/70 border border-amber-300 px-3 py-0.5 rounded-md">
+            <div className="flex flex-wrap items-center justify-center gap-1.5 sm:gap-2.5 text-[9px] sm:text-[11px] text-stone-800 font-sans font-medium">
+              <span className="bg-amber-100/70 border border-amber-300 px-2.5 py-0.5 rounded-md">
                 <strong className="text-amber-950 font-bold">सहभाग वर्ग:</strong> {categoryText} ({categoryTextEn})
               </span>
-              <span className="bg-amber-100/70 border border-amber-300 px-3 py-0.5 rounded-md">
+              <span className="bg-amber-100/70 border border-amber-300 px-2.5 py-0.5 rounded-md">
                 <strong className="text-amber-950 font-bold">स्थान:</strong> {locationText}
               </span>
               {data.themeTitle && (
-                <span className="bg-amber-100/70 border border-amber-300 px-3 py-0.5 rounded-md">
+                <span className="bg-amber-100/70 border border-amber-300 px-2.5 py-0.5 rounded-md">
                   <strong className="text-amber-950 font-bold">सजावट संकल्पना:</strong> &ldquo;{data.themeTitle}&rdquo;
                 </span>
               )}
             </div>
 
             {/* Official Citation Statement */}
-            <p className="max-w-2xl mx-auto text-stone-700 text-[10px] sm:text-xs lg:text-[13px] leading-relaxed font-sans font-normal px-4">
-              यांनी <strong className="text-stone-900 font-semibold">&lsquo;लोकोत्सव २०२६&rsquo;</strong> या राज्यस्तरीय ऑनलाइन गणेशोत्सव स्पर्धेत अत्यंत उत्साहाने, कलात्मकतेने व आपली सांस्कृतिक परंपरा जपणारी उत्कृष्ट गणेश सजावट सादर करून सक्रिय सहभाग नोंदविला. त्यांच्या या कलात्मक योगदानाची व श्रद्धेची प्रशंसा करून हे <strong className="text-[#7B1113] font-semibold">सहभाग सन्मानपत्र</strong> सस्नेह प्रदान करण्यात येत आहे.
+            <p className="max-w-2xl mx-auto text-stone-700 text-[9.5px] sm:text-[11px] leading-relaxed font-sans font-normal px-4">
+              यांनी <strong className="text-stone-900 font-semibold">&lsquo;लोकोत्सव २०२६&rsquo;</strong> या राज्यस्तरीय ऑनलाइन गणेश सजावट स्पर्धेत कलात्मकतेने व आपली सांस्कृतिक परंपरा जपणारी उत्कृष्ट गणेश सजावट सादर करून सक्रिय सहभाग नोंदविला. त्यांच्या या कलात्मक योगदानाची व श्रद्धेची प्रशंसा करून हे <strong className="text-[#7B1113] font-semibold">सहभाग सन्मानपत्र</strong> सस्नेह प्रदान करण्यात येत आहे.
             </p>
           </div>
 
           {/* FOOTER SECTION: VERIFICATION, GOLD SEAL & SIGNATURES */}
-          <div className="relative z-10 pt-2 border-t border-amber-300/80 flex items-end justify-between text-[9px] sm:text-xs">
+          <div className="relative z-10 pt-1.5 border-t border-amber-300/80 flex items-end justify-between text-[8px] sm:text-[11px]">
             
             {/* Left Credentials Block */}
-            <div className="text-left space-y-0.5 sm:space-y-1">
+            <div className="text-left space-y-0.5 shrink-0 max-w-[30%]">
               <div>
-                <span className="text-stone-500 font-sans text-[8px] sm:text-[10px] block uppercase font-bold tracking-wider">
+                <span className="text-stone-500 font-sans text-[7.5px] sm:text-[9px] block uppercase font-bold tracking-wider">
                   नोंदणी तिकीट क्रमांक
                 </span>
-                <span className="font-mono font-bold text-stone-900 text-[10px] sm:text-xs">
+                <span className="font-mono font-bold text-stone-900 text-[9.5px] sm:text-xs">
                   {data.ticketId}
                 </span>
               </div>
               <div>
-                <span className="text-stone-500 font-sans text-[8px] sm:text-[10px] block uppercase font-bold tracking-wider">
+                <span className="text-stone-500 font-sans text-[7.5px] sm:text-[9px] block uppercase font-bold tracking-wider">
                   प्रमाणपत्र अनुक्रमांक
                 </span>
-                <span className="font-mono font-bold text-[#7B1113] text-[10px] sm:text-xs">
+                <span className="font-mono font-bold text-[#7B1113] text-[9.5px] sm:text-xs">
                   {certId}
                 </span>
               </div>
               <div>
-                <span className="text-stone-500 font-sans text-[8px] sm:text-[10px] block uppercase font-bold tracking-wider">
+                <span className="text-stone-500 font-sans text-[7.5px] sm:text-[9px] block uppercase font-bold tracking-wider">
                   कालावधी
                 </span>
-                <span className="text-stone-800 font-sans text-[9px] sm:text-[11px] font-medium">
+                <span className="text-stone-800 font-sans text-[8.5px] sm:text-[10px] font-medium">
                   भाद्रपद गणेशोत्सव २०२६
                 </span>
               </div>
             </div>
 
-            {/* Center Official Gold Seal (Embossed Holographic Medallion) */}
-            <div className="flex flex-col items-center justify-center my-auto">
-              <div className="relative w-14 h-14 sm:w-20 sm:h-20 rounded-full bg-gradient-to-tr from-[#B45309] via-[#F59E0B] to-[#FEF08A] p-0.5 shadow-md flex items-center justify-center border-2 border-amber-200">
-                {/* Scalloped Ring */}
-                <div className="w-full h-full rounded-full border border-dashed border-[#78350F] flex flex-col items-center justify-center text-center p-1 bg-gradient-to-b from-[#FFFBEB] to-[#FDE68A]">
-                  <span className="text-[7px] sm:text-[9px] font-black text-[#7B1113] leading-none uppercase tracking-tighter">
+            {/* Center Official Gold Seal */}
+            <div className="flex flex-col items-center justify-center shrink-0 mx-2">
+              <div className="relative w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-gradient-to-tr from-[#B45309] via-[#F59E0B] to-[#FEF08A] p-0.5 shadow-xs flex items-center justify-center border border-amber-200">
+                <div className="w-full h-full rounded-full border border-dashed border-[#78350F] flex flex-col items-center justify-center text-center p-0.5 bg-gradient-to-b from-[#FFFBEB] to-[#FDE68A]">
+                  <span className="text-[6.5px] sm:text-[8px] font-black text-[#7B1113] leading-none uppercase tracking-tighter">
                     LOKUTSAV
                   </span>
-                  <span className="text-[9px] sm:text-base text-[#B45309] leading-tight font-serif">
+                  <span className="text-[8px] sm:text-xs text-[#B45309] leading-tight font-serif my-0.5">
                     ★ 2026 ★
                   </span>
-                  <span className="text-[6px] sm:text-[7.5px] font-bold text-[#78350F] uppercase tracking-tight leading-none">
+                  <span className="text-[5.5px] sm:text-[6.5px] font-bold text-[#78350F] uppercase tracking-tight leading-none">
                     OFFICIAL SEAL
                   </span>
                 </div>
               </div>
-              <span className="text-[7px] sm:text-[8.5px] text-[#7B1113] font-bold tracking-wider uppercase mt-0.5">
+              <span className="text-[6.5px] sm:text-[7.5px] text-[#7B1113] font-bold tracking-wider uppercase mt-0.5">
                 अधिकृत सहभाग मोहर
               </span>
             </div>
 
             {/* Right: Official Cryptographic Digital Signature Block */}
-            <div className="text-right flex flex-col items-end justify-end">
-              <div className="bg-emerald-50/90 border border-emerald-600/70 rounded-lg p-1.5 sm:p-2 shadow-2xs max-w-[210px] sm:max-w-[260px] text-left relative overflow-hidden backdrop-blur-xs">
-                <div className="flex items-center gap-1.5 border-b border-emerald-300 pb-1 mb-1">
-                  <span className="inline-flex items-center justify-center w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full bg-emerald-600 text-white text-[8px] sm:text-[10px] font-black">
+            <div className="text-right flex flex-col items-end justify-end shrink-0 max-w-[42%]">
+              <div className="bg-emerald-50/95 border border-emerald-600/60 rounded-md p-1 sm:p-1.5 shadow-2xs text-left relative overflow-hidden backdrop-blur-xs w-full max-w-[190px] sm:max-w-[230px]">
+                <div className="flex items-center gap-1 border-b border-emerald-300 pb-0.5 mb-0.5">
+                  <span className="inline-flex items-center justify-center w-3 h-3 sm:w-3.5 sm:h-3.5 rounded-full bg-emerald-600 text-white text-[7px] sm:text-[8px] font-black">
                     ✓
                   </span>
-                  <span className="text-[7.5px] sm:text-[9.5px] font-bold text-emerald-900 tracking-wide uppercase font-sans">
+                  <span className="text-[7px] sm:text-[8.5px] font-bold text-emerald-900 tracking-wide uppercase font-sans">
                     Digitally Signed & Verified
                   </span>
                 </div>
-                <div className="space-y-0.5 text-[6.5px] sm:text-[8px] font-sans text-stone-700 leading-tight">
+                <div className="space-y-0.5 text-[6px] sm:text-[7.5px] font-sans text-stone-700 leading-tight">
                   <p>
                     <strong className="text-emerald-950">Signed By:</strong> Lokutsav Committee, MS
                   </p>
                   <p>
                     <strong className="text-emerald-950">Reason:</strong> Official Participation Certification
                   </p>
-                  <p>
-                    <strong className="text-emerald-950">Location:</strong> Maharashtra, India
-                  </p>
-                  <p className="font-mono text-[6px] sm:text-[7.5px] text-stone-500 truncate">
+                  <p className="font-mono text-[5.5px] sm:text-[7px] text-stone-500 truncate">
                     <strong>Hash:</strong> SHA256:{data.ticketId ? data.ticketId.replace(/[^A-Z0-9]/g, '') : 'LOK2026'}•e7f9a2
                   </p>
                 </div>
               </div>
-              <div className="text-center mt-1 w-full max-w-[210px] sm:max-w-[260px]">
-                <span className="text-stone-900 font-sans font-bold text-[8.5px] sm:text-[10.5px] block">
+              <div className="text-center mt-0.5 w-full max-w-[190px] sm:max-w-[230px]">
+                <span className="text-stone-900 font-sans font-bold text-[7.5px] sm:text-[9.5px] block leading-tight">
                   अधिकृत डिजिटल स्वाक्षरी (E-Sign)
                 </span>
-                <span className="text-stone-500 font-sans text-[7px] sm:text-[8.5px] block">
+                <span className="text-stone-500 font-sans text-[6.5px] sm:text-[7.5px] block leading-tight">
                   महाराष्ट्र राज्य गणेशोत्सव समन्वय समिती
                 </span>
               </div>
@@ -265,9 +287,9 @@ export default function CertificateDocument({ data, id = 'certificate-render-tar
           </div>
 
           {/* Micro Security Footnote */}
-          <div className="text-center pt-1 mt-0.5 border-t border-amber-200/50">
-            <p className="text-[7px] sm:text-[8px] text-stone-500 font-sans">
-              अधिकृत डिजिटल सहभाग प्रमाणपत्र • सत्यता पडताळणी: https://lokutsav.com/certificate • नोंदणीकृत गणेशभक्तांसाठी जारी.
+          <div className="text-center pt-0.5 mt-0.5 border-t border-amber-200/50">
+            <p className="text-[6.5px] sm:text-[7.5px] text-stone-500 font-sans">
+              अधिकृत डिजिटल सहभाग प्रमाणपत्र • पडताळणी: https://lokutsav.com/certificate • नोंदणीकृत गणेशभक्तांसाठी जारी.
             </p>
           </div>
 

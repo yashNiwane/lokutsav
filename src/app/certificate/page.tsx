@@ -19,7 +19,6 @@ import {
   Ticket,
   Image as ImageIcon,
   ShieldCheck,
-  ArrowLeft,
 } from 'lucide-react';
 
 function CertificatePageContent() {
@@ -295,19 +294,8 @@ function CertificatePageContent() {
           /* SCREEN 2: DEDICATED CERTIFICATE & DOWNLOAD/SHARE SCREEN     */
           /* ============================================================ */
           <div className="space-y-6 animate-in fade-in slide-in-from-bottom-3 duration-400">
-            {/* Top Navigation & Status Bar */}
+            {/* Top Status Bar */}
             <div className="flex flex-wrap items-center justify-between gap-3 bg-white/90 backdrop-blur-md border border-amber-200 px-4 py-3 rounded-2xl shadow-xs">
-              <button
-                onClick={() => {
-                  setSelectedEntry(null);
-                  setError('');
-                }}
-                className="inline-flex items-center gap-2 text-stone-700 hover:text-[#9B1B1E] font-bold text-xs sm:text-sm px-3 py-1.5 rounded-xl hover:bg-stone-100 transition-colors cursor-pointer"
-              >
-                <ArrowLeft className="w-4 h-4 text-[#9B1B1E]" />
-                <span>{lang === 'mr' ? '← दुसरा नंबर शोधा (मागे जा)' : '← Search Another Number'}</span>
-              </button>
-
               <div className="flex items-center gap-2">
                 <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-bold border border-emerald-300">
                   <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
@@ -317,6 +305,9 @@ function CertificatePageContent() {
                   {selectedEntry.ticketId}
                 </span>
               </div>
+              <span className="text-xs text-stone-500 font-medium hidden sm:inline">
+                {lang === 'mr' ? 'अधिकृत सहभाग प्रमाणपत्र' : 'Official Certificate of Participation'}
+              </span>
             </div>
 
             {/* Multiple Entries Switcher (If mobile number has multiple registered idols) */}
@@ -439,19 +430,6 @@ function CertificatePageContent() {
                   ? 'टीप: या प्रमाणपत्रावर कोणत्याही प्रकारचे गुण (Marks) किंवा क्रमांक नमूद नसून, हा केवळ सर्व पुष्टीकृत स्पर्धकांसाठी सन्मानपूर्वक सहभाग दाखला आहे.'
                   : 'Note: This is a Certificate of Participation celebrating your entry. No marks or scores are displayed.'}
               </p>
-
-              <div className="pt-2">
-                <button
-                  onClick={() => {
-                    setSelectedEntry(null);
-                    setError('');
-                  }}
-                  className="inline-flex items-center gap-1.5 text-[#9B1B1E] hover:underline font-bold text-xs cursor-pointer"
-                >
-                  <ArrowLeft className="w-3.5 h-3.5" />
-                  <span>{lang === 'mr' ? 'दुसऱ्या क्रमांकाचे प्रमाणपत्र शोधा' : 'Search another certificate'}</span>
-                </button>
-              </div>
             </div>
 
           </div>

@@ -38,14 +38,6 @@ export default function CertificateDocument({ data, id = 'certificate-render-tar
     }
   }
 
-  // Safely cap theme title to max 38 characters to protect fixed aspect-ratio certificate from vertical overflow
-  const rawTheme = data.themeTitle?.trim();
-  const themeTitleText = rawTheme
-    ? rawTheme.length > 38
-      ? `${rawTheme.slice(0, 36)}...`
-      : rawTheme
-    : null;
-
   return (
     <div
       id={id}
@@ -181,21 +173,13 @@ export default function CertificateDocument({ data, id = 'certificate-render-tar
             </div>
 
             {/* Participation Metadata */}
-            <div className="flex flex-wrap items-center justify-center gap-1.5 sm:gap-2.5 text-[9px] sm:text-[11px] text-stone-800 font-sans font-medium">
-              <span className="bg-amber-100/70 border border-amber-300 px-2.5 py-0.5 rounded-md">
+            <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 text-[9.5px] sm:text-[11.5px] text-stone-800 font-sans font-medium">
+              <span className="bg-amber-100/70 border border-amber-300 px-3 py-0.5 rounded-md">
                 <strong className="text-amber-950 font-bold">सहभाग वर्ग:</strong> {categoryText} ({categoryTextEn})
               </span>
-              <span className="bg-amber-100/70 border border-amber-300 px-2.5 py-0.5 rounded-md">
+              <span className="bg-amber-100/70 border border-amber-300 px-3 py-0.5 rounded-md">
                 <strong className="text-amber-950 font-bold">स्थान:</strong> {locationText}
               </span>
-              {themeTitleText && (
-                <span
-                  className="bg-amber-100/70 border border-amber-300 px-2.5 py-0.5 rounded-md max-w-[280px] sm:max-w-[400px] truncate"
-                  title={rawTheme || undefined}
-                >
-                  <strong className="text-amber-950 font-bold">सजावट संकल्पना:</strong> &ldquo;{themeTitleText}&rdquo;
-                </span>
-              )}
             </div>
 
             {/* Official Citation Statement */}

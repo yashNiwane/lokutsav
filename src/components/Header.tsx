@@ -139,37 +139,10 @@ export default function Header() {
           <Link href="/#rules" className="hover:text-[#9B1B1E] transition-colors">
             {t.nav.rules}
           </Link>
-          <Link href="/referral" className="hover:text-[#9B1B1E] transition-colors flex items-center gap-1 text-amber-800 font-bold">
-            <span>🎁</span>
-            <span>{lang === 'mr' ? 'रेफरल' : 'Referral'}</span>
-          </Link>
-          <Link href="/certificate" className="hover:text-[#9B1B1E] transition-colors flex items-center gap-1 text-[#9B1B1E] font-bold">
-            <span>📜</span>
-            <span>{lang === 'mr' ? 'प्रमाणपत्र' : 'Certificate'}</span>
-          </Link>
         </nav>
 
         {/* Action button */}
         <div className="hidden sm:flex items-center gap-3">
-          <Link
-            href="/certificate"
-            className="inline-flex items-center gap-1.5 bg-amber-100 hover:bg-amber-200 text-amber-950 font-bold px-3 py-2 rounded-lg text-xs border border-amber-300 transition-colors shadow-2xs"
-          >
-            <Award className="w-3.5 h-3.5 text-[#9B1B1E]" />
-            <span>{lang === 'mr' ? 'सहभाग प्रमाणपत्र' : 'Certificate'}</span>
-          </Link>
-          <Link
-            href="/analytics"
-            className="text-xs font-semibold px-2.5 py-2 rounded-md text-stone-600 hover:text-stone-900 hover:bg-stone-200/60 transition-colors border border-[#E5D7C0]"
-          >
-            📊 {lang === 'mr' ? 'ॲनालिटिक्स' : 'Analytics'}
-          </Link>
-          <Link
-            href="/judging"
-            className="text-xs font-semibold px-3 py-2 rounded-md text-stone-600 hover:text-stone-900 hover:bg-stone-200/60 transition-colors border border-[#E5D7C0]"
-          >
-            {t.nav.judgingPortal}
-          </Link>
           <button
             onClick={() => setLookupModalOpen(true)}
             className="inline-flex items-center gap-1.5 bg-[#9B1B1E] hover:bg-[#781416] text-white px-3.5 py-2 rounded-lg text-xs font-bold shadow-xs transition-all hover:shadow-md cursor-pointer"

@@ -1,5 +1,6 @@
 import React from 'react';
 import { dataStore } from '@/lib/db';
+import { INITIAL_ENTRIES } from '@/lib/seed-data';
 import { Trophy, Award, MapPin, Sparkles, Scale, ShieldCheck, Leaf, Palette, Sun, CheckCircle2 } from 'lucide-react';
 import Link from 'next/link';
 
@@ -7,9 +8,15 @@ export const revalidate = 0;
 
 export default async function WinnersPage() {
   const allEntries = await dataStore.getAllEntries();
-  const winners = allEntries
+  let winners = allEntries
     .filter((e) => e.finalRank && e.finalRank <= 10)
     .sort((a, b) => (a.finalRank || 99) - (b.finalRank || 99));
+
+  if (winners.length === 0) {
+    winners = INITIAL_ENTRIES
+      .filter((e) => e.finalRank && e.finalRank <= 10)
+      .sort((a, b) => (a.finalRank || 99) - (b.finalRank || 99));
+  }
 
   // Top 3 Champions
   const top3 = winners.slice(0, 3);

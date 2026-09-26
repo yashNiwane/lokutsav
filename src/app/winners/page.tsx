@@ -1,6 +1,6 @@
 import React from 'react';
 import { dataStore } from '@/lib/db';
-import { Trophy, Award, MapPin, Sparkles } from 'lucide-react';
+import { Trophy, Award, MapPin, Sparkles, Scale, ShieldCheck, Leaf, Palette, Sun, CheckCircle2 } from 'lucide-react';
 import Link from 'next/link';
 
 export const revalidate = 0;
@@ -67,6 +67,146 @@ export default async function WinnersPage() {
           <p className="text-stone-600 text-sm sm:text-base max-w-2xl mx-auto font-normal leading-relaxed">
             महाराष्ट्र राज्यस्तरीय लोकोत्सव २०२६ ऑनलाइन गणेश सजावट स्पर्धेतील तज्ज्ञ ज्युरी मंडळाने निवडलेले अव्वल १० विजेते स्पर्धक आणि त्यांच्या नाविन्यपूर्ण कलात्मक देखाव्यांची संकल्पना.
           </p>
+        </div>
+
+        {/* ================= HIGHLIGHTED SELECTION CRITERIA BOX ================= */}
+        <div className="bg-gradient-to-br from-amber-500/10 via-amber-100/40 to-amber-50 rounded-3xl p-6 sm:p-8 border-2 border-amber-400 shadow-md relative overflow-hidden">
+          {/* Subtle decorative glow */}
+          <div className="absolute -top-12 -right-12 w-48 h-48 bg-amber-300/30 rounded-full blur-2xl pointer-events-none" />
+
+          <div className="relative space-y-6">
+            {/* Header */}
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-amber-300/80 pb-4">
+              <div className="space-y-1">
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-200/80 border border-amber-400 text-amber-950 text-xs font-bold uppercase tracking-wider">
+                  <Scale className="w-3.5 h-3.5 text-[#9B1B1E]" />
+                  <span>अधिकृत निवड निकष • Official Selection Criteria</span>
+                </div>
+                <h2 className="font-serif font-black text-xl sm:text-2xl text-stone-900">
+                  सर्व विजेत्यांची निवड खालील ५ मुख्य निकषांवर आधारित करण्यात आली आहे:
+                </h2>
+              </div>
+              <span className="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-800 bg-emerald-50 px-3 py-1.5 rounded-full border border-emerald-300 shrink-0 self-start sm:self-auto">
+                <ShieldCheck className="w-4 h-4 text-emerald-600" />
+                <span>१००% निष्पक्ष ज्युरी परीक्षण</span>
+              </span>
+            </div>
+
+            <p className="text-xs sm:text-sm text-stone-700 leading-relaxed font-medium">
+              महाराष्ट्रभरातून सहभागी झालेल्या सर्व कलाकृतींचे ज्येष्ठ कलाकार व सांस्कृतिक तज्ज्ञ परीक्षकांनी काटेकोरपणे मूल्यमापन केले. सर्व विजेत्या स्पर्धकांची निवड ही कोणत्याही एका घटकावर अवलंबून नसून, खालील ५ अधिकृत निकषांनुसार दिलेल्या एकत्रित गुणांकनावर (Jury Scoring Matrix) आधारित करण्यात आली आहे:
+            </p>
+
+            {/* Criteria Grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3.5">
+              {/* Criterion 1 */}
+              <div className="bg-white/95 backdrop-blur-xs rounded-2xl p-4 border border-amber-300 shadow-2xs space-y-2 flex flex-col justify-between">
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between">
+                    <div className="w-8 h-8 rounded-lg bg-amber-100 text-amber-800 flex items-center justify-center">
+                      <Sparkles className="w-4 h-4" />
+                    </div>
+                    <span className="font-mono text-xs font-bold px-2 py-0.5 rounded-full bg-amber-100 text-amber-900 border border-amber-300">
+                      २५% भार
+                    </span>
+                  </div>
+                  <h3 className="font-serif font-bold text-sm sm:text-base text-stone-900">
+                    संकल्पना व कल्पकता
+                  </h3>
+                  <p className="text-[11px] text-stone-600 leading-relaxed font-normal">
+                    सजावटीमागील मूळ विचार, सामाजिक किंवा ऐतिहासिक संदेश, पौराणिक संदर्भ आणि कल्पकतेचा दर्जा.
+                  </p>
+                </div>
+              </div>
+
+              {/* Criterion 2 */}
+              <div className="bg-white/95 backdrop-blur-xs rounded-2xl p-4 border border-amber-300 shadow-2xs space-y-2 flex flex-col justify-between">
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between">
+                    <div className="w-8 h-8 rounded-lg bg-amber-100 text-amber-800 flex items-center justify-center">
+                      <Palette className="w-4 h-4" />
+                    </div>
+                    <span className="font-mono text-xs font-bold px-2 py-0.5 rounded-full bg-amber-100 text-amber-900 border border-amber-300">
+                      २५% भार
+                    </span>
+                  </div>
+                  <h3 className="font-serif font-bold text-sm sm:text-base text-stone-900">
+                    हस्तकला व फिनिशिंग
+                  </h3>
+                  <p className="text-[11px] text-stone-600 leading-relaxed font-normal">
+                    हस्तनिर्मित कारागिरी, बारकावे, सुबकता, घटकांमधील समतोल आणि कलात्मक रचना.
+                  </p>
+                </div>
+              </div>
+
+              {/* Criterion 3 */}
+              <div className="bg-white/95 backdrop-blur-xs rounded-2xl p-4 border border-amber-300 shadow-2xs space-y-2 flex flex-col justify-between">
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between">
+                    <div className="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-800 flex items-center justify-center">
+                      <Leaf className="w-4 h-4" />
+                    </div>
+                    <span className="font-mono text-xs font-bold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-900 border border-emerald-300">
+                      २०% भार
+                    </span>
+                  </div>
+                  <h3 className="font-serif font-bold text-sm sm:text-base text-stone-900">
+                    पर्यावरणपूरकता व साहित्य
+                  </h3>
+                  <p className="text-[11px] text-stone-600 leading-relaxed font-normal">
+                    शाडू माती मूर्ती, कागदी लगदा, बांबू, ज्यूट व नैसर्गिक सेंद्रिय रंगांचा १००% वापर (थर्माकोल-प्लास्टिक बंदी).
+                  </p>
+                </div>
+              </div>
+
+              {/* Criterion 4 */}
+              <div className="bg-white/95 backdrop-blur-xs rounded-2xl p-4 border border-amber-300 shadow-2xs space-y-2 flex flex-col justify-between">
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between">
+                    <div className="w-8 h-8 rounded-lg bg-amber-100 text-amber-800 flex items-center justify-center">
+                      <Sun className="w-4 h-4" />
+                    </div>
+                    <span className="font-mono text-xs font-bold px-2 py-0.5 rounded-full bg-amber-100 text-amber-900 border border-amber-300">
+                      १५% भार
+                    </span>
+                  </div>
+                  <h3 className="font-serif font-bold text-sm sm:text-base text-stone-900">
+                    प्रकाशयोजना व सादरीकरण
+                  </h3>
+                  <p className="text-[11px] text-stone-600 leading-relaxed font-normal">
+                    पारंपरिक दिवे, सौम्य वॉर्म रोषणाई, सुसंवादी रंगसंगती आणि संपूर्ण देखाव्याचा आध्यात्मिक प्रभाव.
+                  </p>
+                </div>
+              </div>
+
+              {/* Criterion 5 */}
+              <div className="bg-white/95 backdrop-blur-xs rounded-2xl p-4 border border-amber-300 shadow-2xs space-y-2 flex flex-col justify-between">
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between">
+                    <div className="w-8 h-8 rounded-lg bg-red-100 text-[#9B1B1E] flex items-center justify-center">
+                      <Trophy className="w-4 h-4" />
+                    </div>
+                    <span className="font-mono text-xs font-bold px-2 py-0.5 rounded-full bg-amber-100 text-amber-900 border border-amber-300">
+                      १५% भार
+                    </span>
+                  </div>
+                  <h3 className="font-serif font-bold text-sm sm:text-base text-stone-900">
+                    नाविन्यता व वेगळेपण
+                  </h3>
+                  <p className="text-[11px] text-stone-600 leading-relaxed font-normal">
+                    नेहमीपेक्षा वेगळा विचार, अनपेक्षित कलात्मक रचना आणि प्रेक्षकांना मंत्रमुग्ध करणारी छाप.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Note banner */}
+            <div className="bg-amber-100/70 border border-amber-300 rounded-xl p-3 text-center sm:text-left flex items-center gap-2.5">
+              <CheckCircle2 className="w-4 h-4 text-emerald-700 shrink-0 hidden sm:inline" />
+              <p className="text-xs text-amber-950 font-medium">
+                <strong>अधिकृत परीक्षण टीप:</strong> सर्व विजेत्या स्पर्धकांची निवड ही संपूर्ण राज्यभरातून प्राप्त झालेल्या नोंदींमधून वरील ५ निकषांवर स्वतंत्रपणे गुण देऊन, एकत्रित सरासरी गुणांनुसार (Consolidated Jury Score) अधिकृतरीत्या करण्यात आली आहे.
+              </p>
+            </div>
+          </div>
         </div>
 
         {/* Top 3 Champions Section (Zero Images) */}

@@ -100,12 +100,20 @@ export default function PrizeSection() {
             </p>
           </div>
 
-          <div className="shrink-0">
+          <div className="shrink-0 flex flex-wrap items-center gap-3">
             <Link
-              href="/register"
-              className="inline-flex items-center gap-2 bg-[#9B1B1E] hover:bg-[#781416] text-white px-6 py-3 rounded-xl font-bold text-sm shadow-sm transition-all"
+              href="/winners"
+              className="inline-flex items-center gap-2 bg-[#9B1B1E] hover:bg-[#781416] text-white px-6 py-3 rounded-xl font-bold text-sm shadow-sm transition-all hover:scale-105"
             >
-              <span>नोंदणी करा (₹99)</span>
+              <Trophy className="w-4 h-4 text-amber-300" />
+              <span>१० महाविजेते पहा</span>
+            </Link>
+            <Link
+              href="/certificate"
+              className="inline-flex items-center gap-2 bg-white hover:bg-stone-50 text-stone-800 border-2 border-stone-300 px-5 py-3 rounded-xl font-bold text-sm shadow-2xs transition-all"
+            >
+              <Award className="w-4 h-4 text-[#9B1B1E]" />
+              <span>प्रमाणपत्र डाउनलोड</span>
             </Link>
           </div>
         </div>

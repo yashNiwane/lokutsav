@@ -140,13 +140,25 @@ export default async function WinnersPage() {
                   </div>
 
                   {/* Prize Footer */}
-                  <div className="mt-5 pt-4 border-t border-stone-200/80">
-                    <span className="text-[10px] uppercase font-bold text-stone-500 block mb-0.5">
-                      प्राप्त पारितोषिक:
-                    </span>
-                    <p className="font-serif font-black text-lg sm:text-xl text-[#9B1B1E]">
-                      {meta.prize}
-                    </p>
+                  <div className="mt-5 pt-4 border-t border-stone-200/80 flex items-center justify-between gap-3">
+                    <div>
+                      <span className="text-[10px] uppercase font-bold text-stone-500 block mb-0.5">
+                        प्राप्त पारितोषिक:
+                      </span>
+                      <p className="font-serif font-black text-lg sm:text-xl text-[#9B1B1E]">
+                        {meta.prize}
+                      </p>
+                    </div>
+                    {entry.phone && (
+                      <Link
+                        href={`/certificate?phone=${entry.phone}&ticketId=${entry.ticketId}`}
+                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-50 hover:bg-amber-100 text-[#9B1B1E] border border-amber-300 text-xs font-bold transition-all shadow-2xs hover:scale-105"
+                        title="सहभाग प्रमाणपत्र पहा व डाउनलोड करा"
+                      >
+                        <Award className="w-3.5 h-3.5 text-amber-600" />
+                        <span>प्रमाणपत्र</span>
+                      </Link>
+                    )}
                   </div>
                 </div>
               );
@@ -178,9 +190,21 @@ export default async function WinnersPage() {
                       {entry.fullName}
                     </span>
                   </div>
-                  <span className="font-serif font-black text-sm text-[#9B1B1E]">
-                    ₹५,००० रोख
-                  </span>
+                  <div className="flex items-center gap-2.5">
+                    <span className="font-serif font-black text-sm text-[#9B1B1E]">
+                      ₹५,००० रोख
+                    </span>
+                    {entry.phone && (
+                      <Link
+                        href={`/certificate?phone=${entry.phone}&ticketId=${entry.ticketId}`}
+                        className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-amber-50 hover:bg-amber-100 text-[#9B1B1E] border border-amber-200 text-xs font-bold transition-all shadow-2xs hover:scale-105"
+                        title="सहभाग प्रमाणपत्र पहा व डाउनलोड करा"
+                      >
+                        <Award className="w-3.5 h-3.5 text-amber-600" />
+                        <span className="hidden sm:inline">प्रमाणपत्र</span>
+                      </Link>
+                    )}
+                  </div>
                 </div>
 
                 <div className="flex items-center gap-3 text-xs text-stone-500">

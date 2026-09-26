@@ -262,7 +262,7 @@ export const INITIAL_ENTRIES: ParticipantEntry[] = [
   // --- Top 10 Declared State Champions ---
   {
     id: 'entry-101',
-    ticketId: 'LOK-2026-900001',
+    ticketId: 'LOK-2026-196450',
     fullName: 'Shrikant Ramchandra Joshi',
     phone: '9822019941',
     email: 'shrikant.joshi@example.com',
@@ -292,7 +292,7 @@ export const INITIAL_ENTRIES: ParticipantEntry[] = [
   },
   {
     id: 'entry-102',
-    ticketId: 'LOK-2026-900002',
+    ticketId: 'LOK-2026-168631',
     fullName: 'Vaishali Anand Salunkhe',
     phone: '9765412390',
     email: 'vaishali.salunkhe@example.com',
@@ -321,7 +321,7 @@ export const INITIAL_ENTRIES: ParticipantEntry[] = [
   },
   {
     id: 'entry-103',
-    ticketId: 'LOK-2026-900003',
+    ticketId: 'LOK-2026-136582',
     fullName: 'Mangesh Devidas Parab',
     phone: '9820156789',
     email: 'mangesh.parab@example.com',
@@ -350,7 +350,7 @@ export const INITIAL_ENTRIES: ParticipantEntry[] = [
   },
   {
     id: 'entry-104',
-    ticketId: 'LOK-2026-900004',
+    ticketId: 'LOK-2026-734767',
     fullName: 'Aniket Surendra Deshmukh',
     phone: '9422334455',
     email: 'aniket.d@example.com',
@@ -377,7 +377,7 @@ export const INITIAL_ENTRIES: ParticipantEntry[] = [
   },
   {
     id: 'entry-105',
-    ticketId: 'LOK-2026-900005',
+    ticketId: 'LOK-2026-360161',
     fullName: 'Suhas Eknath Kadam',
     phone: '9921345566',
     email: 'suhas.kadam@example.com',
@@ -404,7 +404,7 @@ export const INITIAL_ENTRIES: ParticipantEntry[] = [
   },
   {
     id: 'entry-106',
-    ticketId: 'LOK-2026-900006',
+    ticketId: 'LOK-2026-650167',
     fullName: 'Balasaheb Tukaram More',
     phone: '9890123456',
     email: 'balasaheb.more@example.com',
@@ -431,7 +431,7 @@ export const INITIAL_ENTRIES: ParticipantEntry[] = [
   },
   {
     id: 'entry-107',
-    ticketId: 'LOK-2026-900007',
+    ticketId: 'LOK-2026-313804',
     fullName: 'Dhananjay Raghunath Shinde',
     phone: '9822445566',
     email: 'dhananjay.shinde@example.com',
@@ -454,7 +454,7 @@ export const INITIAL_ENTRIES: ParticipantEntry[] = [
   },
   {
     id: 'entry-108',
-    ticketId: 'LOK-2026-900008',
+    ticketId: 'LOK-2026-777638',
     fullName: 'Pratibha Gajanan Kulkarni',
     phone: '9833556677',
     email: 'pratibha.kulkarni@example.com',
@@ -477,7 +477,7 @@ export const INITIAL_ENTRIES: ParticipantEntry[] = [
   },
   {
     id: 'entry-109',
-    ticketId: 'LOK-2026-900009',
+    ticketId: 'LOK-2026-157887',
     fullName: 'Nilesh Baburao Gaikwad',
     phone: '9822667788',
     email: 'nilesh.gaikwad@example.com',
@@ -500,7 +500,7 @@ export const INITIAL_ENTRIES: ParticipantEntry[] = [
   },
   {
     id: 'entry-110',
-    ticketId: 'LOK-2026-900010',
+    ticketId: 'LOK-2026-240821',
     fullName: 'Digambar Madhav Sahasrabuddhe',
     phone: '9890778899',
     email: 'digambar.sahasrabuddhe@example.com',

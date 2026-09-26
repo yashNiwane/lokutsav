@@ -140,25 +140,13 @@ export default async function WinnersPage() {
                   </div>
 
                   {/* Prize Footer */}
-                  <div className="mt-5 pt-4 border-t border-stone-200/80 flex items-center justify-between gap-3">
-                    <div>
-                      <span className="text-[10px] uppercase font-bold text-stone-500 block mb-0.5">
-                        प्राप्त पारितोषिक:
-                      </span>
-                      <p className="font-serif font-black text-lg sm:text-xl text-[#9B1B1E]">
-                        {meta.prize}
-                      </p>
-                    </div>
-                    {entry.phone && (
-                      <Link
-                        href={`/certificate?phone=${entry.phone}&ticketId=${entry.ticketId}`}
-                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-50 hover:bg-amber-100 text-[#9B1B1E] border border-amber-300 text-xs font-bold transition-all shadow-2xs hover:scale-105"
-                        title="सहभाग प्रमाणपत्र पहा व डाउनलोड करा"
-                      >
-                        <Award className="w-3.5 h-3.5 text-amber-600" />
-                        <span>प्रमाणपत्र</span>
-                      </Link>
-                    )}
+                  <div className="mt-5 pt-4 border-t border-stone-200/80">
+                    <span className="text-[10px] uppercase font-bold text-stone-500 block mb-0.5">
+                      प्राप्त पारितोषिक:
+                    </span>
+                    <p className="font-serif font-black text-lg sm:text-xl text-[#9B1B1E]">
+                      {meta.prize}
+                    </p>
                   </div>
                 </div>
               );
@@ -190,21 +178,9 @@ export default async function WinnersPage() {
                       {entry.fullName}
                     </span>
                   </div>
-                  <div className="flex items-center gap-2.5">
-                    <span className="font-serif font-black text-sm text-[#9B1B1E]">
-                      ₹५,००० रोख
-                    </span>
-                    {entry.phone && (
-                      <Link
-                        href={`/certificate?phone=${entry.phone}&ticketId=${entry.ticketId}`}
-                        className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-amber-50 hover:bg-amber-100 text-[#9B1B1E] border border-amber-200 text-xs font-bold transition-all shadow-2xs hover:scale-105"
-                        title="सहभाग प्रमाणपत्र पहा व डाउनलोड करा"
-                      >
-                        <Award className="w-3.5 h-3.5 text-amber-600" />
-                        <span className="hidden sm:inline">प्रमाणपत्र</span>
-                      </Link>
-                    )}
-                  </div>
+                  <span className="font-serif font-black text-sm text-[#9B1B1E]">
+                    ₹५,००० रोख
+                  </span>
                 </div>
 
                 <div className="flex items-center gap-3 text-xs text-stone-500">
@@ -243,29 +219,14 @@ export default async function WinnersPage() {
           </div>
         </div>
 
-        {/* Bottom CTAs */}
-        <div className="text-center pt-8 border-t border-amber-200/80 space-y-4">
-          <h3 className="font-serif font-bold text-lg sm:text-xl text-stone-800">
-            आपणही स्पर्धेत सहभागी झाला आहात का?
-          </h3>
-          <p className="text-xs sm:text-sm text-stone-600 max-w-lg mx-auto">
-            स्पर्धेत सहभागी झालेल्या सर्व पुष्टीकृत गणेशभक्तांसाठी अधिकृत सहभाग प्रमाणपत्र उपलब्ध आहे.
-          </p>
-          <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
-            <Link
-              href="/certificate"
-              className="inline-flex items-center gap-2 bg-[#9B1B1E] hover:bg-[#781416] text-white px-6 py-3.5 rounded-xl font-bold text-sm shadow-md transition-all hover:scale-105"
-            >
-              <Award className="w-4 h-4 text-amber-300" />
-              <span>सहभाग प्रमाणपत्र डाउनलोड करा</span>
-            </Link>
-            <Link
-              href="/"
-              className="inline-flex items-center gap-2 bg-white hover:bg-stone-50 text-stone-800 border-2 border-stone-300 px-5 py-3.5 rounded-xl font-bold text-sm shadow-xs transition-all"
-            >
-              <span>मुख्यपृष्ठावर परत जा</span>
-            </Link>
-          </div>
+        {/* Bottom CTA */}
+        <div className="text-center pt-8 border-t border-amber-200/80">
+          <Link
+            href="/"
+            className="inline-flex items-center gap-2 bg-[#9B1B1E] hover:bg-[#781416] text-white px-7 py-3.5 rounded-xl font-bold text-sm shadow-md transition-all hover:scale-105"
+          >
+            <span>मुख्यपृष्ठावर परत जा</span>
+          </Link>
         </div>
 
       </div>
